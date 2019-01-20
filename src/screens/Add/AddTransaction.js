@@ -26,10 +26,7 @@ class AddTransaction extends Component {
   }   
   
   async componentDidMount() {
-    let user = await AsyncStorage.getItem("user");
-    if(user !== null){
-      this.setState({user: JSON.parse(user)});
-    }
+    await this.updateUser();
     await this.updateTransactions();
   }
   
@@ -37,6 +34,13 @@ class AddTransaction extends Component {
     let transactions = await AsyncStorage.getItem("transactions");
     if(transactions !== null){
       this.setState({transactions: JSON.parse(transactions)});
+    }
+  }
+
+  updateUser = async () => {
+    let user = await AsyncStorage.getItem("user");
+    if(user !== null){
+      this.setState({user: JSON.parse(user)});
     }
   }
 
@@ -118,6 +122,7 @@ class AddTransaction extends Component {
     this.toggleLoading();
     let amt = parseFloat(this.state.amount);
     await this.updateTransactions();
+    await this.updateUser();
     this.clearTextInputs();
     if(this.safeToSave(amt)){
       if(this.props.type === "Cost"){

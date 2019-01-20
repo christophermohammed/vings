@@ -23,7 +23,7 @@ class History extends Component {
   async componentDidMount() {
     let user = await AsyncStorage.getItem("user");
     this.setState({user: JSON.parse(user)});
-    await this.updateTransactions();
+    await this.refreshFlatList();
   }
 
   removeFromAzure = async (uid) => {
@@ -91,7 +91,7 @@ class History extends Component {
             <Text style={{fontSize: 18}}>You don't seem to have any recent transactions...</Text>
             <Button 
               title="Refresh"
-              onPress={this.updateTransactions}
+              onPress={this.refreshFlatList}
               color={Colors.main}
             />
           </View>
