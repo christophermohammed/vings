@@ -45,7 +45,7 @@ class TransactionCard extends React.Component {
                         <Text style={styles.descriptionText}>{this.props.item.date}</Text>
                     </View>
                     <View style={[styles.amount, styles.vCommon]}>
-                        <Text style={(amt < 0) ? [styles.amountText, {color: Colors.red}] : [styles.amountText, {color: Colors.green}]}>${amt}</Text>
+                        <Text style={(amt < 0) ? [styles.amountText, {color: Colors.red}] : [styles.amountText, {color: Colors.green}]}>${Math.round(amt * 100) / 100}</Text>
                     </View>
                 </View>
             </Swipeout>

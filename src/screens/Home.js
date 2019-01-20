@@ -85,6 +85,10 @@ class Home extends Component {
           {this.renderLoading()}
         </View>
         <Image source={require('./../../assets/BeachFace.jpg')} style={styles.homeImage}/>
+        <Button 
+          title="Clear"
+          onPress={this.clearAsync}
+        />
       </View>
     );
   }
