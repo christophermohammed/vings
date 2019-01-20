@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Swipeout from 'react-native-swipeout';
 
+import Colors from '../utilities/colors';
+
 class TransactionCard extends React.Component {
     constructor(props){
         super(props);
@@ -33,17 +35,17 @@ class TransactionCard extends React.Component {
             rowId: this.props.index,
             sectionId: 1,
         }
-    
+        const amt = this.props.item.amount;
         return(
             <Swipeout {...swipeSettings}>
                 <View style={[styles.container, styles.vCommon]}>
-                    <View style={[styles.description, styles.vCommon]}>
+                    <View style={styles.vCommon}>
                         <Text style={styles.descriptionText}>{this.props.item.description}</Text>
                         <Text style={styles.descriptionText}>{this.props.item.location}</Text>
                         <Text style={styles.descriptionText}>{this.props.item.date}</Text>
                     </View>
                     <View style={[styles.amount, styles.vCommon]}>
-                        <Text style={styles.amountText}>{this.props.item.amount}</Text>
+                        <Text style={(amt < 0) ? [styles.amountText, {color: Colors.red}] : [styles.amountText, {color: Colors.green}]}>${amt}</Text>
                     </View>
                 </View>
             </Swipeout>
@@ -54,7 +56,8 @@ class TransactionCard extends React.Component {
 const styles = StyleSheet.create({
     vCommon: {
         flex: 1,
-        padding: 10
+        padding: 10,
+        backgroundColor: 'white'
     },
     descriptionText: {
         fontSize: 20
@@ -67,10 +70,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRightColor:   'white',
         borderLeftColor:    'white',
-        borderTopColor:     '#4a69bd',
+        borderTopColor:     Colors.main,
         borderBottomColor:  'white',
-    },
-    description: {
     },
     amount: {
         alignItems: 'center'

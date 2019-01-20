@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from './screens/Home';
 import Add from './screens/Add/Add';
 import History from './screens/History';
+import Colors from './utilities/colors';
 
 const VingsNav = createMaterialBottomTabNavigator({
   Home:{ screen : Home,
@@ -36,15 +37,14 @@ const VingsNav = createMaterialBottomTabNavigator({
 },{
   navigationOptions: ({navigation}) => {
     const { routeName } = navigation.state.routes[navigation.state.index];
-    return{
+    return {
       headerTitle: routeName
     };
   },
-  unmountInactiveRoutes: true,
   initialRouteName: 'Home',
   order: ['History','Home', 'Add'],
   activeTintColor: '#1e3799',
-  inactiveTintColor: '#4a69bd',
+  inactiveTintColor: Colors.main,
   barStyle: { backgroundColor: 'white' },
   shifting: true
 });

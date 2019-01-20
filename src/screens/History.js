@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, Button, View, Dimensions, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import TransactionCard from './../components/TransactionCard';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import Colors from '../utilities/colors';
 
 class History extends Component {
   
@@ -16,14 +15,15 @@ class History extends Component {
       refreshing: false,
 
       user: null,
-      transactions: null
+      transactions: [],
+      marginTop: 0
     }
   }
 
   async componentDidMount() {
     let user = await AsyncStorage.getItem("user");
-    let transactions = await AsyncStorage.getItem("transactions");
-    this.setState({user: JSON.parse(user), transactions: JSON.parse(transactions)});
+    this.setState({user: JSON.parse(user)});
+    await this.updateTransactions();
   }
 
   removeFromAzure = async (uid) => {
@@ -81,28 +81,41 @@ class History extends Component {
       return(
         <ActivityIndicator
           size="large"
-          color="#4a69bd"
+          color={Colors.main}
         />
       );
-    }else{ 
-      return(
-        <FlatList
+    }else{
+      if(this.state.transactions.length < 1){
+        return(
+          <View style={styles.empty}>
+            <Text style={{fontSize: 18}}>You don't seem to have any recent transactions...</Text>
+            <Button 
+              title="Refresh"
+              onPress={this.updateTransactions}
+              color={Colors.main}
+            />
+          </View>
+        );
+      }else{
+        return(
+          <FlatList
             data={this.state.transactions}
-            keyExtractor={(_item, index) => index.toString()}
+            keyExtractor={(_item, index) => (index).toString()}
             renderItem={({item, index}) => 
               <View>
-                  <TransactionCard 
-                    item={item}
-                    index={index} 
-                    deleteAction={() => this.deleteTransaction(index)}
-                    refresh={this.refreshFlatListAfterDelete}
-                  />
+                <TransactionCard 
+                  item={item}
+                  index={index} 
+                  deleteAction={() => this.deleteTransaction(index)}
+                  refresh={this.refreshFlatListAfterDelete}
+                />
               </View>
             }
             refreshing={this.state.refreshing}
-            onRefresh={this.refreshFlatListAfterCreate}
+            onRefresh={this.refreshFlatList}
           />
-      );
+        );
+      }
     }
   }
 
@@ -111,10 +124,10 @@ class History extends Component {
     this.setState({transactions: JSON.parse(transactions)});
   }
 
-  refreshFlatListAfterCreate = async () => {
+  refreshFlatList = async () => {
     this.setState({refreshing: true});
     await this.updateTransactions();
-    this.setState({refreshing: false})
+    this.setState({refreshing: false});
   }
 
   refreshFlatListAfterDelete = (deletedKey) => {
@@ -140,14 +153,20 @@ class History extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
     padding: 10
   },
   loadingStyle: {
-    flex: 1,
+    flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 50
+    marginTop: 10
+  },
+  empty: {
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10
   }
 });
 

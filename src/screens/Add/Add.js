@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 
 import AddTransaction from './AddTransaction';
+import Colors from '../../utilities/colors';
 
 class AddCost extends Component {
   goHome = () => {
@@ -42,13 +43,13 @@ const AddNav = createMaterialTopTabNavigator({
   order: ['AddCost', 'AddSaving' ],
   tabBarOptions: {
     labelStyle: {
-      color: "#4a69bd"
+      color: Colors.main
     },
     style: {
       backgroundColor: 'white',
     },
     indicatorStyle: {
-      backgroundColor: "#4a69bd"
+      backgroundColor: Colors.main
     }
   }
 })

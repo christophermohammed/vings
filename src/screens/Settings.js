@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Dimensions, Platform, Picker, Button } from 'react-native';
 
-import VingsContext from './../../VingsContext';
+import Colors from '../utilities/colors';
 
 const genders = ["Male", "Female" , "Non-Binary"];
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -77,7 +77,7 @@ export default class Settings extends Component {
       return(
         <ActivityIndicator
           size="large"
-          color="#4a69bd"
+          color={Colors.main}
         />
       );
     }
@@ -88,51 +88,47 @@ export default class Settings extends Component {
       return <Picker.Item key={i} value={s} label={s} />
     });
     return (
-      <VingsContext.Consumer>
-        {(context) => (
-          <View style={styles.container}>
-            <StatusBar
-              backgroundColor="white"
-              barStyle="dark-content"
-            />
-            <Text style={styles.welcome}>Tell us a little bit about you</Text>
-            <View style={styles.space}>
-              <Text style={styles.question}>How old are you?</Text>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(age) => this.setState({age})}
-                value={this.state.age}
-                keyboardType="number-pad"
-              />
-            </View>
-            <View style={styles.space}>
-              <Text style={styles.question}>What is your gender?</Text>
-              <Picker
-                  selectedValue={this.state.selectedItem}
-                  onValueChange={
-                      (itemValue) => {
-                          this.setState({selectedItem: itemValue}) 
-                      }
+      <View style={styles.container}>
+        <StatusBar
+          backgroundColor="white"
+          barStyle="dark-content"
+        />
+        <Text style={styles.welcome}>Tell us a little bit about you</Text>
+        <View style={styles.space}>
+          <Text style={styles.question}>How old are you?</Text>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(age) => this.setState({age})}
+            value={this.state.age}
+            keyboardType="phone-pad"
+          />
+        </View>
+        <View style={styles.space}>
+          <Text style={styles.question}>What is your gender?</Text>
+          <Picker
+              selectedValue={this.state.selectedItem}
+              onValueChange={
+                  (itemValue) => {
+                      this.setState({selectedItem: itemValue}) 
                   }
-                  style={styles.VingsPickerStyle}
-              >
-                  {itemList}
-              </Picker>
-            </View>
-            <View style={styles.space}>
-              <Button
-                title="Save"
-                onPress={this.save}
-                color="#4a69bd"
-                disabled={this.state.loading ? true : false }
-              />
-            </View>
-            <View style={styles.loading}>
-              {this.renderLoading()}
-            </View>
-          </View>
-        )}
-      </VingsContext.Consumer>
+              }
+              style={styles.VingsPickerStyle}
+          >
+              {itemList}
+          </Picker>
+        </View>
+        <View style={styles.space}>
+          <Button
+            title="Save"
+            onPress={this.save}
+            color={Colors.main}
+            disabled={this.state.loading ? true : false }
+          />
+        </View>
+        <View style={styles.loading}>
+          {this.renderLoading()}
+        </View>
+      </View>
     );
   }
 }

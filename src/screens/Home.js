@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import { StyleSheet, Button, Text, View, StatusBar, Dimensions, Image, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
+import { StyleSheet, Button, View, StatusBar, Dimensions, Image, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
+
+import HomeCard from '../components/HomeCard';
+import Colors from '../utilities/colors';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -9,7 +12,11 @@ class Home extends Component {
     super(props);
 
     this.state = {
-        user: null
+      user: null,
+      users: [],
+
+      refreshing: false,
+      loading: false,
     }
   }
 
@@ -22,9 +29,49 @@ class Home extends Component {
     await AsyncStorage.clear();
   }
 
-  async componentDidMount() {
+  updateUser = async () => {
     let json = await AsyncStorage.getItem("user");
-    this.setState({user: JSON.parse(json)});
+    let user = JSON.parse(json);
+    let users = [];
+    if(user !== null){
+      users.push(user);
+      this.setState({user: user, users: users});
+    }
+  }
+
+  refreshFlatListAfterCreate = async () => {
+    this.setState({refreshing: true});
+    await this.updateUser();
+    this.setState({refreshing: false})
+  }
+
+  renderLoading = () => {
+    if(this.state.loading){
+      return(
+        <ActivityIndicator
+          size="large"
+          color={Colors.main}
+        />
+      );
+    }else{ 
+      return(
+        <FlatList
+          data={this.state.users}
+          keyExtractor={(_item, index) => index.toString()}
+          renderItem={({item}) => 
+            <View>
+                <HomeCard item={item}/>
+            </View>
+          }
+          refreshing={this.state.refreshing}
+          onRefresh={this.refreshFlatListAfterCreate}
+        />
+      );
+    }
+  }
+
+  async componentDidMount() {
+    await this.updateUser();
   }
 
   render() {
@@ -34,25 +81,16 @@ class Home extends Component {
           backgroundColor="white"
           barStyle="dark-content"
         />
+        <View style={[this.state.loading ? styles.loadingStyle : {}, {marginTop: 10}]}>
+          {this.renderLoading()}
+        </View>
         <Image source={require('./../../assets/BeachFace.jpg')} style={styles.homeImage}/>
-        <Button 
-          title="Display"
-          onPress={this.displayUserInfo}
-        />
-        <Button 
-          title="clear"
-          onPress={this.clearAsync}
-        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10
-  },
   welcome: {
     fontSize: 40,
     padding: 10,
@@ -61,7 +99,16 @@ const styles = StyleSheet.create({
   homeImage: {
     width: SCREEN_WIDTH - 20,
     height: SCREEN_WIDTH - 20,
-    borderRadius: 10
+    borderRadius: 10,
+    marginTop: 20
+  },
+  container: {
+    flex: 0,
+    padding: 10
+  },
+  loadingStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 

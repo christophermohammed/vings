@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { ActivityIndicator, AsyncStorage, TextInput, StyleSheet, Text, View, StatusBar, Dimensions, Button } from 'react-native';
 
+import Colors from '../../utilities/colors';
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const date = new Date().toDateString();
 
@@ -25,12 +27,17 @@ class AddTransaction extends Component {
   
   async componentDidMount() {
     let user = await AsyncStorage.getItem("user");
-    this.setState({user: JSON.parse(user)});
+    if(user !== null){
+      this.setState({user: JSON.parse(user)});
+    }
+    await this.updateTransactions();
   }
   
   updateTransactions = async () => {
     let transactions = await AsyncStorage.getItem("transactions");
-    this.setState({transactions: JSON.parse(transactions)});
+    if(transactions !== null){
+      this.setState({transactions: JSON.parse(transactions)});
+    }
   }
 
   toggleLoading = () => {
@@ -50,7 +57,7 @@ class AddTransaction extends Component {
 
   addToTransactions = async (transaction) => {
     let transactions = this.state.transactions;
-    transactions.push(transaction);
+    transactions.unshift(transaction);
     this.setState({transactions: transactions});
     await AsyncStorage.setItem("transactions", JSON.stringify(transactions));
   }   
@@ -102,9 +109,6 @@ class AddTransaction extends Component {
     if(isNaN(amt)){
       clearToSave = false;
     }else{
-      if(this.props.type === "Cost"){
-        amt *= -1;
-      }
       clearToSave = true;
     }
     return clearToSave;
@@ -116,6 +120,9 @@ class AddTransaction extends Component {
     await this.updateTransactions();
     this.clearTextInputs();
     if(this.safeToSave(amt)){
+      if(this.props.type === "Cost"){
+        amt *= -1;
+      }
       let transaction = {
         description: this.state.description,
         location: this.state.location,
@@ -140,7 +147,7 @@ class AddTransaction extends Component {
       return(
         <ActivityIndicator
           size="large"
-          color="#4a69bd"
+          color={Colors.main}
         />
       );
     }
@@ -227,7 +234,7 @@ class AddTransaction extends Component {
             <Button
               title="Add"
               onPress={this.save}
-              color="#4a69bd"
+              color={Colors.main}
               disabled={this.state.loading ? true : false }
             />
           </View>
