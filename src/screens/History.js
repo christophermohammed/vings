@@ -85,7 +85,7 @@ class History extends Component {
         />
       );
     }else{
-      if(this.state.transactions.length < 1){
+      if(this.state.transactions === null || this.state.transactions.length < 1){
         return(
           <View style={styles.empty}>
             <Text style={{fontSize: 18}}>You don't seem to have any recent transactions...</Text>
