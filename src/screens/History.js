@@ -113,6 +113,7 @@ class History extends Component {
             }
             refreshing={this.state.refreshing}
             onRefresh={this.refreshFlatList}
+            showsVerticalScrollIndicator={false}
           />
         );
       }

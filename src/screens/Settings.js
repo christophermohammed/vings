@@ -105,19 +105,21 @@ export default class Settings extends Component {
         </View>
         <View style={styles.space}>
           <Text style={styles.question}>What is your gender?</Text>
-          <Picker
-              selectedValue={this.state.selectedItem}
-              onValueChange={
-                  (itemValue) => {
-                      this.setState({selectedItem: itemValue}) 
-                  }
-              }
-              style={styles.VingsPickerStyle}
-          >
-              {itemList}
-          </Picker>
+          <View style={{alignItems: 'center'}}>
+            <Picker
+                selectedValue={this.state.selectedItem}
+                onValueChange={
+                    (itemValue) => {
+                        this.setState({selectedItem: itemValue}) 
+                    }
+                }
+                style={styles.VingsPickerStyle}
+            >
+                {itemList}
+            </Picker>
+          </View>
         </View>
-        <View style={styles.space}>
+        <View style={[styles.space, {marginTop: Platform.OS === 'ios' ? 30 : 0}]}>
           <Button
             title="Save"
             onPress={this.save}

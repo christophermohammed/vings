@@ -65,6 +65,7 @@ class Home extends Component {
           }
           refreshing={this.state.refreshing}
           onRefresh={this.refreshFlatListAfterCreate}
+          showsVerticalScrollIndicator={false}
         />
       );
     }

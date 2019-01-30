@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 import {
   createSwitchNavigator,
   createAppContainer,
@@ -8,8 +8,19 @@ import {
 import Settings from './src/screens/Settings';
 import Vings from './src/Vings';
 
+const SettingsNav = createStackNavigator({
+  Settings: { 
+    screen: Settings,
+    navigationOptions: {
+      headerTitle: "Settings"
+    } 
+  }
+});
+
 const AppSwitchNavigator = createSwitchNavigator({
-  Settings: { screen: Settings },
+  Settings: { 
+    screen: SettingsNav
+  },
   Vings: { screen: Vings }
 },{
   initialRouteName: 'Vings'
