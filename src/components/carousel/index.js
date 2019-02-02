@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
-import { SCREEN_WIDTH } from '../../utilities/utils';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import CarouselCard from './card';
+import { SCREEN_HEIGHT } from '../../utilities/utils';
+import images from './data';
+
+const IMAGE_HEIGHT = SCREEN_HEIGHT / 2;
 
 class Carousel extends Component {
     render() {
         return (
-            <View>
-                <Image source={require('./../../../assets/BeachFace.jpg')} style={styles.homeImage}/>
+            <View style={styles.container}>
+                <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    pagingEnabled={true}
+                >
+                    {images.map((image) => (
+                        <CarouselCard key={image.key} image={image} />
+                    ))}
+                </ScrollView>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    homeImage: {
-      width: SCREEN_WIDTH - 20,
-      height: SCREEN_WIDTH - 20,
-      borderRadius: 10,
-      marginTop: 20
-    },
-  });
+    container: {
+        width: ((IMAGE_HEIGHT / 4) * 3) + 20,
+        height: IMAGE_HEIGHT + (IMAGE_HEIGHT / 5),
+    }
+});
 
 export default Carousel;

@@ -60,10 +60,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     descriptionText: {
-        fontSize: 20
+        fontSize: 18
     },
     amountText: {
-        fontSize: 40
+        fontSize: 30
     },
     container: {
         flexDirection: 'row',

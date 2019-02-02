@@ -82,14 +82,14 @@ class Home extends Component {
           backgroundColor="white"
           barStyle="dark-content"
         />
-        <View style={[this.state.loading ? styles.loadingStyle : {}, {marginTop: 10}]}>
+        <View style={[this.state.loading ? styles.loadingStyle : {height: 90}, {marginTop: 10}]}>
           {this.renderLoading()}
         </View>
         <Carousel />
-        <Button 
+        {/*<Button 
           title="Clear"
           onPress={this.clearAsync}
-        />
+        />*/}
       </View>
     );
   }
@@ -101,15 +101,10 @@ const styles = StyleSheet.create({
     padding: 10,
     color: 'black'
   },
-  homeImage: {
-    width: SCREEN_WIDTH - 20,
-    height: SCREEN_WIDTH - 20,
-    borderRadius: 10,
-    marginTop: 20
-  },
   container: {
     flex: 0,
-    padding: 10
+    padding: 10,
+    alignItems: 'center'
   },
   loadingStyle: {
     alignItems: 'center',

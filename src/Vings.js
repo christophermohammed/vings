@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { createAppContainer, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 

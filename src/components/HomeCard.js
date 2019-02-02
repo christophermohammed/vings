@@ -5,10 +5,12 @@ import { Colors } from '../utilities/utils';
 
 const HomeCard = (props) => {
     const amt = props.item.netSav;
+    const modAmt = (amt < 0) ? (-1 * amt) : amt;
+    const amountStyle = [styles.amountText, (amt < 0) ? {color: Colors.red} : {color: Colors.green}];
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 18}}>{(amt < 0) ? "You're out:" : "You're saving:"}</Text>
-            <Text style={[styles.amountText, (amt < 0) ? {color: Colors.red} : {color: Colors.green}]}>${Math.round(amt * 100) / 100}</Text>
+            <Text style={amountStyle}>{(amt < 0) ? "-$" : "$"}</Text>
+            <Text style={amountStyle}>{Math.round(modAmt * 100) / 100}</Text>
         </View>
     );
 }
@@ -17,12 +19,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'stretch',
-        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        justifyContent: 'center',
         height: 90
     },
     amountText: {
-        fontSize: 60
+        fontSize: 40
     },
 });
 
