@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Button, View, StatusBar, Dimensions, Image, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import HomeCard from '../components/HomeCard';
-import Colors from '../utilities/utils';
+import { Colors } from '../utilities/utils';
 import Carousel from '../components/carousel/index';
 import { SCREEN_WIDTH } from '../utilities/utils';
 

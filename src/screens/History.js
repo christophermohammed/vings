@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import TransactionCard from './../components/TransactionCard';
-import Colors from '../utilities/utils';
+import { Colors } from '../utilities/utils';
 
 class History extends Component {
   

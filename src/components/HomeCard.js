@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
-import Colors from '../utilities/utils';
+import { Colors } from '../utilities/utils';
 
 const HomeCard = (props) => {
     const amt = props.item.netSav;

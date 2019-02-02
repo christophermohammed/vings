@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
 
-import Colors from '../utilities/utils';
+import { Colors } from '../utilities/utils';
 import { SCREEN_WIDTH } from '../utilities/utils';
 
 const genders = ["Male", "Female" , "Non-Binary"];

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 
 import AddTransaction from './AddTransaction';
-import Colors from '../../utilities/utils';
+import { Colors } from '../../utilities/utils';
 
 class AddCost extends Component {
   goHome = () => {
