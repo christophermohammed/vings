@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Dimensions, Platform, Picker, Button } from 'react-native';
+import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
 
-import Colors from '../utilities/colors';
+import Colors from '../utilities/utils';
+import { SCREEN_WIDTH } from '../utilities/utils';
 
 const genders = ["Male", "Female" , "Non-Binary"];
-const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class Settings extends Component {
 

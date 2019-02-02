@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import { StyleSheet, Button, View, StatusBar, Dimensions, Image, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import HomeCard from '../components/HomeCard';
-import Colors from '../utilities/colors';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import Colors from '../utilities/utils';
+import Carousel from '../components/carousel/index';
+import { SCREEN_WIDTH } from '../utilities/utils';
 
 class Home extends Component {
   
@@ -85,7 +85,7 @@ class Home extends Component {
         <View style={[this.state.loading ? styles.loadingStyle : {}, {marginTop: 10}]}>
           {this.renderLoading()}
         </View>
-        <Image source={require('./../../assets/BeachFace.jpg')} style={styles.homeImage}/>
+        <Carousel />
         <Button 
           title="Clear"
           onPress={this.clearAsync}

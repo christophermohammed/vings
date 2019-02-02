@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { ActivityIndicator, AsyncStorage, TextInput, StyleSheet, Text, View, StatusBar, Dimensions, Button } from 'react-native';
+import { ActivityIndicator, AsyncStorage, TextInput, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
 
-import Colors from '../../utilities/colors';
+import Colors from '../../utilities/utils';
+import { SCREEN_WIDTH } from '../../utilities/utils';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
 const date = new Date().toDateString();
 
 class AddTransaction extends Component {
