@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
-import { SCREEN_HEIGHT } from '../../utilities/utils';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utilities/utils';
 
 const IMAGE_HEIGHT = SCREEN_HEIGHT / 2;
 
@@ -36,7 +36,7 @@ class CarouselCard extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: ((IMAGE_HEIGHT / 4) * 3) + 20,
+        width: SCREEN_WIDTH,
         height: IMAGE_HEIGHT + (IMAGE_HEIGHT / 5),
         justifyContent: 'center',
         alignItems: 'center'
