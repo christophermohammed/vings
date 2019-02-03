@@ -4,6 +4,6 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 
-console.ignoredYellowBox = ['Warning: You should only render'];
+console.disableYellowBox = true;
 
 AppRegistry.registerComponent(appName, () => App);
