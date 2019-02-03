@@ -22,11 +22,11 @@ class CarouselCard extends Component {
             <View>
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
-                        <Image source={{uri: this.props.image.uri}} style={styles.homeImage}/>
+                        <Image source={{uri: this.props.image.URI}} style={styles.homeImage}/>
                     </View>
-                    <TouchableOpacity style={styles.textContainer} onPress={() => this.handleLink(this.props.image.photographer.VSCO)}>
+                    <TouchableOpacity style={styles.textContainer} onPress={() => this.handleLink(this.props.image.URL)}>
                         <Image style={{width: 25, height: 25}} source={require('../../../assets/Seal.png')} />
-                        <Text style={{fontSize: 18}}>   {this.props.image.photographer.username}</Text>
+                        <Text style={{fontSize: 18}}>   {this.props.image.Username}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

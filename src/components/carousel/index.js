@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import CarouselCard from './card';
 import { SCREEN_HEIGHT } from '../../utilities/utils';
-import images from './data';
 
 const IMAGE_HEIGHT = SCREEN_HEIGHT / 2;
 
@@ -15,8 +14,8 @@ class Carousel extends Component {
                     showsHorizontalScrollIndicator={false}
                     pagingEnabled={true}
                 >
-                    {images.map((image) => (
-                        <CarouselCard key={image.key} image={image} />
+                    {this.props.photos.map((image) => (
+                        <CarouselCard key={image.UID} image={image} />
                     ))}
                 </ScrollView>
             </View>

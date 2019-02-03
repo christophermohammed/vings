@@ -17,6 +17,7 @@ class Home extends Component {
 
       refreshing: false,
       loading: false,
+      photos: []
     }
   }
 
@@ -71,8 +72,43 @@ class Home extends Component {
     }
   }
 
+  getPhotosFromAzure = async () => {
+    let url = 'https://vingsgallery.azurewebsites.net/api/GetPhotos?code=bAVDlZbfCJtiu5rDbk2DWBpVC95KvwnRqgoSHseEjw/77XXgOdzFdA==';
+    try {
+        let response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({})
+        });
+        let resJson = await response.json();
+        let fromAzure = JSON.parse(JSON.stringify(resJson));
+        this.setState({photos: fromAzure.photos});
+      } catch (error) {
+        console.error(error);
+    }
+  }
+
+  renderPhotos = () => {
+    if(this.state.photos === []){
+      return(
+        <ActivityIndicator
+          size="large"
+          color={Colors.main}
+        />
+      );
+    }else{
+      return(
+        <Carousel photos={this.state.photos}/>
+      );
+    }
+  }
+
   async componentDidMount() {
     await this.updateUser();
+    await this.getPhotosFromAzure();
   }
 
   render() {
@@ -85,7 +121,9 @@ class Home extends Component {
         <View style={[this.state.loading ? styles.loadingStyle : {height: 90}, {marginTop: 10}]}>
           {this.renderLoading()}
         </View>
-        <Carousel />
+        <View style={[this.state.loading ? styles.loadingStyle : {} , {marginTop: 10}]}>
+          {this.renderPhotos()}
+        </View>
         {/*<Button 
           title="Clear"
           onPress={this.clearAsync}
