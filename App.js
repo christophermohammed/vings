@@ -5,8 +5,8 @@ import {
   createAppContainer,
 } from 'react-navigation';
 
-import Settings from './src/screens/Settings';
-import Vings from './src/Vings';
+import Settings from './src/components/screens/Settings';
+import Vings from './src/components/vings/index';
 
 const SettingsNav = createStackNavigator({
   Settings: { 

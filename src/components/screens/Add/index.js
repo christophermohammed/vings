@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { ActivityIndicator, AsyncStorage, TextInput, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
 
-import { Colors } from '../../utilities/utils';
-import { SCREEN_WIDTH } from '../../utilities/utils';
+import { SCREEN_WIDTH, Colors } from '../../../utilities/utils';
 
 const date = new Date().toDateString();
 

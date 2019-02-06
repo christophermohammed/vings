@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
-import { Colors } from '../utilities/utils';
+import { Colors } from '../../../utilities/utils';
 
-const HomeCard = (props) => {
+const NetSavingsCard = (props) => {
     const amt = props.item.netSav;
     const modAmt = (amt < 0) ? (-1 * amt) : amt;
     const amountStyle = [styles.amountText, (amt < 0) ? {color: Colors.red} : {color: Colors.green}];
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeCard;
+export default NetSavingsCard;
