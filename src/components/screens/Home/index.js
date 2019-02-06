@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
-import NetSavingsCard from './NetSavingsCard';
-import Tip from './Tip';
+import NetSavingsCard from '../../netsavingsCard';
+import Tip from '../../tipoftheday';
 import { Colors } from '../../../utilities/utils';
 import Carousel from '../../carousel';
 
