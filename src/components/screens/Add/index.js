@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { ActivityIndicator, AsyncStorage, TextInput, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
+import { ActivityIndicator, TextInput, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
 
-import { SCREEN_WIDTH, Colors } from '../../../utilities/utils';
+import { SCREEN_WIDTH, Colors, to2Dp } from '../../../utilities/utils';
+import { safeToSave, saveTransaction } from './add-logic';
 
 const date = new Date().toDateString();
 
@@ -15,34 +16,11 @@ class AddTransaction extends Component {
       amount: "",
       loading: false,
 
-      user: null,
-      transaction: null,
-      transactions: [],
-
       dPlaceholder: "\tDescription",
       lPlaceholder: "\tLocation",
     }
   }   
   
-  async componentDidMount() {
-    await this.updateUser();
-    await this.updateTransactions();
-  }
-  
-  updateTransactions = async () => {
-    let transactions = await AsyncStorage.getItem("transactions");
-    if(transactions !== null){
-      this.setState({transactions: JSON.parse(transactions)});
-    }
-  }
-
-  updateUser = async () => {
-    let user = await AsyncStorage.getItem("user");
-    if(user !== null){
-      this.setState({user: JSON.parse(user)});
-    }
-  }
-
   toggleLoading = () => {
     this.setState((prevState) => {
       return{ loading: !prevState.loading };
@@ -58,72 +36,12 @@ class AddTransaction extends Component {
     }
   }
 
-  addToTransactions = async (transaction) => {
-    let transactions = this.state.transactions;
-    transactions.unshift(transaction);
-    this.setState({transactions: transactions});
-    await AsyncStorage.setItem("transactions", JSON.stringify(transactions));
-  }   
-  
-  updateTransactionUID = (uid, transaction) => {
-    transaction.uid = uid;
-    this.setState({transaction: transaction});
-    return transaction;
-  }   
-  
-  saveToAzure = async (transaction) => {
-    let user = this.state.user;
-    let url = 'https://vingsazure.azurewebsites.net/api/CreateTransaction/';
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            UserUID: user.uid,
-            description: transaction.description,
-            location: transaction.location,
-            amount: transaction.amount,
-            date: transaction.date
-          }),
-      });
-      let responseJson = await response.json();
-      let fromAzure = JSON.stringify(responseJson);
-      let length = fromAzure.length; 
-      let uid = (fromAzure.substring(1,length-1));
-      return(uid);
-    } catch (error) {
-      console.error(error);
-      return("err");
-    }
-  }
-  
-  updateUserNetSav = async (amt) => {
-    let user = this.state.user;
-    user.netSav += amt;
-    this.setState({user: user});
-    await AsyncStorage.setItem("user", JSON.stringify(user));
-  } 
-
-  safeToSave = (amt) => {
-    let clearToSave;
-    if(isNaN(amt)){
-      clearToSave = false;
-    }else{
-      clearToSave = true;
-    }
-    return clearToSave;
-  }
-
   save = async () => {
+    //alter UI on save
     this.toggleLoading();
-    let amt = parseFloat(this.state.amount);
-    await this.updateTransactions();
-    await this.updateUser();
     this.clearTextInputs();
-    if(this.safeToSave(amt)){
+    let amt = to2Dp(parseFloat(this.state.amount));
+    if(safeToSave(amt)){
       if(this.props.type === "Cost"){
         amt *= -1;
       }
@@ -134,14 +52,10 @@ class AddTransaction extends Component {
         date: date,
         uid: ""
       }
-      await this.updateUserNetSav(amt);
-      let uid = await this.saveToAzure(transaction);
-      let t = this.updateTransactionUID(uid, transaction);
-      await this.addToTransactions(t);
+      await saveTransaction(transaction);
       this.props.goHome();
     }else{
-      alert("Bad amount entered. Try again.");
-      this.clearTextInputs();
+      alert("Invalid amount entered. Try again.");
     }
     this.toggleLoading();
   }

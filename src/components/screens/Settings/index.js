@@ -86,6 +86,7 @@ export default class Settings extends Component {
     let itemList = this.state.items.map( (s, i) => {
       return <Picker.Item key={i} value={s} label={s} />
     });
+    const agePlaceholder = "\tAge";
     return (
       <View style={styles.container}>
         <StatusBar
@@ -100,7 +101,7 @@ export default class Settings extends Component {
             onChangeText={(age) => this.setState({age})}
             value={this.state.age}
             keyboardType="phone-pad"
-            placeholder="\tAge"
+            placeholder={agePlaceholder}
           />
         </View>
         <View style={styles.space}>
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   VingsPickerStyle: {
-    width: SCREEN_WIDTH - 150,
+    width: Platform.OS === 'ios' ? SCREEN_WIDTH - 150 : SCREEN_WIDTH,
     height: Platform.OS === 'ios' ? 165 : 40,
     marginTop: Platform.OS === 'ios' ? -20 : 0
   }

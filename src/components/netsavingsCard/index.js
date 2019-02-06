@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
-import { Colors } from '../../utilities/utils';
+import { Colors, to2Dp } from '../../utilities/utils';
 
 const NetSavingsCard = (props) => {
     const amt = props.item.netSav;
@@ -10,7 +10,7 @@ const NetSavingsCard = (props) => {
     return (
         <View style={styles.container}>
             <Text style={amountStyle}>{(amt < 0) ? "-$" : "$"}</Text>
-            <Text style={amountStyle}>{Math.round(modAmt * 100) / 100}</Text>
+            <Text style={amountStyle}>{to2Dp(modAmt)}</Text>
         </View>
     );
 }

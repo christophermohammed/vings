@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Button, StatusBar, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
-import { Colors } from '../../../utilities/utils';
+import { Colors, clearAsync } from '../../../utilities/utils';
 import Carousel from '../../carousel';
 
 class Home extends Component {
@@ -19,10 +19,6 @@ class Home extends Component {
       loading: false,
       photos: []
     }
-  }
-
-  clearAsync = async () => {
-    await AsyncStorage.clear();
   }
 
   updateUser = async () => {
@@ -116,10 +112,10 @@ class Home extends Component {
             <Text style={styles.title}>Gallery</Text>
             <Carousel photos={this.state.photos}/>
           </View>
-          {/*<Button 
+          <Button 
             title="Clear"
-            onPress={this.clearAsync}
-          />*/}
+            onPress={clearAsync}
+          />
         </View>
       </ScrollView>
     );
