@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from '../screens/Home';
-import Add from '../screens/Add';
+import Add from '../screens/Add/Add';
 import History from '../screens/History';
 import { Colors } from '../../utilities/utils';
 

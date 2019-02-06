@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utilities/utils';
-
-const IMAGE_HEIGHT = SCREEN_HEIGHT / 2;
+import { SCREEN_HEIGHT, SCREEN_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH } from '../../utilities/utils';
 
 class CarouselCard extends Component {
     handleLink = (url) => {
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },  
     imageContainer: {
-        width: ((IMAGE_HEIGHT / 4) * 3),
+        width: IMAGE_WIDTH,
         height: IMAGE_HEIGHT,
     },  
     homeImage: {

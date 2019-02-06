@@ -14,7 +14,7 @@ export default class Settings extends Component {
         gender: "",
         items: [],
         selectedItem: "Male",
-        loading: false
+        loading: false,
     }
   }
 
@@ -100,6 +100,7 @@ export default class Settings extends Component {
             onChangeText={(age) => this.setState({age})}
             value={this.state.age}
             keyboardType="phone-pad"
+            placeholder="\tAge"
           />
         </View>
         <View style={styles.space}>

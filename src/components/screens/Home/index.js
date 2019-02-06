@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { StyleSheet, Button, View, StatusBar, Dimensions, Image, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import NetSavingsCard from './NetSavingsCard';
+import Tip from './Tip';
 import { Colors } from '../../../utilities/utils';
 import Carousel from '../../carousel';
 
@@ -18,11 +19,6 @@ class Home extends Component {
       loading: false,
       photos: []
     }
-  }
-
-  displayUserInfo = async () => {
-    let user = this.state.user;
-    alert("UID:" + user.uid + " Age:" + user.age + " Gender:" + user.gender + " Net Savings:" + user.netSav);
   }
 
   clearAsync = async () => {
@@ -90,21 +86,6 @@ class Home extends Component {
     }
   }
 
-  renderPhotos = () => {
-    if(this.state.photos === []){
-      return(
-        <ActivityIndicator
-          size="large"
-          color={Colors.main}
-        />
-      );
-    }else{
-      return(
-        <Carousel photos={this.state.photos}/>
-      );
-    }
-  }
-
   async componentDidMount() {
     await this.updateUser();
     await this.getPhotosFromAzure();
@@ -112,22 +93,35 @@ class Home extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar
-          backgroundColor="white"
-          barStyle="dark-content"
-        />
-        <View style={[this.state.loading ? styles.loadingStyle : {height: 90}, {marginTop: 10}]}>
-          {this.renderLoading()}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
+          <StatusBar
+            backgroundColor="white"
+            barStyle="dark-content"
+          />
+          {/* Net savings section */}
+          <View style={[styles.section, {marginTop: 0}]}>
+            <Text style={styles.title}>Savings</Text>
+            <View style={this.state.loading ? styles.loadingStyle : {height: 70}}>
+              {this.renderLoading()}
+            </View>
+          </View>
+          {/* Tip section */}
+          <View style={styles.section}>
+            <Text style={styles.title}>Tip of the day</Text>
+            <Tip />
+          </View>
+          {/* Gallery section */}
+          <View style={styles.section}>
+            <Text style={styles.title}>Gallery</Text>
+            <Carousel photos={this.state.photos}/>
+          </View>
+          {/*<Button 
+            title="Clear"
+            onPress={this.clearAsync}
+          />*/}
         </View>
-        <View style={[this.state.loading ? styles.loadingStyle : {} , {marginTop: 10}]}>
-          {this.renderPhotos()}
-        </View>
-        {/*<Button 
-          title="Clear"
-          onPress={this.clearAsync}
-        />*/}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -141,11 +135,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 0,
     padding: 10,
-    alignItems: 'center'
+    
   },
   loadingStyle: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  title: {
+    fontSize: 30,
+  },
+  section: {
+    padding: 10,
+    marginTop: 30
   }
 });
 

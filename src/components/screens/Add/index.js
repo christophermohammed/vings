@@ -19,8 +19,8 @@ class AddTransaction extends Component {
       transaction: null,
       transactions: [],
 
-      dPlaceholder: "Description",
-      lPlaceholder: "Location",
+      dPlaceholder: "\tDescription",
+      lPlaceholder: "\tLocation",
     }
   }   
   

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 90
+        height: 70
     },
     amountText: {
         fontSize: 40
