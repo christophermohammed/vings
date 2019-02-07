@@ -28,6 +28,10 @@ class Home extends Component {
     await getPhotosFromAzure(this.setPhotos);
   }
 
+  async componentDidUpdate(){
+    await getPhotosFromAzure(this.setPhotos);
+  }
+
   refreshFlatList = async () => {
     this.setState({refreshing: true});
     let user = await getUser();
@@ -77,10 +81,10 @@ class Home extends Component {
             <Text style={styles.title}>Gallery</Text>
             <Carousel photos={this.state.photos}/>
           </View>
-          <Button 
+          {/*<Button 
             title="Clear"
             onPress={clearAsync}
-          />
+          />*/}
         </View>
       </ScrollView>
     );

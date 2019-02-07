@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 class Offline extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Icon 
-                    
-                />
-                <Text>Offline</Text>
+                <Image source={require('C:/Users/Chris/Documents/Tilted/Vings/assets/cellularOffline.png')} style={styles.image}/>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>Seems like you're offline...</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>Connect to the internet to keep saving!</Text>
+                </View>
             </View>
         );
     }
@@ -20,6 +22,16 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    image: {
+        height: 80,
+        width: 80
+    },
+    textContainer: {
+        padding: 5
+    },
+    text: {
+        fontSize: 20
     }
   });
 
