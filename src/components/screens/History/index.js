@@ -23,11 +23,6 @@ class History extends Component {
     await this.refreshFlatList();
   }
 
-  updateTransactions = async () => {
-    let transactions = await getTransactions();
-    this.setState({transactions: transactions});
-  }
-
   deleteTransaction = async (index) => {
     this.toggleLoading();
     //get transactions from state
@@ -48,6 +43,24 @@ class History extends Component {
     await removeFromAzure(uid);
 
     this.toggleLoading();
+  }
+
+  refreshFlatList = async () => {
+    this.setState({refreshing: true});
+    let transactions = await getTransactions();
+    this.setState({transactions: transactions, refreshing: false});
+  }
+
+  refreshFlatListAfterDelete = (deletedKey) => {
+    this.setState(() => {
+      return{ deletedRowKey: deletedKey };
+    });
+  }
+
+  toggleLoading = () => {
+    this.setState((prevState) => {
+      return{ loading: !prevState.loading };
+    });
   }
 
   renderLoading = () => {
@@ -92,24 +105,6 @@ class History extends Component {
         );
       }
     }
-  }
-
-  refreshFlatList = async () => {
-    this.setState({refreshing: true});
-    await this.updateTransactions();
-    this.setState({refreshing: false});
-  }
-
-  refreshFlatListAfterDelete = (deletedKey) => {
-    this.setState(() => {
-      return{ deletedRowKey: deletedKey };
-    });
-  }
-
-  toggleLoading = () => {
-    this.setState((prevState) => {
-      return{ loading: !prevState.loading };
-    });
   }
 
   render() {

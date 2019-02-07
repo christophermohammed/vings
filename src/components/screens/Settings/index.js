@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
 
 import { Colors, SCREEN_WIDTH } from '../../../utilities/utils';
+import { saveUser } from './settings-logic';
 
 const genders = ["Male", "Female" , "Non-Binary"];
 
@@ -30,31 +31,6 @@ export default class Settings extends Component {
     });
   }
 
-  saveUserToAzure = async (user) => {
-    let url = 'https://vingsazure.azurewebsites.net/api/CreateUser/';
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          age: user.age,
-          gender: user.gender
-          }),
-      });
-      let responseJson = await response.json();
-      let fromAzure = JSON.stringify(responseJson);
-      let length = fromAzure.length; 
-      let uid = fromAzure.substring(1,length-1);
-      return(uid);
-    } catch (error) {
-      console.error(error);
-      return("err");
-    }
-  }
-
   save = async () => {
     this.toggleLoading();
     let user = {
@@ -63,10 +39,7 @@ export default class Settings extends Component {
       netSav: 0.0,
       uid: ""
     }
-    let uid = await this.saveUserToAzure(user);
-    user.uid = uid;
-    debugger;
-    await AsyncStorage.setItem("user", JSON.stringify(user));
+    await saveUser(user);
     this.toggleLoading();
     this.props.navigation.navigate("Vings");
   }

@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Button, StatusBar, ScrollView, FlatList, AsyncS
 
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
-import { Colors, clearAsync } from '../../../utilities/utils';
+import { clearAsync, getUser } from '../../../utilities/utils';
+import { getPhotosFromAzure } from './home-logic';
 import Carousel from '../../carousel';
 
 class Home extends Component {
@@ -12,8 +13,9 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      user: null,
-      users: [],
+      user: {
+        netSav: 0
+      },
 
       refreshing: false,
       loading: false,
@@ -21,70 +23,22 @@ class Home extends Component {
     }
   }
 
-  updateUser = async () => {
-    let json = await AsyncStorage.getItem("user");
-    let user = JSON.parse(json);
-    let users = [];
-    if(user !== null){
-      users.push(user);
-      this.setState({user: user, users: users});
-    }
+  async componentDidMount() {
+    await this.refreshFlatList();
+    await getPhotosFromAzure(this.setPhotos);
   }
 
-  refreshFlatListAfterCreate = async () => {
+  refreshFlatList = async () => {
     this.setState({refreshing: true});
-    await this.updateUser();
+    let user = await getUser();
+    if(user !== null){
+      this.setState({user: user});
+    }
     this.setState({refreshing: false})
   }
 
-  renderLoading = () => {
-    if(this.state.loading){
-      return(
-        <ActivityIndicator
-          size="large"
-          color={Colors.main}
-        />
-      );
-    }else{ 
-      return(
-        <FlatList
-          data={this.state.users}
-          keyExtractor={(_item, index) => index.toString()}
-          renderItem={({item}) => 
-            <View>
-                <NetSavingsCard item={item}/>
-            </View>
-          }
-          refreshing={this.state.refreshing}
-          onRefresh={this.refreshFlatListAfterCreate}
-          showsVerticalScrollIndicator={false}
-        />
-      );
-    }
-  }
-
-  getPhotosFromAzure = async () => {
-    let url = 'https://vingsgallery.azurewebsites.net/api/GetPhotos?code=bAVDlZbfCJtiu5rDbk2DWBpVC95KvwnRqgoSHseEjw/77XXgOdzFdA==';
-    try {
-        let response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({})
-        });
-        let resJson = await response.json();
-        let fromAzure = JSON.parse(JSON.stringify(resJson));
-        this.setState({photos: fromAzure.photos});
-      } catch (error) {
-        console.error(error);
-    }
-  }
-
-  async componentDidMount() {
-    await this.updateUser();
-    await this.getPhotosFromAzure();
+  setPhotos = (photos) => {
+    this.setState({photos: photos});
   }
 
   render() {
@@ -98,8 +52,19 @@ class Home extends Component {
           {/* Net savings section */}
           <View style={[styles.section, {marginTop: 0}]}>
             <Text style={styles.title}>Savings</Text>
-            <View style={this.state.loading ? styles.loadingStyle : {height: 70}}>
-              {this.renderLoading()}
+            <View style={{height: 70}}>
+              <FlatList
+                data={[this.state.user]}
+                keyExtractor={(_item, index) => index.toString()}
+                renderItem={({item}) => 
+                  <View>
+                      <NetSavingsCard item={item}/>
+                  </View>
+                }
+                refreshing={this.state.refreshing}
+                onRefresh={this.refreshFlatList}
+                showsVerticalScrollIndicator={false}
+              />
             </View>
           </View>
           {/* Tip section */}
