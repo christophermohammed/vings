@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import { getTransactions, getUser } from '../../../utilities/utils';
 
 export const saveTransaction = async (transaction) => {
     //get transactions and user from async
@@ -26,24 +27,6 @@ export const safeToSave = (amt) => {
       clearToSave = true;
     }
     return clearToSave;
-}
-
-const getTransactions = async () => {
-  let transactions = await AsyncStorage.getItem("transactions");
-  if(transactions !== null){
-    return JSON.parse(transactions);
-  }else{
-      return [];
-  }
-}
-
-const getUser = async () => {
-  let user = await AsyncStorage.getItem("user");
-  if(user !== null){
-    return JSON.parse(user);
-  }else{
-        return {};
-    }
 }
 
 const saveToAzure = async (transaction, userUID) => {

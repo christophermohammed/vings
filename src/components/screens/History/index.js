@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import TransactionCard from '../../transactionCard';
-import { Colors } from '../../../utilities/utils';
+import { removeFromAzure, updateUserNetSav } from './history-logic';
+import { Colors, getTransactions } from '../../../utilities/utils';
 
 class History extends Component {
   
@@ -14,46 +15,17 @@ class History extends Component {
       deletedRowKey: null,
       refreshing: false,
 
-      user: null,
       transactions: [],
-      marginTop: 0
     }
   }
 
   async componentDidMount() {
-    let user = await AsyncStorage.getItem("user");
-    this.setState({user: JSON.parse(user)});
     await this.refreshFlatList();
   }
 
-  removeFromAzure = async (uid) => {
-    let user = this.state.user;
-    let url = 'https://vingsazure.azurewebsites.net/api/RemoveTransaction/';
-    try {
-        let response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            UserUID: user.uid,
-            transactionUID: uid 
-            }),
-        });
-        let resJson = await response.json();
-      } catch (error) {
-        console.error(error);
-    }
-    this.toggleLoading();
-  }
-
-  updateUserNetSav = async (amt) => {
-    let user = this.state.user;
-    user.netSav -= amt;
-    this.setState({user: user}, () => {
-      AsyncStorage.setItem("user", JSON.stringify(user));
-    });
+  updateTransactions = async () => {
+    let transactions = await getTransactions();
+    this.setState({transactions: transactions});
   }
 
   deleteTransaction = async (index) => {
@@ -71,9 +43,11 @@ class History extends Component {
     //setState
     this.setState({transactions: ts});
     //update user
-    await this.updateUserNetSav(amt);
+    await updateUserNetSav(amt);
     //remove from azure using uid
-    await this.removeFromAzure(uid);
+    await removeFromAzure(uid);
+
+    this.toggleLoading();
   }
 
   renderLoading = () => {
@@ -85,7 +59,7 @@ class History extends Component {
         />
       );
     }else{
-      if(this.state.transactions === null || this.state.transactions.length < 1){
+      if(this.state.transactions === [] || this.state.transactions.length < 1){
         return(
           <View style={styles.empty}>
             <Text style={{fontSize: 18}}>You don't seem to have any recent transactions...</Text>
@@ -118,11 +92,6 @@ class History extends Component {
         );
       }
     }
-  }
-
-  updateTransactions = async () => {
-    let transactions = await AsyncStorage.getItem("transactions");
-    this.setState({transactions: JSON.parse(transactions)});
   }
 
   refreshFlatList = async () => {
