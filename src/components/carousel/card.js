@@ -20,7 +20,7 @@ class CarouselCard extends Component {
             <View>
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
-                        <Image source={{uri: this.props.image.URI}} style={styles.homeImage}/>
+                        <Image source={{uri: this.props.image.URI, cache: 'force-cache'}} style={styles.homeImage}/>
                     </View>
                     <TouchableOpacity style={styles.textContainer} onPress={() => this.handleLink(this.props.image.URL)}>
                         <Image style={{width: 25, height: 25}} source={require('../../../assets/Seal.png')} />
