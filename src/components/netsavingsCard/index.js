@@ -4,7 +4,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import { Colors, to2Dp } from '../../utilities/utils';
 
 const NetSavingsCard = (props) => {
-    const amt = props.item.netSav;
+    const amt = props.netSav;
     const modAmt = (amt < 0) ? (-1 * amt) : amt;
     const amountStyle = [styles.amountText, (amt < 0) ? {color: Colors.red} : {color: Colors.green}];
     return (

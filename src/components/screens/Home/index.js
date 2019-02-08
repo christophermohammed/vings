@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, StatusBar, ScrollView, FlatList, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, StatusBar, ScrollView, AsyncStorage } from 'react-native';
 
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
 import { clearAsync, getUser } from '../../../utilities/utils';
 import { getPhotosFromAzure } from './home-logic';
 import Carousel from '../../carousel';
+import RefreshIcon from '../../refreshIcon';
 
 class Home extends Component {
   
@@ -13,19 +14,13 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      user: {
-        netSav: 0
-      },
+      netSav: 0,
       photos: [],
-
-      enableScrollViewScroll: true,
-      refreshing: false,
-      loading: false,
     }
   }
 
   async componentDidMount() {
-    await this.refreshFlatList();
+    await this.refresh();
     await getPhotosFromAzure(this.setPhotos);
   }
 
@@ -33,29 +28,22 @@ class Home extends Component {
     await getPhotosFromAzure(this.setPhotos);
   }
 
-  refreshFlatList = async () => {
-    this.setState({refreshing: true});
+  refresh = async () => {
     let user = await getUser();
     if(user !== null){
-      this.setState({user: user});
+      this.setState({netSav: user.netSav});
     }
-    this.setState({refreshing: false})
   }
 
   setPhotos = (photos) => {
     this.setState({photos: photos});
   }
 
-  onEnableScroll = (value) => {
-    this.setState({enableScrollViewScroll: value});
-  };
-
   render() {
     return (
       <View>
         <ScrollView 
           showsVerticalScrollIndicator={false}
-          scrollEnabled={this.state.enableScrollViewScroll}
         >
           <View>
             <StatusBar
@@ -64,47 +52,28 @@ class Home extends Component {
             />
             {/* Net savings section */}
             <View style={[styles.section, {marginTop: 0}]}>
-              <Text style={styles.title}>Savings</Text>
-              <View style={{height: 70}}>
-                <FlatList
-                  data={[this.state.user]}
-                  keyExtractor={(_item, index) => index.toString()}
-                  renderItem={({item}) => 
-                    <View>
-                        <NetSavingsCard item={item}/>
-                    </View>
-                  }
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.refreshFlatList}
-                  showsVerticalScrollIndicator={false}
-                  onTouchStart={() => {
-                    this.onEnableScroll(false);
-                  }}
-                  onMomentumScrollEnd={() => {
-                    this.onEnableScroll(true);
-                  }}
-                />
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={styles.title}>Savings</Text>
+                <View style={{justifyContent: 'center'}}>
+                  <RefreshIcon refresh={this.refresh}/>
+                </View>
               </View>
+              <NetSavingsCard netSav={this.state.netSav}/>
             </View>
-            <TouchableOpacity 
-              onPress={() => this.onEnableScroll(true)}
-              activeOpacity={1}
-            >
-              {/* Tip section */}
-              <View style={styles.section}>
-                <Text style={styles.title}>Tip of the day</Text>
-                <Tip />
-              </View>
-              {/* Gallery section */}
-              <View style={styles.section}>
-                <Text style={styles.title}>Gallery</Text>
-                <Carousel photos={this.state.photos}/>
-              </View>
-              {/*<Button 
-                title="Clear"
-                onPress={clearAsync}
-              />*/}
-            </TouchableOpacity>
+            {/* Tip section */}
+            <View style={styles.section}>
+              <Text style={styles.title}>Tip of the day</Text>
+              <Tip />
+            </View>
+            {/* Gallery section */}
+            <View style={styles.section}>
+              <Text style={styles.title}>Gallery</Text>
+              <Carousel photos={this.state.photos}/>
+            </View>
+            {/*<Button 
+              title="Clear"
+              onPress={clearAsync}
+            />*/}
           </View>
         </ScrollView>
       </View>
@@ -121,7 +90,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 0,
     padding: 10,
-    
   },
   loadingStyle: {
     alignItems: 'center',
