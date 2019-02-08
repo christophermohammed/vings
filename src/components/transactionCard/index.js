@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Swipeout from 'react-native-swipeout';
 
-import { Colors } from '../../utilities/utils';
+import { Colors, SCREEN_WIDTH } from '../../utilities/utils';
 
 class TransactionCard extends React.Component {
     constructor(props){
@@ -38,13 +38,28 @@ class TransactionCard extends React.Component {
         const amt = this.props.item.amount;
         return(
             <Swipeout {...swipeSettings}>
-                <View style={[styles.container, styles.vCommon]}>
-                    <View style={styles.vCommon}>
+                <View style={[
+                    styles.container, 
+                    styles.vCommon,
+                    {
+                        borderWidth: 3,
+                        borderRightColor:   'white',
+                        borderLeftColor:    (this.props.index % 2 === 0) ? Colors.main : 'white',
+                        borderTopColor:     'white',
+                        borderBottomColor:  'white',
+                    }
+                ]}>
+                    <View style={[
+                        styles.vCommon 
+                    ]}>
                         <Text style={styles.descriptionText}>{this.props.item.description}</Text>
                         <Text style={styles.descriptionText}>{this.props.item.location}</Text>
                         <Text style={styles.descriptionText}>{this.props.item.date}</Text>
                     </View>
-                    <View style={[styles.amount, styles.vCommon]}>
+                    <View style={[
+                        styles.amount, 
+                        styles.vCommon,
+                    ]}>
                         <Text style={(amt < 0) ? [styles.amountText, {color: Colors.red}] : [styles.amountText, {color: Colors.green}]}>${Math.round(amt * 100) / 100}</Text>
                     </View>
                 </View>
@@ -57,7 +72,7 @@ const styles = StyleSheet.create({
     vCommon: {
         flex: 1,
         padding: 10,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     descriptionText: {
         fontSize: 18
@@ -67,11 +82,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'row',
-        borderWidth: 2,
-        borderRightColor:   'white',
-        borderLeftColor:    'white',
-        borderTopColor:     Colors.main,
-        borderBottomColor:  'white',
     },
     amount: {
         alignItems: 'center'

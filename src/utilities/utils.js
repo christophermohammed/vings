@@ -3,7 +3,8 @@ import { Dimensions, AsyncStorage } from 'react-native';
 export const Colors = {
     main: '#4a69bd',
     red: '#eb4d4b',
-    green: '#6ab04c'
+    green: '#6ab04c',
+    secondary: '#1e3799'
 }
 
 export const SCREEN_WIDTH = Dimensions.get('window').width;

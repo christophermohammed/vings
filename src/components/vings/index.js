@@ -43,7 +43,7 @@ const VingsNav = createMaterialBottomTabNavigator({
   },
   initialRouteName: 'Home',
   order: ['History','Home', 'Add'],
-  activeTintColor: '#1e3799',
+  activeTintColor: Colors.secondary,
   inactiveTintColor: Colors.main,
   barStyle: { backgroundColor: 'white' },
   shifting: true
