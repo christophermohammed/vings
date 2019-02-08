@@ -19,14 +19,28 @@ export const saveTransaction = async (transaction) => {
     await AsyncStorage.setItem("user", JSON.stringify(user));
 }
 
-export const safeToSave = (amt) => {
-    let clearToSave;
-    if(isNaN(amt) || amt < 0){
-      clearToSave = false;
-    }else{
-      clearToSave = true;
-    }
-    return clearToSave;
+export const amtSafeToSave = (amt) => {
+  if(isNaN(amt) || amt < 0){
+    return false;
+  }else{
+    return true;
+  }
+}
+
+export const desSafeToSave = (des) => {
+  if(des === ""){
+    return false;
+  }else{
+    return true;
+  }
+}
+
+export const locSafeToSave = (loc, type) => {
+  if(loc === "" && type === "Cost"){
+    return false;
+  }else{
+    return true;
+  }
 }
 
 const saveToAzure = async (transaction, userUID) => {

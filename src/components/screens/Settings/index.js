@@ -33,15 +33,19 @@ export default class Settings extends Component {
 
   save = async () => {
     this.toggleLoading();
-    let user = {
-      age: this.state.age,
-      gender: this.state.selectedItem,
-      netSav: 0.0,
-      uid: ""
+    if(this.state.age < 10 || this.state.age > 100){
+      alert("Please enter a valid age.");
+    }else{
+      let user = {
+        age: this.state.age,
+        gender: this.state.selectedItem,
+        netSav: 0.0,
+        uid: ""
+      }
+      await saveUser(user);
+      this.props.navigation.navigate("Vings");
     }
-    await saveUser(user);
     this.toggleLoading();
-    this.props.navigation.navigate("Vings");
   }
 
   renderLoading = () => {

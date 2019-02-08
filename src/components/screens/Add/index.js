@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { ActivityIndicator, TextInput, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
 
 import { SCREEN_WIDTH, Colors, to2Dp } from '../../../utilities/utils';
-import { safeToSave, saveTransaction } from './add-logic';
+import { amtSafeToSave, desSafeToSave, locSafeToSave, saveTransaction } from './add-logic';
 
 const date = new Date().toDateString();
 
@@ -40,22 +40,31 @@ class AddTransaction extends Component {
     //alter UI on save
     this.toggleLoading();
     this.clearTextInputs();
-    let amt = to2Dp(parseFloat(this.state.amount));
-    if(safeToSave(amt)){
-      if(this.props.type === "Cost"){
-        amt *= -1;
+    let { amount, description, location } = this.state;
+    let amt = to2Dp(parseFloat(amount));
+    if(amtSafeToSave(amt)){
+      if(desSafeToSave(description)){
+        if (locSafeToSave(location, this.props.type)) {
+          if(this.props.type === "Cost"){
+            amt *= -1;
+          }
+          let transaction = {
+            description: description,
+            location: location,
+            amount: amt.toString(),
+            date: date,
+            uid: ""
+          }
+          await saveTransaction(transaction);
+          this.props.goHome();
+        } else {
+          alert("Please enter a valid location.");
+        }
+      }else{
+        alert("Please enter a valid description.");
       }
-      let transaction = {
-        description: this.state.description,
-        location: this.state.location,
-        amount: amt.toString(),
-        date: date,
-        uid: ""
-      }
-      await saveTransaction(transaction);
-      this.props.goHome();
     }else{
-      alert("Invalid amount entered. Try again.");
+      alert("Please enter a valid amount.");
     }
     this.toggleLoading();
   }
