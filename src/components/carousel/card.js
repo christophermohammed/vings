@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
-import { SCREEN_HEIGHT, SCREEN_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH } from '../../utilities/utils';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, Colors } from '../../utilities/utils';
 
 class CarouselCard extends Component {
     handleLink = (url) => {
@@ -19,8 +19,14 @@ class CarouselCard extends Component {
         return (
             <View>
                 <View style={styles.container}>
+                    <View style={{position: "absolute"}}>
+                        <ActivityIndicator
+                          size="large"
+                          color={Colors.main}
+                        />
+                    </View>
                     <View style={styles.imageContainer}>
-                        <Image source={{uri: this.props.image.URI, cache: 'force-cache'}} style={styles.homeImage}/>
+                        <Image source={{uri: this.props.image.URI, cache: 'force-cache'}} style={styles.homeImage}/>                 
                     </View>
                     <TouchableOpacity style={styles.textContainer} onPress={() => this.handleLink(this.props.image.URL)}>
                         <Image style={{width: 25, height: 25}} source={require('../../../assets/Seal.png')} />
@@ -51,7 +57,7 @@ const styles = StyleSheet.create({
     },  
     homeImage: {
         flex: 1,
-        borderRadius: 10
+        borderRadius: 10,
     },
 });
 
