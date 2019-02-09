@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
         width: 80
     },
     textContainer: {
-        padding: 5
+        padding: 2.5
     },
     text: {
-        fontSize: 20
+        fontSize: 15
     }
   });
 

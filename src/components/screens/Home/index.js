@@ -27,6 +27,10 @@ class Home extends Component {
     setTip();
   }
 
+  async componentDidUpdate() {
+    await this.getPhotos();
+  }
+
   refresh = async () => {
     let user = await getUser();
     if(user !== null){
