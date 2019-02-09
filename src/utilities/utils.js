@@ -29,7 +29,7 @@ export const getTransactions = async () => {
   if(transactions !== null){
     return JSON.parse(transactions);
   }else{
-      return [];
+    return [];
   }
 }
 
@@ -47,12 +47,25 @@ export const getDate = async () => {
   if(date !== null){
     return date;
   }else{
-    var d = new Date();
-    d.setDate(d.getDate() - 1);
-    return d.toString();
+    return "";
   }
 }
 
 export const setDate = async (date) => {
   await AsyncStorage.setItem("date", date);
+}
+
+export const getPhotosFromAsync = async (setPhotos) => {
+  let photos = await AsyncStorage.getItem("photos");
+  let ps;
+  if(photos !== null){
+    ps = photos;
+  }else{
+    ps = [];
+  }
+  setPhotos(ps);
+}
+
+export const setPhotosToAsync = async (photos) => {
+  await AsyncStorage.setItem("photos", photos);
 }

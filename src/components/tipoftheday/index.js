@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 import { Colors } from '../../utilities/utils';
-import { tips } from '../../utilities/data';
+import { tips } from '../../utilities/tips';
 
 const Tip = (props) => {
     const { index } = props;
@@ -25,7 +25,7 @@ const Tip = (props) => {
 
 const styles = StyleSheet.create({
     tipContainer: {
-        backgroundColor: Colors.soft,
+        //backgroundColor: Colors.soft,
         borderRadius: 7.5
     },
     section: {

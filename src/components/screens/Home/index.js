@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, Button, StatusBar, ScrollView, AsyncStorage } from 'react-native';
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
-import { clearAsync, getUser } from '../../../utilities/utils';
+import { clearAsync, getUser, getTransactions, setDate, getDate, getPhotosFromAsync, setPhotosToAsync } from '../../../utilities/utils';
 import { getPhotosFromAzure } from './home-logic';
 import Carousel from '../../carousel';
 import RefreshIcon from '../../refreshIcon';
@@ -23,18 +23,26 @@ class Home extends Component {
 
   async componentDidMount() {
     await this.refresh();
-    await getPhotosFromAzure(this.setPhotos);
+    await this.getPhotos();
     setTip();
-  }
-
-  async componentDidUpdate(){
-    await getPhotosFromAzure(this.setPhotos);
   }
 
   refresh = async () => {
     let user = await getUser();
     if(user !== null){
       this.setState({netSav: user.netSav});
+    }
+  }
+
+  getPhotos = async() => {
+    let oldDate = await getDate();
+    let date = Date.toString();
+    if(oldDate !== date){
+      await getPhotosFromAzure(this.setPhotos);
+      await setPhotosToAsync(photos);
+      await setDate(date);
+    }else{
+      await getPhotosFromAsync(this.setPhotos);
     }
   }
 
@@ -107,7 +115,7 @@ const styles = StyleSheet.create({
   },
   section: {
     padding: 10,
-    marginTop: 30
+    marginTop: 20
   }
 });
 
