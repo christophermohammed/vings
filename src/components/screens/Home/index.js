@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Button, StatusBar, ScrollView, AsyncStorage } from 'react-native';
-
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
 import { clearAsync, getUser } from '../../../utilities/utils';
 import { getPhotosFromAzure } from './home-logic';
 import Carousel from '../../carousel';
 import RefreshIcon from '../../refreshIcon';
+
 
 class Home extends Component {
   
@@ -16,12 +16,15 @@ class Home extends Component {
     this.state = {
       netSav: 0,
       photos: [],
+
+      index: Math.floor(Math.random() * 99),
     }
   }
 
   async componentDidMount() {
     await this.refresh();
     await getPhotosFromAzure(this.setPhotos);
+    setTip();
   }
 
   async componentDidUpdate(){
@@ -37,6 +40,10 @@ class Home extends Component {
 
   setPhotos = (photos) => {
     this.setState({photos: photos});
+  }
+
+  setTip = () => {
+    this.setState({index: Math.floor(Math.random() * 99)});  
   }
 
   render() {
@@ -62,18 +69,18 @@ class Home extends Component {
             </View>
             {/* Tip section */}
             <View style={styles.section}>
-              <Text style={styles.title}>Tip of the day</Text>
-              <Tip />
+              <Text style={styles.title}>Tips</Text>
+              <Tip index={this.state.index}/>
             </View>
             {/* Gallery section */}
             <View style={styles.section}>
               <Text style={styles.title}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
-            {/*<Button 
+            <Button 
               title="Clear"
               onPress={clearAsync}
-            />*/}
+            />
           </View>
         </ScrollView>
       </View>

@@ -1,30 +1,59 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
-class Tip extends Component {
-    render() {
-        return (
-            <View style={styles.tipContainer}>
-                <View style={[styles.section, {alignItems: 'flex-start', marginLeft: 10}]}>
-                    <Text>Title</Text>
-                </View>
-                <View style={[styles.section, {alignItems: 'center'}]}>
-                    <Text>Body</Text>
-                </View>
-                <View style={[styles.section, {alignItems: 'flex-end', marginRight: 10}]}>
-                    <Text>Footer</Text>
-                </View>
+import { Colors } from '../../utilities/utils';
+import { tips } from '../../utilities/data';
+
+const Tip = (props) => {
+    const { index } = props;
+    const tip = tips[index];
+    return (
+        <View style={styles.tipContainer}>
+            <View style={[styles.section, styles.titleContainer]}>
+                <Text style={styles.title}>{tip.title}</Text>
             </View>
-        );
-    }
+            <View style={[styles.section, styles.bodyContainer]}>
+                <Text style={styles.body}>{tip.body}</Text>
+            </View>
+            <View style={[styles.section, styles.authorContainer]}>
+                <Text style={styles.author}>{(tip.author === undefined) ? "" : tip.author.name }</Text>
+                <Text style={styles.author}>{(tip.author === undefined) ? "" : `, ${tip.author.year}` }</Text>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
     tipContainer: {
-
+        backgroundColor: Colors.soft,
+        borderRadius: 7.5
     },
     section: {
         paddingTop: 5,
+    },
+    bodyContainer: {
+        alignItems: 'flex-start', 
+        marginLeft: 10, 
+        marginRight: 10
+    },
+    titleContainer: {
+        alignItems: 'flex-start', 
+        marginLeft: 10
+    },
+    authorContainer: {
+        justifyContent: 'flex-end', 
+        flexDirection: 'row',
+        marginRight: 10, 
+    },
+    title: {
+        fontWeight: "800",
+        fontSize: 15
+    },
+    body: {
+        fontWeight: "400",
+    },
+    author: {
+        fontWeight: "600"
     }
 })
 
