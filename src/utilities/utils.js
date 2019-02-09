@@ -38,8 +38,12 @@ export const getUser = async () => {
   if(user !== null){
     return JSON.parse(user);
   }else{
-      return {};
-    }
+    return {};
+  }
+}
+
+export const setUser = async (user) => {
+  await AsyncStorage.setItem("user", JSON.stringify(user));
 }
 
 export const getDate = async () => {

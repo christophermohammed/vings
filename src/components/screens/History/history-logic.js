@@ -1,4 +1,4 @@
-import { getUser } from "../../../utilities/utils";
+import { getUser, setUser } from "../../../utilities/utils";
 
 export const removeFromAzure = async (uid) => {
   let user = await getUser();
@@ -17,12 +17,12 @@ export const removeFromAzure = async (uid) => {
       });
       let resJson = await response.json();
     } catch (error) {
-      console.error(error);
+    console.error(error);
   }
 }
 
 export const updateUserNetSav = async (amt) => {
   let user = await getUser();
   user.netSav -= amt;
-  await AsyncStorage.setItem("user", JSON.stringify(user));
+  await setUser(user);
 }
