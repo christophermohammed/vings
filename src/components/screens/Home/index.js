@@ -70,7 +70,7 @@ class Home extends Component {
               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.title}>Savings</Text>
                 <View style={{justifyContent: 'center'}}>
-                  <RefreshIcon refresh={this.refresh}/>
+                  <RefreshIcon refresh={this.refresh} size={20}/>
                 </View>
               </View>
               <NetSavingsCard netSav={this.state.netSav}/>

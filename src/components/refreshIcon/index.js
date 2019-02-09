@@ -7,7 +7,7 @@ const RefreshIcon = (props) => {
     return (
         <View>
             <TouchableOpacity onPress={props.refresh}>
-                <Icon name="ios-refresh" color={Colors.main} size={20} />
+                <Icon name="ios-refresh" color={Colors.main} size={props.size} />
             </TouchableOpacity>
         </View>
     );

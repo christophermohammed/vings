@@ -4,6 +4,7 @@ import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicat
 import TransactionCard from '../../transactionCard';
 import { removeFromAzure, updateUserNetSav } from './history-logic';
 import { Colors, getTransactions } from '../../../utilities/utils';
+import RefreshIcon from '../../refreshIcon';
 
 class History extends Component {
   
@@ -75,12 +76,8 @@ class History extends Component {
       if(this.state.transactions === [] || this.state.transactions.length < 1){
         return(
           <View style={styles.empty}>
-            <Text style={{fontSize: 18}}>You don't seem to have any recent transactions...</Text>
-            <Button 
-              title="Refresh"
-              onPress={this.refreshFlatList}
-              color={Colors.main}
-            />
+            <Text style={{fontSize: 15}}>You don't seem to have any recent transactions...</Text>
+            <RefreshIcon refresh={this.refreshFlatList} size={30}/>
           </View>
         );
       }else{
