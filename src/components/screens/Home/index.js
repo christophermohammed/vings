@@ -85,8 +85,8 @@ class Home extends Component {
               <Tip index={this.state.index}/>
             </View>
             {/* Gallery section */}
-            <View style={styles.section}>
-              <Text style={styles.title}>Gallery</Text>
+            <View style={styles.gallery}>
+              <Text style={[styles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
             {/*<Button 
@@ -119,6 +119,11 @@ const styles = StyleSheet.create({
   },
   section: {
     padding: 10,
+    marginTop: 20
+  },
+  gallery: {
+    paddingTop: 10,
+    paddingBottom: 10,
     marginTop: 20
   }
 });

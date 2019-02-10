@@ -5,7 +5,7 @@ class Offline extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image source={require('C:/Users/Chris/Documents/Tilted/Vings/assets/cellularOffline.png')} style={styles.image}/>
+                <Image source={require('../../../../assets/cellularOffline.png')} style={styles.image}/>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>Seems like you're offline...</Text>
                 </View>
