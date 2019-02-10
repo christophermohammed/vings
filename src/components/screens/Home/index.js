@@ -89,10 +89,10 @@ class Home extends Component {
               <Text style={[styles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
-            <Button 
+            {/*<Button 
               title="Clear"
               onPress={clearAsync}
-            />
+            />*/}
           </View>
         </ScrollView>
       </View>
