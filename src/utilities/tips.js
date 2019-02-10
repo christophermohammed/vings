@@ -24,7 +24,7 @@ const authors = [
     year: "2015"
   },
   J = {
-    name: "James",
+    name: "James Doe",
     year: "2014"
   },
 ]

@@ -9,6 +9,7 @@ import {
 import Settings from './src/components/screens/Settings';
 import Vings from './src/components/vings';
 import Offline from './src/components/screens/Offline';
+import Blank from './src/components/screens/blank';
 
 const SettingsNav = createStackNavigator({
   Settings: { 
@@ -20,12 +21,11 @@ const SettingsNav = createStackNavigator({
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Settings: { 
-    screen: SettingsNav
-  },
-  Vings: { screen: Vings }
+  Settings: { screen: SettingsNav },
+  Vings: { screen: Vings },
+  Blank: { screen: Blank }
 },{
-  initialRouteName: 'Vings'
+  initialRouteName: 'Blank'
 });
 
 let AppContainer = createAppContainer(AppSwitchNavigator);

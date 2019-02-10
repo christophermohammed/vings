@@ -55,23 +55,4 @@ const StackNav = createStackNavigator({
 
 const VingsContainer = createAppContainer(StackNav);
 
-class Vings extends React.Component {
-  setUp = async () => {
-    let user = await AsyncStorage.getItem("user");
-    if(user === null){
-      this.props.navigation.navigate("Settings");
-    }
-  }
-
-  async componentDidMount() {
-    await this.setUp();
-  }
-
-  render() {
-    return (
-      <VingsContainer />
-    );
-  }
-}
-
-export default Vings;
+export default VingsContainer;
