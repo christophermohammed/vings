@@ -19,7 +19,7 @@ const Tip = (props) => {
                 <Text style={styles.author}>{(tip.author === undefined) ? "" : tip.author.name }</Text>
                 <Text style={styles.author}>{(tip.author === undefined) ? "" : `, ${tip.author.year}` }</Text>
             </View>
-            <View>
+            <View style={{paddingTop: 10}}>
                 <TipIcons category={tip.category}/>
             </View>
         </View>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, Colors } from '../../utilities/utils';
-import { Icon } from 'react-native-vector-icons/Ionicons';
+
+import PlatformLogo from '../platformLogo';
 
 class CarouselCard extends Component {
     handleLink = (url) => {
@@ -14,25 +15,6 @@ class CarouselCard extends Component {
               }
             })
         .catch((err) => console.error('An error occurred', err));
-    }
-
-    getIcon = (platform) => {
-        let res;
-        switch(platform) {
-            case "twitter":
-                res = <Icon name="logo-twitter" color="black" size={25}/>;
-            break;
-            case "facebook":
-                res = <Icon name="logo-facebook" color="black" size={25}/>;
-            break;
-            case "instagram":
-                res = <Icon name="logo-instagram" color="black" size={25}/>;
-            break;
-            case "vsco":
-                res = <Image style={{width: 25, height: 25}} source={require('../../../assets/Seal.png')} />
-            break;
-        }
-        return res;
     }
 
     render() {
@@ -49,7 +31,7 @@ class CarouselCard extends Component {
                         <Image source={{uri: this.props.image.URI, cache: 'force-cache'}} style={styles.homeImage}/>                 
                     </View>
                     <TouchableOpacity style={styles.textContainer} onPress={() => this.handleLink(this.props.image.URL)}>
-                        {this.getIcon}
+                        <PlatformLogo platform={this.props.image.Platform}/>
                         <Text style={{fontSize: 18}}>   {this.props.image.Username}</Text>
                     </TouchableOpacity>
                 </View>

@@ -22,9 +22,11 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    await this.refresh();
-    await this.getPhotos();
-    setTip();
+    if(this.state.netSav === 0 || this.state.photos.length < 1){
+      await this.refresh();
+      await this.getPhotos();
+      setTip();
+    }
   }
 
   async componentDidUpdate() {

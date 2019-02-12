@@ -8,31 +8,31 @@ const TipIcons = (props) => {
         let res = [];
         switch(category){
             case categories.general:
-                res = ["cash", "wallet"];
+                res = ["ios-cash", "ios-wallet"];
             break;
             case categories.food:
-                res = ["pizza", "beer"];
+                res = ["ios-pizza", "ios-beer"];
             break;
             case categories.groceries:
-                res = ["clipboard", "pricetag"];
+                res = ["ios-clipboard", "ios-pricetag"];
             break;
             case categories.health:
-                res = ["heart", "medkit"];
+                res = ["ios-heart", "ios-medkit"];
             break;
             case categories.finance:
-                res = ["card", "calculator"];
+                res = ["ios-card", "ios-calculator"];
             break;
             case categories.shopping:
-                res = ["cart", "pricetags"];
+                res = ["ios-cart", "ios-pricetags"];
             break;
             case categories.transport:
-                res = ["car", "bicycle"];
+                res = ["ios-car", "ios-bicycle"];
             break;
             case categories.travel:
-                res = ["airplane", "globe"];
+                res = ["ios-airplane", "ios-globe"];
             break;
             case categories.utilities:
-                res = ["hammer", "build"];
+                res = ["ios-hammer", "ios-build"];
             break;
         }
         return res;
