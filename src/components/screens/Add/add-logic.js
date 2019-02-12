@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { getTransactions, getUser } from '../../../utilities/utils';
+import { getTransactions, getUser, setUser } from '../../../utilities/utils';
 
 export const saveTransaction = async (transaction) => {
     //get transactions and user from async
@@ -17,7 +17,7 @@ export const saveTransaction = async (transaction) => {
     //update user net savings
     user.netSav += parseFloat(transaction.amount);
 
-    await AsyncStorage.setItem("user", user);
+    await setUser(user);
 }
 
 export const amtSafeToSave = (amt) => {

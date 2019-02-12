@@ -26,7 +26,7 @@ export const clearAsync = async () => {
 
 export const getTransactions = async () => {
   let transactions = await AsyncStorage.getItem("transactions");
-  if(!transactions){
+  if(transactions !== null){
     return JSON.parse(transactions);
   }else{
     return [];
@@ -35,7 +35,7 @@ export const getTransactions = async () => {
 
 export const getUser = async () => {
   let user = await AsyncStorage.getItem("user");
-  if(!user){
+  if(user !== null){
     return JSON.parse(user);
   }else{
     return {};
@@ -49,6 +49,10 @@ export const getDate = async () => {
   }else{
     return "";
   }
+}
+
+export const setUser = async (user) => {
+  await AsyncStorage.setItem("user", JSON.stringify(user));
 }
 
 export const setDate = async (date) => {
