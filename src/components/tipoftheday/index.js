@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
-import { Colors } from '../../utilities/utils';
 import { tips } from '../../utilities/tips';
+import TipIcons from '../tipIcons';
 
 const Tip = (props) => {
     const { index } = props;
@@ -18,6 +18,9 @@ const Tip = (props) => {
             <View style={[styles.section, styles.authorContainer]}>
                 <Text style={styles.author}>{(tip.author === undefined) ? "" : tip.author.name }</Text>
                 <Text style={styles.author}>{(tip.author === undefined) ? "" : `, ${tip.author.year}` }</Text>
+            </View>
+            <View>
+                <TipIcons category={tip.category}/>
             </View>
         </View>
     );

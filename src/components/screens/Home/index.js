@@ -28,7 +28,9 @@ class Home extends Component {
   }
 
   async componentDidUpdate() {
-    await this.getPhotos();
+    if(this.state.photos.length < 1){
+      await this.getPhotos();
+    }
   }
 
   refresh = async () => {
