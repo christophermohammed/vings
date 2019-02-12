@@ -14,6 +14,7 @@ export const getPhotosFromAzure = async (setPhotos) => {
       let resJson = await response.json();
       let fromAzure = JSON.parse(JSON.stringify(resJson));
       setPhotos(fromAzure.photos);
+      return(fromAzure.photos);
     } catch (error) {
       console.error(error);
   }

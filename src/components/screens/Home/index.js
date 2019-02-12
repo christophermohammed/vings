@@ -5,7 +5,7 @@ import Tip from '../../tipoftheday';
 import { clearAsync, getUser, getTransactions, setDate, getDate, getPhotosFromAsync, setPhotosToAsync } from '../../../utilities/utils';
 import { getPhotosFromAzure } from './home-logic';
 import Carousel from '../../carousel';
-import RefreshIcon from '../../refreshIcon';
+import VIcon from '../../VIcon';
 
 
 class Home extends Component {
@@ -42,7 +42,7 @@ class Home extends Component {
     let oldDate = await getDate();
     let date = Date.toString();
     if(oldDate !== date){
-      await getPhotosFromAzure(this.setPhotos);
+      let photos = await getPhotosFromAzure(this.setPhotos);
       await setPhotosToAsync(photos);
       await setDate(date);
     }else{
@@ -74,7 +74,7 @@ class Home extends Component {
               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.title}>Savings</Text>
                 <View style={{justifyContent: 'center'}}>
-                  <RefreshIcon refresh={this.refresh} size={20}/>
+                  <VIcon action={this.refresh} size={20} name="ios-refresh"/>
                 </View>
               </View>
               <NetSavingsCard netSav={this.state.netSav}/>
@@ -89,10 +89,10 @@ class Home extends Component {
               <Text style={[styles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
-            {/*<Button 
+            <Button 
               title="Clear"
               onPress={clearAsync}
-            />*/}
+            />
           </View>
         </ScrollView>
       </View>

@@ -4,7 +4,7 @@ import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicat
 import TransactionCard from '../../transactionCard';
 import { removeFromAzure, updateUserNetSav } from './history-logic';
 import { Colors, getTransactions } from '../../../utilities/utils';
-import RefreshIcon from '../../refreshIcon';
+import VIcon from '../../VIcon';
 
 class History extends Component {
   
@@ -73,11 +73,11 @@ class History extends Component {
         />
       );
     }else{
-      if(this.state.transactions === [] || this.state.transactions.length < 1){
+      if(this.state.transactions === [] || !this.state.transactions.length){
         return(
           <View style={styles.empty}>
             <Text style={{fontSize: 15}}>You don't seem to have any recent transactions...</Text>
-            <RefreshIcon refresh={this.refreshFlatList} size={30}/>
+            <VIcon action={this.refreshFlatList} size={30} name="ios-refresh"/>
           </View>
         );
       }else{

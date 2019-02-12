@@ -1,10 +1,10 @@
 import { AsyncStorage } from 'react-native';
-import { setDate, setUser } from '../../../utilities/utils';
+import { setDate } from '../../../utilities/utils';
 
 export const saveUser = async (user) => {
   let uid = await saveUserToAzure(user);
   user.uid = uid;
-  await setUser(user);
+  await AsyncStorage.setItem("user", user);
   await setDate("");
 }
 

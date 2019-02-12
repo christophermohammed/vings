@@ -42,10 +42,6 @@ export const getUser = async () => {
   }
 }
 
-export const setUser = async (user) => {
-  await AsyncStorage.setItem("user", JSON.stringify(user));
-}
-
 export const getDate = async () => {
   let date = await AsyncStorage.getItem("date");
   if(date !== null){

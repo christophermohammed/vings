@@ -1,4 +1,5 @@
-import { getUser, setUser } from "../../../utilities/utils";
+import { AsyncStorage } from 'react-native';
+import { getUser } from "../../../utilities/utils";
 
 export const removeFromAzure = async (uid) => {
   let user = await getUser();
@@ -24,5 +25,5 @@ export const removeFromAzure = async (uid) => {
 export const updateUserNetSav = async (amt) => {
   let user = await getUser();
   user.netSav -= amt;
-  await setUser(user);
+  await AsyncStorage.setItem("user", user);
 }
