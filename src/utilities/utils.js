@@ -61,15 +61,14 @@ export const setDate = async (date) => {
 
 export const getPhotosFromAsync = async (setPhotos) => {
   let photos = await AsyncStorage.getItem("photos");
-  let ps;
-  if(photos !== null){
-    ps = photos;
+  let ps = JSON.parse(photos);
+  if(ps !== null){
+    setPhotos(ps);
   }else{
-    ps = [];
+    setPhotos([]);
   }
-  setPhotos(ps);
 }
 
 export const setPhotosToAsync = async (photos) => {
-  await AsyncStorage.setItem("photos", photos);
+  await AsyncStorage.setItem("photos", JSON.stringify(photos));
 }
