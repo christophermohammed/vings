@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { getUser } from '../../../utilities/utils';
+import { getUser } from '../../../utilities/async';
 
 class Blank extends Component {
   setUp = async () => {

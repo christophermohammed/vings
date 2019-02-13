@@ -1,5 +1,4 @@
-import { AsyncStorage } from 'react-native';
-import { getUser, setUser } from "../../../utilities/utils";
+import { getUser, setUser } from "../../../utilities/async";
 
 export const removeFromAzure = async (uid) => {
   let user = await getUser();

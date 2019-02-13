@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
-import { getTransactions, getUser, setUser } from '../../../utilities/utils';
+import { getTransactions, getUser, setUser } from '../../../utilities/async';
+import { transactionType } from '../../../utilities/terms';
 
 export const saveTransaction = async (transaction) => {
     //get transactions and user from async
@@ -37,7 +38,7 @@ export const desSafeToSave = (des) => {
 }
 
 export const locSafeToSave = (loc, type) => {
-  if(loc === "" && type === "Cost"){
+  if(loc === "" && type === transactionType.cost){
     return false;
   }else{
     return true;

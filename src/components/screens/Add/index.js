@@ -3,6 +3,7 @@ import { ActivityIndicator, TextInput, StyleSheet, Text, View, StatusBar, Button
 
 import { SCREEN_WIDTH, Colors, to2Dp } from '../../../utilities/utils';
 import { amtSafeToSave, desSafeToSave, locSafeToSave, saveTransaction } from './add-logic';
+import { transactionType, placeholders } from '../../../utilities/terms';
 
 const date = new Date().toDateString();
 
@@ -15,9 +16,6 @@ class AddTransaction extends Component {
       location: "",
       amount: "",
       loading: false,
-
-      dPlaceholder: "\tDescription",
-      lPlaceholder: "\tLocation",
     }
   }   
   
@@ -31,7 +29,7 @@ class AddTransaction extends Component {
     this.setState({amount: ""});
     this.textInput1.clear();
     this.textInput2.clear();
-    if(this.props.type === "Cost"){
+    if(this.props.type === transactionType.cost){
       this.textInput3.clear();
     }
   }
@@ -45,7 +43,7 @@ class AddTransaction extends Component {
     if(amtSafeToSave(amt)){
       if(desSafeToSave(description)){
         if (locSafeToSave(location, this.props.type)) {
-          if(this.props.type === "Cost"){
+          if(this.props.type === transactionType.cost){
             amt *= -1;
           }
           let transaction = {
@@ -81,7 +79,7 @@ class AddTransaction extends Component {
   }
 
   renderType = () => {
-    if(this.props.type === "Cost"){
+    if(this.props.type === transactionType.cost){
       return(
         <View style={styles.container}>
           <View style={styles.space}>
@@ -90,7 +88,7 @@ class AddTransaction extends Component {
               ref={input => { this.textInput1 = input }}
               style={styles.inputStyle}
               onChangeText={(description) => this.setState({description})}
-              placeholder={this.state.dPlaceholder}
+              placeholder={placeholders.description}
               clearTextOnFocus={true}
               value={this.state.description}
             />
@@ -101,7 +99,7 @@ class AddTransaction extends Component {
               ref={input => { this.textInput2 = input }}
               style={styles.inputStyle}
               onChangeText={(location) => this.setState({location})}
-              placeholder={this.state.lPlaceholder}
+              placeholder={placeholders.location}
               clearTextOnFocus={true}
               value={this.state.location}
             />
@@ -118,7 +116,7 @@ class AddTransaction extends Component {
           </View>
         </View>
       );
-    }else if(this.props.type === "Savings"){
+    }else if(this.props.type === transactionType.savings){
       return(
         <View style={styles.container}>
           <View style={styles.space}>
@@ -126,7 +124,7 @@ class AddTransaction extends Component {
             <TextInput
               ref={input => { this.textInput1 = input }}
               style={styles.inputStyle}
-              placeholder={this.state.dPlaceholder}
+              placeholder={placeholders.description}
               onChangeText={(description) => this.setState({description})}
               clearTextOnFocus={true}
               value={this.state.description}

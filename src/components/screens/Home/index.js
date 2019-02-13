@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, StatusBar, ScrollView, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, StatusBar, ScrollView } from 'react-native';
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
-import { clearAsync, getUser, getTransactions, setDate, getDate, getPhotosFromAsync, setPhotosToAsync } from '../../../utilities/utils';
+import { getUser, setDate, getDate, getPhotosFromAsync, setPhotosToAsync } from '../../../utilities/async';
 import { getPhotosFromAzure } from './home-logic';
 import Carousel from '../../carousel';
 import VIcon from '../../VIcon';

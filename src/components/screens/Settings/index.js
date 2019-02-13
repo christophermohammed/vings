@@ -3,6 +3,7 @@ import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, Tex
 
 import { Colors, SCREEN_WIDTH } from '../../../utilities/utils';
 import { saveUser } from './settings-logic';
+import { placeholders } from '../../../utilities/terms';
 
 const genders = ["Male", "Female" , "Non-Binary"];
 
@@ -33,7 +34,8 @@ export default class Settings extends Component {
 
   save = async () => {
     this.toggleLoading();
-    if(this.state.age < 10 || this.state.age > 100){
+    let age = parseInt(this.state.age);
+    if(age < 10 || age > 100 || age === NaN){
       alert("Please enter a valid age.");
     }else{
       let user = {
@@ -63,7 +65,6 @@ export default class Settings extends Component {
     let itemList = this.state.items.map( (s, i) => {
       return <Picker.Item key={i} value={s} label={s} />
     });
-    const agePlaceholder = "\tAge";
     return (
       <View style={styles.container}>
         <StatusBar
@@ -77,8 +78,8 @@ export default class Settings extends Component {
             style={styles.inputStyle}
             onChangeText={(age) => this.setState({age})}
             value={this.state.age}
-            keyboardType="phone-pad"
-            placeholder={agePlaceholder}
+            keyboardType="number-pad"
+            placeholder={placeholders.age}
           />
         </View>
         <View style={styles.space}>

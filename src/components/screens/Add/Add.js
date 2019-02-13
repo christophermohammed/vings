@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigat
 
 import AddTransaction from './index';
 import { Colors } from '../../../utilities/utils';
+import { transactionType } from '../../../utilities/terms';
 
 class AddCost extends Component {
   goHome = () => {
@@ -11,7 +12,7 @@ class AddCost extends Component {
   
   render() {
     return (
-      <AddTransaction goHome={this.goHome} type="Cost" />
+      <AddTransaction goHome={this.goHome} type={transactionType.cost} />
     );
   }
 }
@@ -23,7 +24,7 @@ class AddSaving extends Component {
   
   render() {
     return (
-      <AddTransaction goHome={this.goHome} type="Savings" />
+      <AddTransaction goHome={this.goHome} type={transactionType.savings} />
     );
   }
 }

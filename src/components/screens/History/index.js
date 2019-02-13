@@ -3,7 +3,8 @@ import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicat
 
 import TransactionCard from '../../transactionCard';
 import { removeFromAzure, updateUserNetSav } from './history-logic';
-import { Colors, getTransactions } from '../../../utilities/utils';
+import { Colors } from '../../../utilities/utils';
+import { getTransactions } from '../../../utilities/async';
 import VIcon from '../../VIcon';
 
 class History extends Component {
