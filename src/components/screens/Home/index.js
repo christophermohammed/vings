@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, Button, StatusBar, ScrollView } from 'react-native';
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
-import { getUser, setDate, getDate, getPhotosFromAsync, setPhotosToAsync } from '../../../utilities/async';
+import { clearAsync, getUser, setDate, getDate, getPhotosFromAsync, setPhotosToAsync } from '../../../utilities/async';
 import { getPhotosFromAzure } from './home-logic';
 import Carousel from '../../carousel';
 import VIcon from '../../VIcon';

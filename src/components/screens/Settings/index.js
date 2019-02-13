@@ -13,9 +13,8 @@ export default class Settings extends Component {
     super(props);
     this.state = {
         age: "",
-        gender: "",
         items: [],
-        selectedItem: "Male",
+        gender: "Male",
         loading: false,
     }
   }
@@ -35,12 +34,13 @@ export default class Settings extends Component {
   save = async () => {
     this.toggleLoading();
     let age = parseInt(this.state.age);
-    if(age < 10 || age > 100 || age === NaN){
+    if(age < 10 || age > 100 || age === NaN) {
+      this.clearTextInputs();
       alert("Please enter a valid age.");
     }else{
       let user = {
         age: this.state.age,
-        gender: this.state.selectedItem,
+        gender: this.state.gender,
         netSav: 0.0,
         uid: ""
       }
@@ -61,6 +61,11 @@ export default class Settings extends Component {
     }
   }
 
+  clearTextInputs = () => {
+    this.setState({age: ""});
+    this.textInput1.clear();
+  }
+
   render() {
     let itemList = this.state.items.map( (s, i) => {
       return <Picker.Item key={i} value={s} label={s} />
@@ -75,6 +80,7 @@ export default class Settings extends Component {
         <View style={styles.space}>
           <Text style={styles.question}>How old are you?</Text>
           <TextInput
+            ref={input => { this.textInput1 = input }}
             style={styles.inputStyle}
             onChangeText={(age) => this.setState({age})}
             value={this.state.age}
@@ -86,10 +92,10 @@ export default class Settings extends Component {
           <Text style={styles.question}>What is your gender?</Text>
           <View style={{alignItems: 'center'}}>
             <Picker
-                selectedValue={this.state.selectedItem}
+                selectedValue={this.state.gender}
                 onValueChange={
                     (itemValue) => {
-                        this.setState({selectedItem: itemValue}) 
+                        this.setState({gender: itemValue}) 
                     }
                 }
                 style={styles.VingsPickerStyle}
