@@ -25,7 +25,7 @@ class Home extends Component {
     if(this.state.netSav === 0 || this.state.photos.length < 1){
       await this.refresh();
       await this.getPhotos();
-      setTip();
+      this.setTip();
     }
   }
 
