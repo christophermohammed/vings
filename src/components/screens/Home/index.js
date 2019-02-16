@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, StatusBar, ScrollView } from 'react-nat
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
 import { clearAsync, getUser, getPhotosFromAsync } from '../../../utilities/async';
-import { getPhotosFromAzure } from './home-logic';
+import { getPhotosFromAzure } from '../../../utilities/cloud';
 import Carousel from '../../carousel';
 import VIcon from '../../VIcon';
 
@@ -19,6 +19,13 @@ class Home extends Component {
 
       index: Math.floor(Math.random() * 99),
     }
+  }
+
+  shouldComponentUpdate(){
+    if(this.state.photos && this.state.photos.length < 1){
+      return true;
+    }
+    return false;
   }
 
   async componentDidMount() {
@@ -78,10 +85,10 @@ class Home extends Component {
               <Text style={[styles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
-            {/* <Button 
+            <Button 
               title="Clear"
               onPress={clearAsync}
-            /> */}
+            />
           </View>
         </ScrollView>
       </View>

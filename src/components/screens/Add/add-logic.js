@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import { getTransactions, getUser, setUser } from '../../../utilities/async';
 import { transactionType } from '../../../utilities/terms';
+import { saveTransactionToAzure } from '../../../utilities/cloud';
 
 export const saveTransaction = async (transaction) => {
     //get transactions and user from async
@@ -8,7 +9,7 @@ export const saveTransaction = async (transaction) => {
     let user = await getUser();
     
     // save to azure and get uid
-    let uid = await saveToAzure(transaction, user.uid);
+    let uid = await saveTransactionToAzure(transaction, user.uid);
     transaction.uid = uid;
     
     //add to transactions
@@ -42,32 +43,4 @@ export const locSafeToSave = (loc, type) => {
   }else{
     return true;
   }
-}
-
-const saveToAzure = async (transaction, userUID) => {
-  let url = 'https://vingsazure.azurewebsites.net/api/CreateTransaction/';
-  try {
-    let response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          UserUID: userUID,
-          description: transaction.description,
-          location: transaction.location,
-          amount: transaction.amount,
-          date: transaction.date
-        }),
-    });
-    let responseJson = await response.json();
-    let fromAzure = JSON.stringify(responseJson);
-    let length = fromAzure.length; 
-    let uid = (fromAzure.substring(1,length-1));
-    return(uid);
-  } catch (error) {
-    console.error(error);
-    return("err");
-  }
-}      
+}     
