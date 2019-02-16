@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
-import { tips } from '../../utilities/tips';
+import { tips } from '../../data/tips';
 import TipIcons from '../tipIcons';
 
 const Tip = (props) => {

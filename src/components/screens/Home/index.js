@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, Button, StatusBar, ScrollView } from 'react-native';
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
-import { clearAsync, getUser, setDate, getDate, getPhotosFromAsync, setPhotosToAsync } from '../../../utilities/async';
-import { getPhotosFromAzure } from './home-logic';
+import { clearAsync, getUser, getPhotosFromAsync } from '../../../utilities/async';
+import { getPhotosFromAzure } from '../../../utilities/cloud';
 import Carousel from '../../carousel';
 import VIcon from '../../VIcon';
 
@@ -21,36 +21,28 @@ class Home extends Component {
     }
   }
 
-  async componentDidMount() {
-    if(this.state.netSav === 0 || this.state.photos.length < 1){
-      await this.refresh();
-      await this.getPhotos();
-      this.setTip();
+  shouldComponentUpdate(){
+    if(this.state.photos && this.state.photos.length < 1){
+      return true;
     }
+    return false;
+  }
+
+  async componentDidMount() {
+    await this.refresh();
+    await getPhotosFromAzure();
+    await getPhotosFromAsync(this.setPhotos);
+    this.setTip();
   }
 
   async componentDidUpdate() {
-    if(this.state.photos.length < 1){
-      await this.getPhotos();
-    }
+    await getPhotosFromAsync(this.setPhotos);
   }
 
   refresh = async () => {
     let user = await getUser();
     if(user !== null){
       this.setState({netSav: user.netSav});
-    }
-  }
-
-  getPhotos = async() => {
-    let oldDate = await getDate();
-    let date = Date.toString();
-    if(oldDate !== date){
-      let photos = await getPhotosFromAzure(this.setPhotos);
-      await setPhotosToAsync(photos);
-      await setDate(date);
-    }else{
-      await getPhotosFromAsync(this.setPhotos);
     }
   }
 
@@ -93,10 +85,10 @@ class Home extends Component {
               <Text style={[styles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
-            {/* <Button 
+            <Button 
               title="Clear"
               onPress={clearAsync}
-            /> */}
+            />
           </View>
         </ScrollView>
       </View>

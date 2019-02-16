@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
 
 import TransactionCard from '../../transactionCard';
-import { removeFromAzure, updateUserNetSav } from './history-logic';
+import { removeTransactionFromAzure } from '../../../utilities/cloud';
+import { updateUserNetSav } from './history-logic';
 import { Colors } from '../../../utilities/utils';
 import { getTransactions } from '../../../utilities/async';
 import VIcon from '../../VIcon';
@@ -33,16 +34,16 @@ class History extends Component {
     let uid = ts[index].uid;
     //get Amount
     let amt = parseFloat(ts[index].amount);
+    //update user
+    await updateUserNetSav(amt);
+    //remove from azure using uid
+    await removeTransactionFromAzure(uid);
     //splice array; remove transaction at index
     ts.splice(index, 1);
     //set ts
     await AsyncStorage.setItem("transactions", JSON.stringify(ts));
     //setState
     this.setState({transactions: ts});
-    //update user
-    await updateUserNetSav(amt);
-    //remove from azure using uid
-    await removeFromAzure(uid);
 
     this.toggleLoading();
   }
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10
+    marginTop: 40
   },
   empty: {
     flex: 0,
