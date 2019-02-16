@@ -17,7 +17,6 @@ export const saveTransaction = async (transaction) => {
     
     //update user net savings
     user.netSav += parseFloat(transaction.amount);
-
     await setUser(user);
 }
 

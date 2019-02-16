@@ -33,16 +33,16 @@ class History extends Component {
     let uid = ts[index].uid;
     //get Amount
     let amt = parseFloat(ts[index].amount);
+    //update user
+    await updateUserNetSav(amt);
+    //remove from azure using uid
+    await removeFromAzure(uid);
     //splice array; remove transaction at index
     ts.splice(index, 1);
     //set ts
     await AsyncStorage.setItem("transactions", JSON.stringify(ts));
     //setState
     this.setState({transactions: ts});
-    //update user
-    await updateUserNetSav(amt);
-    //remove from azure using uid
-    await removeFromAzure(uid);
 
     this.toggleLoading();
   }

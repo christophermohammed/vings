@@ -10,6 +10,8 @@ import Settings from './src/components/screens/Settings';
 import Vings from './src/components/vings';
 import Offline from './src/components/screens/Offline';
 import Blank from './src/components/screens/blank';
+import { setPhotosToAsync } from './src/utilities/async';
+import { photos } from './src/data/photos';
 
 const SettingsNav = createStackNavigator({
   Settings: { 
@@ -39,7 +41,8 @@ class App extends Component {
     }
   }
   
-  componentDidMount() {
+  async componentDidMount() {
+    await setPhotosToAsync(photos);
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
   }
 

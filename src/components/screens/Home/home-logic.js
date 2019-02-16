@@ -1,4 +1,4 @@
-
+import { setPhotosToAsync } from '../../../utilities/async';
 
 export const getPhotosFromAzure = async (setPhotos) => {
   let url = 'https://vingsgallery.azurewebsites.net/api/GetPhotos?code=bAVDlZbfCJtiu5rDbk2DWBpVC95KvwnRqgoSHseEjw/77XXgOdzFdA==';
@@ -13,8 +13,7 @@ export const getPhotosFromAzure = async (setPhotos) => {
       });
       let resJson = await response.json();
       let fromAzure = JSON.parse(JSON.stringify(resJson));
-      setPhotos(fromAzure.photos);
-      return(fromAzure.photos);
+      await setPhotosToAsync(fromAzure.photos);
     } catch (error) {
       console.error(error);
   }

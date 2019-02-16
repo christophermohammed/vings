@@ -1,5 +1,23 @@
 import { AsyncStorage } from 'react-native';
 
+export const makeCancelable = (promise) => {
+  let hasCanceled_ = false;
+
+  const wrappedPromise = new Promise((resolve, reject) => {
+    promise.then(
+      val => hasCanceled_ ? reject({isCanceled: true}) : resolve(val),
+      error => hasCanceled_ ? reject({isCanceled: true}) : reject(error)
+    );
+  });
+
+  return {
+    promise: wrappedPromise,
+    cancel() {
+      hasCanceled_ = true;
+    },
+  };
+};
+
 export const clearAsync = async () => {
   await AsyncStorage.clear();
 }
@@ -22,21 +40,8 @@ export const getUser = async () => {
   }
 }
 
-export const getDate = async () => {
-  let date = await AsyncStorage.getItem("date");
-  if(date !== null){
-    return date;
-  }else{
-    return "";
-  }
-}
-
 export const setUser = async (user) => {
   await AsyncStorage.setItem("user", JSON.stringify(user));
-}
-
-export const setDate = async (date) => {
-  await AsyncStorage.setItem("date", date);
 }
 
 export const getPhotosFromAsync = async (setPhotos) => {
