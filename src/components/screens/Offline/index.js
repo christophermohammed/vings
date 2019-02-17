@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, StatusBar } from 'react-native';
 
 class Offline extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image source={require('../../../../assets/cellularOffline.png')} style={styles.image}/>
+                <StatusBar
+                    backgroundColor="white"
+                    barStyle="dark-content"
+                />
+                <View>
+                    <Image source={require('../../../../assets/wifiOffline.png')} style={styles.image}/>
+                </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>Seems like you're offline...</Text>
                 </View>
@@ -18,21 +24,21 @@ class Offline extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    image: {
-        height: 80,
-        width: 80
-    },
-    textContainer: {
-        padding: 2.5
-    },
-    text: {
-        fontSize: 15
-    }
-  });
+  container: {
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40
+  },
+  image: {
+    flex: 0
+  },
+  textContainer: {
+    padding: 5
+  },
+  text: {
+    fontSize: 15
+  }
+});
 
 export default Offline;

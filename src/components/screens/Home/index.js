@@ -30,14 +30,25 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    await this.refresh();
-    await getPhotosFromAzure();
-    await getPhotosFromAsync(this.setPhotos);
-    this.setTip();
+    this.mounted = true;
+    if(this.mounted){
+      await this.refresh();
+      this.setTip();
+      await getPhotosFromAzure();
+      let photos = await getPhotosFromAsync();
+      this.setPhotos(photos);
+    }
   }
 
   async componentDidUpdate() {
-    await getPhotosFromAsync(this.setPhotos);
+    if(this.mounted){
+      let photos = await getPhotosFromAsync();
+      this.setPhotos(photos);
+    }
+  }
+
+  componentWillUnmount(){
+    this.mounted = false;
   }
 
   refresh = async () => {
@@ -86,10 +97,10 @@ class Home extends Component {
               <Text style={[styles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
-            <Button 
+            {/* <Button 
               title="Clear"
               onPress={clearAsync}
-            />
+            /> */}
           </View>
         </ScrollView>
       </View>

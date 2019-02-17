@@ -44,13 +44,13 @@ export const setUser = async (user) => {
   await AsyncStorage.setItem("user", JSON.stringify(user));
 }
 
-export const getPhotosFromAsync = async (setPhotos) => {
+export const getPhotosFromAsync = async () => {
   let photos = await AsyncStorage.getItem("photos");
   let ps = JSON.parse(photos);
   if(ps !== null){
-    setPhotos(ps);
+    return(ps);
   }else{
-    setPhotos([]);
+    return([]);
   }
 }
 

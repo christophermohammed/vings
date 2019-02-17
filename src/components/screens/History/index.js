@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicator, StatusBar } from 'react-native';
 
 import TransactionCard from '../../transactionCard';
 import { removeTransactionFromAzure } from '../../../utilities/cloud';
@@ -109,7 +109,11 @@ class History extends Component {
   render() {
     return (
       <View styles={[this.state.loading ? styles.loadingStyle : styles.container, {marginTop: 10}]}>
-          {this.renderLoading()}
+        <StatusBar
+          backgroundColor="white"
+          barStyle="dark-content"
+        />
+        {this.renderLoading()}
       </View>
     );
   }
