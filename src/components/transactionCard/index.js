@@ -8,19 +8,33 @@ class TransactionCard extends React.Component {
     constructor(props){
         super(props);
 
+        this.mounted = false;
+
         this.state = {
             activeRowKey: null
         };
+    }
+
+    componentDidMount(){
+        this.mounted = true;
+    }
+
+    componentWillUnmount(){
+        this.mounted = false;
     }
 
     render(){
         const swipeSettings = {
             autoClose: true,
             onClose: (secId, rowId, direction) => {
-                this.setState({activeRowKey: null});
+                if(this.mounted){
+                    this.setState({activeRowKey: null});
+                }
             },
             onOpen: (secId, rowId, direction) => {
-                this.setState({activeRowKey: this.props.index});
+                if(this.mounted){
+                    this.setState({activeRowKey: this.props.index});
+                }
             },
             right: [
                 {

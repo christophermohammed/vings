@@ -11,6 +11,8 @@ class AddTransaction extends Component {
   constructor(props){
     super(props);
 
+    this.mounted = false;
+
     this.state = {
       description: "",
       location: "",
@@ -19,18 +21,30 @@ class AddTransaction extends Component {
     }
   }   
   
+  componentDidMount(){
+    this.mounted = true;
+  }
+
+  componentWillUnmount(){
+    this.mounted = false;
+  }
+
   toggleLoading = () => {
-    this.setState((prevState) => {
-      return{ loading: !prevState.loading };
-    });
+    if(this.mounted){
+      this.setState((prevState) => {
+        return{ loading: !prevState.loading };
+      });
+    }
   }
 
   clearTextInputs = () => {
-    this.setState({amount: ""});
-    this.textInput1.clear();
-    this.textInput2.clear();
-    if(this.props.type === transactionType.cost){
+    if(this.mounted){
+      this.setState({amount: ""});
+      this.textInput1.clear();
+      this.textInput2.clear();
+      if(this.props.type === transactionType.cost){
       this.textInput3.clear();
+      }
     }
   }
 

@@ -13,8 +13,10 @@ class Home extends Component {
   constructor(props){
     super(props);
 
+    this.mounted = false;
+
     this.state = {
-      netSav: 0,
+      netSav: 0.001,
       photos: [],
 
       index: Math.floor(Math.random() * 99),
@@ -31,18 +33,17 @@ class Home extends Component {
 
   async componentDidMount() {
     this.mounted = true;
+    await this.refresh();
+    await getPhotosFromAzure();
+    let photos = await getPhotosFromAsync();
     if(this.mounted){
-      await this.refresh();
-      this.setTip();
-      await getPhotosFromAzure();
-      let photos = await getPhotosFromAsync();
       this.setPhotos(photos);
     }
   }
 
   async componentDidUpdate() {
+    let photos = await getPhotosFromAsync();
     if(this.mounted){
-      let photos = await getPhotosFromAsync();
       this.setPhotos(photos);
     }
   }
@@ -53,17 +54,13 @@ class Home extends Component {
 
   refresh = async () => {
     let user = await getUser();
-    if(user !== null){
+    if(user !== null && this.mounted){
       this.setState({netSav: user.netSav});
     }
   }
 
   setPhotos = (photos) => {
     this.setState({photos: photos});
-  }
-
-  setTip = () => {
-    this.setState({index: Math.floor(Math.random() * 99)});  
   }
 
   render() {
@@ -97,10 +94,10 @@ class Home extends Component {
               <Text style={[styles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={this.state.photos}/>
             </View>
-            {/* <Button 
+            <Button 
               title="Clear"
               onPress={clearAsync}
-            /> */}
+            />
           </View>
         </ScrollView>
       </View>

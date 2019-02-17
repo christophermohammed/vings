@@ -13,6 +13,8 @@ class History extends Component {
   constructor(props){
     super(props);
 
+    this.mounted = false;
+
     this.state = {
       loading: false,
       deletedRowKey: null,
@@ -23,7 +25,12 @@ class History extends Component {
   }
 
   async componentDidMount() {
+    this.mounted = true;
     await this.refreshFlatList();
+  }
+
+  componentWillUnmount(){
+    this.mounted = false;
   }
 
   deleteTransaction = async (index) => {
@@ -43,27 +50,35 @@ class History extends Component {
     //set ts
     await AsyncStorage.setItem("transactions", JSON.stringify(ts));
     //setState
-    this.setState({transactions: ts});
+    if(this.mounted){
+      this.setState({transactions: ts});
+    }
 
     this.toggleLoading();
   }
 
   refreshFlatList = async () => {
-    this.setState({refreshing: true});
-    let transactions = await getTransactions();
-    this.setState({transactions: transactions, refreshing: false});
+    if(this.mounted){
+      this.setState({refreshing: true});
+      let transactions = await getTransactions();
+      this.setState({transactions: transactions, refreshing: false});
+    }
   }
 
   refreshFlatListAfterDelete = (deletedKey) => {
-    this.setState(() => {
-      return{ deletedRowKey: deletedKey };
-    });
+    if(this.mounted){
+      this.setState(() => {
+        return{ deletedRowKey: deletedKey };
+      });
+    }
   }
 
   toggleLoading = () => {
-    this.setState((prevState) => {
-      return{ loading: !prevState.loading };
-    });
+    if(this.mounted){
+      this.setState((prevState) => {
+        return{ loading: !prevState.loading };
+      });
+    }
   }
 
   renderLoading = () => {

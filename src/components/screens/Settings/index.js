@@ -11,6 +11,9 @@ export default class Settings extends Component {
 
   constructor(props){
     super(props);
+
+    this.mounted = false;
+
     this.state = {
         age: "",
         items: [],
@@ -20,15 +23,22 @@ export default class Settings extends Component {
   }
 
   componentDidMount(){
+    this.mounted = true;
     this.setState({
         items: genders
     });
   }
 
+  componentWillUnmount(){
+    this.mounted = false;
+  }
+
   toggleLoading = () => {
-    this.setState((prevState) => {
-      return{loading: !prevState.loading}
-    });
+    if(this.mounted){
+      this.setState((prevState) => {
+        return{loading: !prevState.loading}
+      });
+    }
   }
 
   save = async () => {
@@ -36,6 +46,7 @@ export default class Settings extends Component {
     let age = parseInt(this.state.age);
     if(age < 10 || age > 100 || age === NaN) {
       this.clearTextInputs();
+      this.toggleLoading();
       alert("Please enter a valid age.");
     }else{
       let user = {
@@ -45,9 +56,9 @@ export default class Settings extends Component {
         uid: ""
       }
       await saveUser(user);
+      this.toggleLoading();
       this.props.navigation.navigate("Vings");
     }
-    this.toggleLoading();
   }
 
   renderLoading = () => {
@@ -62,8 +73,10 @@ export default class Settings extends Component {
   }
 
   clearTextInputs = () => {
-    this.setState({age: ""});
-    this.textInput1.clear();
+    if(this.mounted){
+      this.setState({age: ""});
+      this.textInput1.clear();
+    }
   }
 
   render() {

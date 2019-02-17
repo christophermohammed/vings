@@ -1,6 +1,6 @@
 import { setPhotosToAsync, getUser } from './async';
 
-export const getPhotosFromAzure = async (setPhotos) => {
+export const getPhotosFromAzure = async () => {
   let url = 'https://vingsgallery.azurewebsites.net/api/GetPhotos?code=bAVDlZbfCJtiu5rDbk2DWBpVC95KvwnRqgoSHseEjw/77XXgOdzFdA==';
   try {
       let response = await fetch(url, {
