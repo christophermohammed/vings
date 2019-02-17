@@ -1,36 +1,9 @@
 import React, { Component } from 'react';
-import { createStackNavigator } from 'react-navigation';
 import { NetInfo } from 'react-native';
-import {
-  createSwitchNavigator,
-  createAppContainer,
-} from 'react-navigation';
-
-import Settings from './src/components/screens/Settings';
-import Vings from './src/components/vings';
+import AppContainer from './src/components/app-container';
 import Offline from './src/components/screens/Offline';
-import Blank from './src/components/screens/blank';
 import { setPhotosToAsync } from './src/utilities/async';
 import { photos } from './src/data/photos';
-
-const SettingsNav = createStackNavigator({
-  Settings: { 
-    screen: Settings,
-    navigationOptions: {
-      headerTitle: "Settings"
-    } 
-  }
-});
-
-const AppSwitchNavigator = createSwitchNavigator({
-  Settings: { screen: SettingsNav },
-  Vings: { screen: Vings },
-  Blank: { screen: Blank }
-},{
-  initialRouteName: 'Blank'
-});
-
-let AppContainer = createAppContainer(AppSwitchNavigator);
 
 class App extends Component { 
   constructor(){
@@ -51,14 +24,15 @@ class App extends Component {
   }
 
   handleConnectivityChange = isConnected => {
+    console.log(isConnected);
     this.setState({ isConnected });
   }
 
   render() {
     if(this.state.isConnected){
-      return <AppContainer />
+      return <AppContainer />;
     }else{
-      return <Offline />
+      return <Offline />;
     }
   }
 }
