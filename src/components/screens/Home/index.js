@@ -18,7 +18,7 @@ class Home extends Component {
     this.state = {
       netSav: 0.001,
       photos: [],
-
+      currency: "$",
       index: Math.floor(Math.random() * 99),
     }
   }
@@ -37,14 +37,14 @@ class Home extends Component {
     await getPhotosFromAzure();
     let photos = await getPhotosFromAsync();
     if(this.mounted){
-      this.setPhotos(photos);
+      this.setState({photos: photos});
     }
   }
 
   async componentDidUpdate() {
     let photos = await getPhotosFromAsync();
     if(this.mounted){
-      this.setPhotos(photos);
+      this.setState({photos: photos});
     }
   }
 
@@ -55,12 +55,8 @@ class Home extends Component {
   refresh = async () => {
     let user = await getUser();
     if(user !== null && this.mounted){
-      this.setState({netSav: user.netSav});
+      this.setState({netSav: user.netSav, currency: user.currency});
     }
-  }
-
-  setPhotos = (photos) => {
-    this.setState({photos: photos});
   }
 
   render() {
@@ -82,7 +78,7 @@ class Home extends Component {
                   <VIcon action={this.refresh} size={20} name="ios-refresh"/>
                 </View>
               </View>
-              <NetSavingsCard netSav={this.state.netSav}/>
+              <NetSavingsCard netSav={this.state.netSav} currency={this.state.currency}/>
             </View>
             {/* Tip section */}
             <View style={styles.section}>

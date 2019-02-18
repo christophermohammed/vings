@@ -50,6 +50,7 @@ class TransactionCard extends React.Component {
             sectionId: 1,
         }
         const amt = this.props.item.amount;
+        const { currency } = this.props;
         return(
             <Swipeout {...swipeSettings}>
                 <View style={[
@@ -74,7 +75,18 @@ class TransactionCard extends React.Component {
                         styles.amount, 
                         styles.vCommon,
                     ]}>
-                        <Text style={(amt < 0) ? [styles.amountText, {color: Colors.red}] : [styles.amountText, {color: Colors.green}]}>${Math.round(amt * 100) / 100}</Text>
+                        <Text 
+                            style={
+                                (amt < 0) 
+                                ? [styles.amountText, {color: Colors.red}] 
+                                : [styles.amountText, {color: Colors.green}]}
+                        >
+                            {
+                                (amt < 0) 
+                                ? `-${currency}${(Math.round(amt * 100) / 100) * -1}` 
+                                : `${currency}${Math.round(amt * 100) / 100}`
+                            }
+                        </Text>
                     </View>
                 </View>
             </Swipeout>

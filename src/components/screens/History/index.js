@@ -5,7 +5,7 @@ import TransactionCard from '../../transactionCard';
 import { removeTransactionFromAzure } from '../../../utilities/cloud';
 import { updateUserNetSav } from './history-logic';
 import { Colors } from '../../../utilities/utils';
-import { getTransactions } from '../../../utilities/async';
+import { getTransactions, getUser } from '../../../utilities/async';
 import VIcon from '../../VIcon';
 
 class History extends Component {
@@ -20,6 +20,7 @@ class History extends Component {
       deletedRowKey: null,
       refreshing: false,
 
+      currency: "",
       transactions: [],
     }
   }
@@ -61,7 +62,8 @@ class History extends Component {
     if(this.mounted){
       this.setState({refreshing: true});
       let transactions = await getTransactions();
-      this.setState({transactions: transactions, refreshing: false});
+      let user = await getUser();
+      this.setState({transactions: transactions, refreshing: false, currency: user.currency});
     }
   }
 
@@ -109,6 +111,7 @@ class History extends Component {
                   index={index} 
                   deleteAction={() => this.deleteTransaction(index)}
                   refresh={this.refreshFlatListAfterDelete}
+                  currency={this.state.currency}
                 />
               </View>
             }

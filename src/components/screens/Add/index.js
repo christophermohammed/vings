@@ -134,7 +134,7 @@ class AddTransaction extends Component {
       return(
         <View style={styles.container}>
           <View style={styles.space}>
-            <Text style={styles.question}>How did you come accross this money?</Text>
+            <Text style={styles.question}>How did you come across this money?</Text>
             <TextInput
               ref={input => { this.textInput1 = input }}
               style={styles.inputStyle}

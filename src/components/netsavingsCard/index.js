@@ -7,9 +7,10 @@ const NetSavingsCard = (props) => {
     const amt = props.netSav;
     const modAmt = (amt < 0) ? (-1 * amt) : amt;
     const amountStyle = [styles.amountText, (amt < 0) ? {color: Colors.red} : {color: Colors.green}];
+    const { currency } = props;
     return (
         <View style={styles.container}>
-            <Text style={amountStyle}>{(amt < 0) ? "-$" : "$"}</Text>
+            <Text style={amountStyle}>{(amt < 0) ? `-${currency}` : currency}</Text>
             <Text style={amountStyle}>{to2Dp(modAmt)}</Text>
         </View>
     );

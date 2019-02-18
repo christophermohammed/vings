@@ -4,8 +4,7 @@ import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, Tex
 import { Colors, SCREEN_WIDTH } from '../../../utilities/utils';
 import { saveUser } from './settings-logic';
 import { placeholders } from '../../../utilities/terms';
-
-const genders = ["Male", "Female" , "Non-Binary"];
+import { genders, currencies } from '../../../data/utils';
 
 export default class Settings extends Component {
 
@@ -16,17 +15,18 @@ export default class Settings extends Component {
 
     this.state = {
         age: "",
-        items: [],
-        gender: "Male",
+        genders: [],
+        gender: 'Male',
+        currencies: [],
+        currency: '$',
+
         loading: false,
     }
   }
 
   componentDidMount(){
     this.mounted = true;
-    this.setState({
-        items: genders
-    });
+    this.setState({genders: genders, currencies: currencies});
   }
 
   componentWillUnmount(){
@@ -46,19 +46,19 @@ export default class Settings extends Component {
     let age = parseInt(this.state.age);
     if(age < 10 || age > 100 || age === NaN) {
       this.clearTextInputs();
-      this.toggleLoading();
       alert("Please enter a valid age.");
     }else{
       let user = {
         age: this.state.age,
         gender: this.state.gender,
         netSav: 0.0,
+        currency: this.state.currency,
         uid: ""
       }
       await saveUser(user);
-      this.toggleLoading();
       this.props.navigation.navigate("Vings");
     }
+    this.toggleLoading();
   }
 
   renderLoading = () => {
@@ -80,7 +80,10 @@ export default class Settings extends Component {
   }
 
   render() {
-    let itemList = this.state.items.map( (s, i) => {
+    let genderList = this.state.genders.map( (s, i) => {
+      return <Picker.Item key={i} value={s} label={s} />
+    });
+    let currencyList = this.state.currencies.map( (s, i) => {
       return <Picker.Item key={i} value={s} label={s} />
     });
     return (
@@ -113,7 +116,23 @@ export default class Settings extends Component {
                 }
                 style={styles.VingsPickerStyle}
             >
-                {itemList}
+                {genderList}
+            </Picker>
+          </View>
+        </View>
+        <View style={[styles.space, {marginTop: Platform.OS === 'ios' ? 30 : 0}]}>
+          <Text style={styles.question}>What is your preferred currency?</Text>
+          <View style={{alignItems: 'center'}}>
+            <Picker
+                selectedValue={this.state.currency}
+                onValueChange={
+                    (itemValue) => {
+                        this.setState({currency: itemValue}) 
+                    }
+                }
+                style={styles.VingsPickerStyle}
+            >
+                {currencyList}
             </Picker>
           </View>
         </View>
