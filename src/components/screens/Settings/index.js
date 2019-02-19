@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { AsyncStorage, ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
 
 import { Colors, SCREEN_WIDTH } from '../../../utilities/utils';
 import { saveUser } from './settings-logic';
@@ -22,8 +22,8 @@ export default class Settings extends Component {
         currency: '$',
 
         loading: false,
-        showingGenders: false,
-        showingCurrencies: false
+        showingGenders: Platform.OS === 'ios' ? false : true,
+        showingCurrencies: Platform.OS === 'ios' ? false : true,
     }
   }
 
@@ -121,9 +121,9 @@ export default class Settings extends Component {
         <View style={styles.space}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.question}>What is your gender?</Text>
-            <VIcon action={this.showGenders} name={(showingGenders) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>
+            {Platform.OS === 'ios' && <VIcon action={this.showGenders} name={(showingGenders) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>}
           </View>
-          {showingGenders &&
+          {showingGenders && 
           <View style={{alignItems: 'center'}}>
             <Picker
                 selectedValue={this.state.gender}
@@ -141,7 +141,7 @@ export default class Settings extends Component {
         <View style={[styles.space, {marginTop: Platform.OS === 'ios' ? 30 : 0}]}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.question}>What is your preferred currency?</Text>
-            <VIcon action={this.showCurrencies} name={(showingCurrencies) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>
+            {Platform.OS === 'ios' && <VIcon action={this.showCurrencies} name={(showingCurrencies) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>}
           </View>
           {showingCurrencies && 
           <View style={{alignItems: 'center'}}>

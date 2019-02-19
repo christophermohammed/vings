@@ -4,7 +4,7 @@ export const photos = [
         UID: "430650c4-8079-4d47-bc04-2f28112a4171",
         Username: "euanography",
         URL: "https://www.instagram.com/euanography/",
-        "Platform": "instagram"
+        Platform: "instagram"
     },
     {
         URI: "https://im.vsco.co/aws-us-west-2/344742/50397774/5c2be6a2f4c4324606502836/vsco5c2be6a4f0bc7.jpg",
@@ -14,17 +14,10 @@ export const photos = [
         Platform: "VSCO"
     },
     {
-        URI: "https://im.vsco.co/aws-us-west-2/344742/50397774/5c2be6a7f4c4324606502837/vsco5c2be6aab2842.jpg",
-        UID: "cf12d052-bc56-4b63-96d3-33d2c6447bb5",
-        Username: "chrismohammed",
-        URL: "https://vsco.co/chrismohammed/",
-        Platform: "VSCO"
-    },
-    {
-        URI: "https://im.vsco.co/aws-us-west-2/344742/50397774/5c53ad3f7332937919d77690/vsco5c53ad6a9a6b0.jpg",
-        UID: "e3d53a21-9099-4ec0-bab1-fba1a2138ac3",
-        Username: "chrismohammed",
-        URL: "https://vsco.co/chrismohammed/",
-        Platform: "VSCO"
+        URI: "https://instagram.fybz2-2.fna.fbcdn.net/vp/8b45d114b842875abfa538e08909837f/5D25A48C/t51.2885-15/sh0.08/e35/p750x750/49395931_307276020135864_4526485541225036837_n.jpg?_nc_ht=instagram.fybz2-2.fna.fbcdn.net",
+        UID: "d4ee30e9-d4c6-448b-8d3e-8bb726dfe026",
+        Username: "roldanpao",
+        URL: "https://www.instagram.com/roldanpao/",
+        Platform: "instagram"
     }
 ]
