@@ -7,7 +7,7 @@ const VIcon = (props) => {
     return (
         <View>
             <TouchableOpacity onPress={props.action}>
-                <Icon name="ios-refresh" color={Colors.main} size={props.size} />
+                <Icon name={(props.name) ? props.name : "ios-refresh"} color={Colors.main} size={props.size} />
             </TouchableOpacity>
         </View>
     );

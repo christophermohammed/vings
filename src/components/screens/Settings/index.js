@@ -5,6 +5,7 @@ import { Colors, SCREEN_WIDTH } from '../../../utilities/utils';
 import { saveUser } from './settings-logic';
 import { placeholders } from '../../../utilities/terms';
 import { genders, currencies } from '../../../data/utils';
+import VIcon from '../../VIcon';
 
 export default class Settings extends Component {
 
@@ -21,6 +22,8 @@ export default class Settings extends Component {
         currency: '$',
 
         loading: false,
+        showingGenders: false,
+        showingCurrencies: false
     }
   }
 
@@ -73,10 +76,20 @@ export default class Settings extends Component {
   }
 
   clearTextInputs = () => {
-    if(this.mounted){
-      this.setState({age: ""});
-      this.textInput1.clear();
-    }
+    this.setState({age: ""});
+    this.textInput1.clear();
+  }
+
+  showGenders = () => {
+    this.setState((prevState) => {
+      return{ showingGenders: !prevState.showingGenders };
+    });
+  }
+
+  showCurrencies = () => {
+    this.setState((prevState) => {
+      return{ showingCurrencies: !prevState.showingCurrencies };
+    });
   }
 
   render() {
@@ -86,6 +99,7 @@ export default class Settings extends Component {
     let currencyList = this.state.currencies.map( (s, i) => {
       return <Picker.Item key={i} value={s} label={s} />
     });
+    const { showingCurrencies, showingGenders } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar
@@ -105,7 +119,11 @@ export default class Settings extends Component {
           />
         </View>
         <View style={styles.space}>
-          <Text style={styles.question}>What is your gender?</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.question}>What is your gender?</Text>
+            <VIcon action={this.showGenders} name={(showingGenders) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>
+          </View>
+          {showingGenders &&
           <View style={{alignItems: 'center'}}>
             <Picker
                 selectedValue={this.state.gender}
@@ -118,10 +136,14 @@ export default class Settings extends Component {
             >
                 {genderList}
             </Picker>
-          </View>
+          </View>}
         </View>
         <View style={[styles.space, {marginTop: Platform.OS === 'ios' ? 30 : 0}]}>
-          <Text style={styles.question}>What is your preferred currency?</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.question}>What is your preferred currency?</Text>
+            <VIcon action={this.showCurrencies} name={(showingCurrencies) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>
+          </View>
+          {showingCurrencies && 
           <View style={{alignItems: 'center'}}>
             <Picker
                 selectedValue={this.state.currency}
@@ -134,7 +156,7 @@ export default class Settings extends Component {
             >
                 {currencyList}
             </Picker>
-          </View>
+          </View>}
         </View>
         <View style={[styles.space, {marginTop: Platform.OS === 'ios' ? 30 : 0}]}>
           <Button
