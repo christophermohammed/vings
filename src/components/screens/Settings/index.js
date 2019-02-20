@@ -116,6 +116,7 @@ export default class Settings extends Component {
             value={this.state.age}
             keyboardType="number-pad"
             placeholder={placeholders.age}
+            returnKeyType="done"
           />
         </View>
         <View style={styles.space}>

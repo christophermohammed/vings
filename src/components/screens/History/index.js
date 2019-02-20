@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, Button, View, FlatList, AsyncStorage, ActivityIndicator, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, FlatList, AsyncStorage, ActivityIndicator, StatusBar, RefreshControl } from 'react-native';
 
 import TransactionCard from '../../transactionCard';
 import { removeTransactionFromAzure } from '../../../utilities/cloud';
@@ -115,8 +115,16 @@ class History extends Component {
                 />
               </View>
             }
-            refreshing={this.state.refreshing}
-            onRefresh={this.refreshFlatList}
+            refreshControl = {
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.refreshFlatList}
+                colors={[Colors.main]}
+                progressBackgroundColor="white"
+                tintColor={Colors.main}
+                title="Pull to refresh"
+              />
+            }
             showsVerticalScrollIndicator={false}
           />
         );

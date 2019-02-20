@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, StatusBar, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, StatusBar, ScrollView, RefreshControl } from 'react-native';
 import NetSavingsCard from '../../netsavingsCard';
 import Tip from '../../tipoftheday';
 import { clearAsync, getUser, getPhotosFromAsync } from '../../../utilities/async';
 import { getPhotosFromAzure } from '../../../utilities/cloud';
 import Carousel from '../../carousel';
 import VIcon from '../../VIcon';
+import { Colors } from '../../../utilities/utils';
 
 
 class Home extends Component {
@@ -20,6 +21,7 @@ class Home extends Component {
       photos: [],
       currency: "$",
       index: Math.floor(Math.random() * 99),
+      refreshing: false
     }
   }
 
@@ -53,9 +55,10 @@ class Home extends Component {
   }
 
   refresh = async () => {
+    this.setState({refreshing: true});
     let user = await getUser();
     if(user !== null && this.mounted){
-      this.setState({netSav: user.netSav, currency: user.currency});
+      this.setState({netSav: user.netSav, currency: user.currency, refreshing: false});
     }
   }
 
@@ -64,6 +67,16 @@ class Home extends Component {
       <View>
         <ScrollView 
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.refresh}
+              colors={[Colors.main]}
+              progressBackgroundColor="white"
+              tintColor={Colors.main}
+              title="Pull to refresh"
+            />
+          }
         >
           <View>
             <StatusBar
@@ -72,12 +85,7 @@ class Home extends Component {
             />
             {/* Net savings section */}
             <View style={[styles.section, {marginTop: 0}]}>
-              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.title}>Savings</Text>
-                <View style={{justifyContent: 'center'}}>
-                  <VIcon action={this.refresh} size={20} name="ios-refresh"/>
-                </View>
-              </View>
+              <Text style={styles.title}>Savings</Text>
               <NetSavingsCard netSav={this.state.netSav} currency={this.state.currency}/>
             </View>
             {/* Tip section */}

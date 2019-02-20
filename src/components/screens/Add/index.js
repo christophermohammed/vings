@@ -105,6 +105,7 @@ class AddTransaction extends Component {
               placeholder={placeholders.description}
               clearTextOnFocus={true}
               value={this.state.description}
+              returnKeyType="done"
             />
           </View>
           <View style={styles.space}>
@@ -116,6 +117,7 @@ class AddTransaction extends Component {
               placeholder={placeholders.location}
               clearTextOnFocus={true}
               value={this.state.location}
+              returnKeyType="done"
             />
           </View>
           <View style={styles.space}>
@@ -126,6 +128,7 @@ class AddTransaction extends Component {
               onChangeText={(amount) => this.setState({amount})}
               value={this.state.amount}
               keyboardType="decimal-pad"
+              returnKeyType="done"
             />
           </View>
         </View>
@@ -142,6 +145,7 @@ class AddTransaction extends Component {
               onChangeText={(description) => this.setState({description})}
               clearTextOnFocus={true}
               value={this.state.description}
+              returnKeyType="done"
             />
           </View>
           <View style={styles.space}>
@@ -152,6 +156,7 @@ class AddTransaction extends Component {
               onChangeText={(amount) => this.setState({amount})}
               value={this.state.amount}
               keyboardType="decimal-pad"
+              returnKeyType="done"
             />
           </View>
         </View>
