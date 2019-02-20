@@ -125,7 +125,7 @@ class AddTransaction extends Component {
               style={styles.inputStyle}
               onChangeText={(amount) => this.setState({amount})}
               value={this.state.amount}
-              keyboardType="number-pad"
+              keyboardType="decimal-pad"
             />
           </View>
         </View>
@@ -151,7 +151,7 @@ class AddTransaction extends Component {
               style={styles.inputStyle}
               onChangeText={(amount) => this.setState({amount})}
               value={this.state.amount}
-              keyboardType="number-pad"
+              keyboardType="decimal-pad"
             />
           </View>
         </View>
