@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 
-import AddTransaction from '../../screens/Add/index';
-import { Colors } from '../../../utilities/utils';
-import { transactionType } from '../../../utilities/terms';
+import AddTransaction from '../../screens/add';
+import { Colors } from '../../utilities/utils';
+import { transactionType } from '../../utilities/terms';
 
 class AddCost extends Component {
   goHome = () => {

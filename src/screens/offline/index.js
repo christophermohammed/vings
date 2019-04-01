@@ -10,7 +10,7 @@ class Offline extends Component {
                     barStyle="dark-content"
                 />
                 <View>
-                    <Image source={require('../../../../assets/wifiOffline.png')} style={styles.image}/>
+                    <Image source={require('../../../assets/wifiOffline.png')} style={styles.image}/>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>Seems like you're offline...</Text>

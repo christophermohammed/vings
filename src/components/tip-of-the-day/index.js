@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 import { tips } from '../../data/tips';
-import TipIcons from '../tipIcons';
+import TipIcons from '../tip-icons';
 
 const Tip = (props) => {
     const { index } = props;

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { ActivityIndicator, TextInput, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
 
-import { SCREEN_WIDTH, Colors, to2Dp } from '../../../utilities/utils';
+import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities/utils';
 import { amtSafeToSave, desSafeToSave, locSafeToSave, saveTransaction } from './add-logic';
-import { transactionType, placeholders } from '../../../utilities/terms';
+import { transactionType, placeholders } from '../../utilities/terms';
 
 const date = new Date().toDateString();
 

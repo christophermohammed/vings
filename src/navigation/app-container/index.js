@@ -4,9 +4,9 @@ import {
   createStackNavigator
 } from 'react-navigation';
 
-import Settings from '../screens/Settings';
-import Vings from '../vings';
-import Blank from '../screens/blank';
+import Settings from '../../screens/settings';
+import Vings from '../main';
+import Blank from '../../screens/blank';
 
 const SettingsNav = createStackNavigator({
   Settings: { 

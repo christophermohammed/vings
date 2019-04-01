@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, FlatList, AsyncStorage, ActivityIndicator, StatusBar, RefreshControl } from 'react-native';
 
-import TransactionCard from '../../transactionCard';
-import { removeTransactionFromAzure } from '../../../utilities/cloud';
+import TransactionCard from '../../components/transaction-card';
+import { removeTransactionFromAzure } from '../../utilities/cloud';
 import { updateUserNetSav } from './history-logic';
-import { Colors } from '../../../utilities/utils';
-import { getTransactions, getUser } from '../../../utilities/async';
-import VIcon from '../../VIcon';
+import { Colors } from '../../utilities/utils';
+import { getTransactions, getUser } from '../../utilities/async';
+import VIcon from '../../components/v-icon';
 
 class History extends Component {
   

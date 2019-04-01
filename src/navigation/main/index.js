@@ -3,9 +3,9 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Home from '../screens/Home';
-import Add from '../screens/Add/Add';
-import History from '../screens/History';
+import Home from '../../screens/home';
+import Add from '../add';
+import History from '../../screens/history';
 import { Colors } from '../../utilities/utils';
 
 const VingsNav = createMaterialBottomTabNavigator({

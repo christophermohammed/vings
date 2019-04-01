@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NetInfo } from 'react-native';
-import AppContainer from './src/components/app-container';
-import Offline from './src/components/screens/Offline';
+import AppContainer from './src/navigation/app-container';
+import Offline from './src/screens/offline';
 import { setPhotosToAsync } from './src/utilities/async';
 import { photos } from './src/data/photos';
 

@@ -1,4 +1,4 @@
-import { getUser, setUser } from "../../../utilities/async";
+import { getUser, setUser } from "../../utilities/async";
 
 export const updateUserNetSav = async (amt) => {
   let user = await getUser();

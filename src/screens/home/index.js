@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, StatusBar, ScrollView, RefreshControl } from 'react-native';
-import NetSavingsCard from '../../netsavingsCard';
-import Tip from '../../tipoftheday';
-import { clearAsync, getUser, getPhotosFromAsync } from '../../../utilities/async';
-import { getPhotosFromAzure } from '../../../utilities/cloud';
-import Carousel from '../../carousel';
-import VIcon from '../../VIcon';
-import { Colors } from '../../../utilities/utils';
+import { StyleSheet, Text, View, StatusBar, ScrollView, RefreshControl } from 'react-native';
+import NetSavingsCard from '../../components/netsavings-card';
+import Tip from '../../components/tip-of-the-day';
+import { getUser, getPhotosFromAsync } from '../../utilities/async';
+import { getPhotosFromAzure } from '../../utilities/cloud';
+import Carousel from '../../components/carousel';
+import { Colors } from '../../utilities/utils';
 
 
 class Home extends Component {

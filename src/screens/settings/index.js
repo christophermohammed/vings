@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
 
-import { Colors, SCREEN_WIDTH } from '../../../utilities/utils';
+import { Colors, SCREEN_WIDTH } from '../../utilities/utils';
 import { saveUser } from './settings-logic';
-import { placeholders } from '../../../utilities/terms';
-import { genders, currencies } from '../../../data/utils';
-import VIcon from '../../VIcon';
+import { placeholders } from '../../utilities/terms';
+import { genders, currencies } from '../../data/utils';
+import VIcon from '../../components/v-icon';
 
 export default class Settings extends Component {
 

@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
-import { getTransactions, getUser, setUser } from '../../../utilities/async';
-import { transactionType } from '../../../utilities/terms';
-import { saveTransactionToAzure } from '../../../utilities/cloud';
+import { getTransactions, getUser, setUser } from '../../utilities/async';
+import { transactionType } from '../../utilities/terms';
+import { saveTransactionToAzure } from '../../utilities/cloud';
 
 export const saveTransaction = async (transaction) => {
     //get transactions and user from async

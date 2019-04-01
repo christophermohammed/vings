@@ -1,5 +1,5 @@
-import { setUser } from '../../../utilities/async';
-import { saveUserToAzure } from '../../../utilities/cloud';
+import { setUser } from '../../utilities/async';
+import { saveUserToAzure } from '../../utilities/cloud';
 
 export const saveUser = async (user) => {
   let uid = await saveUserToAzure(user);

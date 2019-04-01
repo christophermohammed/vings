@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
-import { getUser } from '../../../utilities/async';
+import { getUser } from '../../utilities/async';
 
 class Blank extends Component {
   setUp = async () => {
