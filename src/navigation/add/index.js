@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 
-import AddTransaction from './index';
+import AddTransaction from '../../screens/Add/index';
 import { Colors } from '../../../utilities/utils';
 import { transactionType } from '../../../utilities/terms';
 

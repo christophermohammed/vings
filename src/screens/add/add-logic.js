@@ -22,25 +22,13 @@ export const saveTransaction = async (transaction) => {
 }
 
 export const amtSafeToSave = (amt) => {
-  if(isNaN(amt) || amt < 0){
-    return false;
-  }else{
-    return true;
-  }
+  return (isNaN(amt) || amt < 0) ? false : true;
 }
 
 export const desSafeToSave = (des) => {
-  if(des === ""){
-    return false;
-  }else{
-    return true;
-  }
+  return (des === "") ? false : true;
 }
 
 export const locSafeToSave = (loc, type) => {
-  if(loc === "" && type === transactionType.cost){
-    return false;
-  }else{
-    return true;
-  }
+  return (loc === "" && type === transactionType.cost) ? false : true;
 }     
