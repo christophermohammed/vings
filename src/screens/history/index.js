@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, FlatList, AsyncStorage, ActivityIndicator, StatusBar, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, StatusBar, RefreshControl } from 'react-native';
 
 import TransactionCard from '../../components/transaction-card';
-import { removeTransactionFromAzure } from '../../utilities/cloud';
-import { updateUserNetSav } from './history-logic';
 import { Colors } from '../../utilities/utils';
 import { getTransactions, getUser } from '../../utilities/async';
 import VIcon from '../../components/v-icon';
+import { deleteTransaction } from './history-logic';
 
 class History extends Component {
   
@@ -26,120 +25,88 @@ class History extends Component {
   }
 
   async componentDidMount() {
-    this.mounted = true;
     await this.refreshFlatList();
   }
 
-  componentWillUnmount(){
-    this.mounted = false;
-  }
-
-  deleteTransaction = async (index) => {
-    this.toggleLoading();
-    //get transactions from state
-    let ts = this.state.transactions;
-    //get uid from transaction to be removed ts[index].uid
-    let uid = ts[index].uid;
-    //get Amount
-    let amt = parseFloat(ts[index].amount);
-    //update user
-    await updateUserNetSav(amt);
-    //remove from azure using uid
-    await removeTransactionFromAzure(uid);
-    //splice array; remove transaction at index
-    ts.splice(index, 1);
-    //set ts
-    await AsyncStorage.setItem("transactions", JSON.stringify(ts));
-    //setState
-    if(this.mounted){
-      this.setState({transactions: ts});
-    }
-
-    this.toggleLoading();
+  delete = async (index) => {
+    await deleteTransaction(index, this.state.transactions, this.setTransactions, this.toggleLoading);
   }
 
   refreshFlatList = async () => {
-    if(this.mounted){
-      this.setState({refreshing: true});
-      let transactions = await getTransactions();
-      let user = await getUser();
-      this.setState({transactions: transactions, refreshing: false, currency: user.currency});
-    }
+    this.setState({refreshing: true});
+    let transactions = await getTransactions();
+    let user = await getUser();
+    this.setState({transactions, refreshing: false, currency: user.currency});
   }
 
-  refreshFlatListAfterDelete = (deletedKey) => {
-    if(this.mounted){
-      this.setState(() => {
-        return{ deletedRowKey: deletedKey };
-      });
-    }
+  refreshFlatListAfterDelete = (deletedRowKey) => {
+    this.setState(() => {
+      return{ deletedRowKey };
+    });
   }
 
   toggleLoading = () => {
-    if(this.mounted){
-      this.setState((prevState) => {
-        return{ loading: !prevState.loading };
-      });
-    }
+    this.setState((prevState) => {
+      return{ loading: !prevState.loading };
+    });
   }
 
-  renderLoading = () => {
-    if(this.state.loading){
-      return(
-        <ActivityIndicator
-          size="large"
-          color={Colors.main}
-        />
-      );
-    }else{
-      if(this.state.transactions === [] || !this.state.transactions.length){
-        return(
-          <View style={styles.empty}>
-            <Text style={{fontSize: 15}}>You don't seem to have any recent transactions...</Text>
-            <VIcon action={this.refreshFlatList} size={30} name="ios-refresh"/>
-          </View>
-        );
-      }else{
-        return(
-          <FlatList
-            data={this.state.transactions}
-            keyExtractor={(_item, index) => (index).toString()}
-            renderItem={({item, index}) => 
-              <View>
-                <TransactionCard 
-                  item={item}
-                  index={index} 
-                  deleteAction={() => this.deleteTransaction(index)}
-                  refresh={this.refreshFlatListAfterDelete}
-                  currency={this.state.currency}
-                />
-              </View>
-            }
-            refreshControl = {
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this.refreshFlatList}
-                colors={[Colors.main]}
-                progressBackgroundColor="white"
-                tintColor={Colors.main}
-                title="Pull to refresh"
-              />
-            }
-            showsVerticalScrollIndicator={false}
-          />
-        );
-      }
-    }
+  setTransactions = (transactions) => {
+    this.setState({transactions});
   }
 
   render() {
+    const { loading, transactions } = this.state;
     return (
-      <View styles={[this.state.loading ? styles.loadingStyle : styles.container, {marginTop: 10}]}>
+      <View styles={[styles.container, {marginTop: 10}]}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
-        {this.renderLoading()}
+        {loading &&
+          <View style={styles.loadingStyle}>
+              <ActivityIndicator
+                size="large"
+                color={Colors.main}
+              />
+          </View>
+        }
+        {(transactions === []) &&
+          <View style={styles.empty}>
+            <Text style={{fontSize: 15}}>You don't seem to have any recent transactions...</Text>
+            <VIcon action={this.refreshFlatList} size={30} name="ios-refresh"/>
+          </View>
+        }
+        {!loading && transactions !== [] &&
+          <View>
+            <FlatList
+              data={this.state.transactions}
+              keyExtractor={(_item, index) => (index).toString()}
+              renderItem={({item, index}) => 
+                <View>
+                  <TransactionCard 
+                    item={item}
+                    index={index} 
+                    deleteAction={() => this.delete(index)}
+                    refresh={this.refreshFlatListAfterDelete}
+                    currency={this.state.currency}
+                  />
+                </View>
+              }
+              refreshControl = {
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.refreshFlatList}
+                  colors={[Colors.main]}
+                  progressBackgroundColor="white"
+                  tintColor={Colors.main}
+                  title="Pull to refresh"
+                />
+              }
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        }
       </View>
     );
   }

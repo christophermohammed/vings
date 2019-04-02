@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from './index';
+import { Colors } from './utils';
 
 export default styles = StyleSheet.create({
     container: {
@@ -65,5 +65,8 @@ export default styles = StyleSheet.create({
         borderTopColor:     'white',
         borderBottomColor:  'white',
         paddingRight: 10
+    },
+    loading: {
+      padding: 10
     },
 });

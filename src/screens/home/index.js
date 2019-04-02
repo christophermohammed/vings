@@ -26,10 +26,7 @@ class Home extends Component {
 
   async shouldComponentUpdate(){
     let user = await getUser();
-    if((this.state.photos && this.state.photos.length < 1) || (user.netSav !== this.state.netSav)){
-      return true;
-    }
-    return false;
+    return((this.state.photos && this.state.photos.length < 1) || (user.netSav !== this.state.netSav));
   }
 
   async componentDidMount() {

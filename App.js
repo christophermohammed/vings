@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NetInfo } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import AppContainer from './src/navigation/app-container';
 import Offline from './src/screens/offline';
 import { setPhotosToAsync } from './src/utilities/async';

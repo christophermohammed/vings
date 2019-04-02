@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import { ActivityIndicator, TextInput, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
-
-import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities/utils';
-import { amtSafeToSave, desSafeToSave, locSafeToSave, saveTransaction } from './add-logic';
+import { ActivityIndicator, View, StatusBar, Button } from 'react-native';
+import { SCREEN_WIDTH, Colors, to2Dp, emptyRegex } from '../../utilities/utils';
+import { saveTransaction, buildTransaction } from './add-logic';
 import { transactionType, placeholders } from '../../utilities/terms';
-
-const date = new Date().toDateString();
+import MWITextInput from '../../components/mwi-text-input';
+import styles from '../../utilities/common-styles';
 
 class AddTransaction extends Component {
   constructor(props){
@@ -40,179 +39,93 @@ class AddTransaction extends Component {
   clearTextInputs = () => {
     if(this.mounted){
       this.setState({amount: ""});
-      this.textInput1.clear();
-      this.textInput2.clear();
+      this.descriptionInput.clear();
+      this.amountInput.clear();
       if(this.props.type === transactionType.cost){
-      this.textInput3.clear();
+        this.locationInput.clear();
       }
     }
   }
 
   save = async () => {
-    //alter UI on save
+    // alter UI on save
     this.toggleLoading();
     this.clearTextInputs();
-    let { amount, description, location } = this.state;
+    // extract data 
+    const { amount, description, location } = this.state;
+    const { type, goHome } = this.props;
     let amt = to2Dp(parseFloat(amount));
-    if(amtSafeToSave(amt)){
-      if(desSafeToSave(description)){
-        if (locSafeToSave(location, this.props.type)) {
-          if(this.props.type === transactionType.cost){
-            amt *= -1;
-          }
-          let transaction = {
-            description: description,
-            location: location,
-            amount: amt.toString(),
-            date: date,
-            uid: ""
-          }
-          await saveTransaction(transaction);
-          this.props.goHome();
-        } else {
-          alert("Please enter a valid location.");
-        }
-      }else{
-        alert("Please enter a valid description.");
-      }
-    }else{
-      alert("Please enter a valid amount.");
+    // verify and save
+    let transaction = buildTransaction(description, location, amt, type);
+    if(transaction){
+      await saveTransaction(transaction);
+      goHome();
     }
     this.toggleLoading();
-  }
-
-  renderLoading = () => {
-    if(this.state.loading){
-      return(
-        <ActivityIndicator
-          size="large"
-          color={Colors.main}
-        />
-      );
-    }
-  }
-
-  renderType = () => {
-    if(this.props.type === transactionType.cost){
-      return(
-        <View style={styles.container}>
-          <View style={styles.space}>
-            <Text style={styles.question}>What did you buy?</Text>
-            <TextInput
-              ref={input => { this.textInput1 = input }}
-              style={styles.inputStyle}
-              onChangeText={(description) => this.setState({description})}
-              placeholder={placeholders.description}
-              clearTextOnFocus={true}
-              value={this.state.description}
-              returnKeyType="done"
-            />
-          </View>
-          <View style={styles.space}>
-            <Text style={styles.question}>Where did you buy it?</Text>
-            <TextInput
-              ref={input => { this.textInput2 = input }}
-              style={styles.inputStyle}
-              onChangeText={(location) => this.setState({location})}
-              placeholder={placeholders.location}
-              clearTextOnFocus={true}
-              value={this.state.location}
-              returnKeyType="done"
-            />
-          </View>
-          <View style={styles.space}>
-            <Text style={styles.question}>How much did you spend?</Text>
-            <TextInput
-              ref={input => { this.textInput3 = input }}
-              style={styles.inputStyle}
-              onChangeText={(amount) => this.setState({amount})}
-              value={this.state.amount}
-              keyboardType="decimal-pad"
-              returnKeyType="done"
-            />
-          </View>
-        </View>
-      );
-    }else if(this.props.type === transactionType.savings){
-      return(
-        <View style={styles.container}>
-          <View style={styles.space}>
-            <Text style={styles.question}>How did you come across this money?</Text>
-            <TextInput
-              ref={input => { this.textInput1 = input }}
-              style={styles.inputStyle}
-              placeholder={placeholders.description}
-              onChangeText={(description) => this.setState({description})}
-              clearTextOnFocus={true}
-              value={this.state.description}
-              returnKeyType="done"
-            />
-          </View>
-          <View style={styles.space}>
-            <Text style={styles.question}>How much did you save?</Text>
-            <TextInput
-              ref={input => { this.textInput2 = input }}
-              style={styles.inputStyle}
-              onChangeText={(amount) => this.setState({amount})}
-              value={this.state.amount}
-              keyboardType="decimal-pad"
-              returnKeyType="done"
-            />
-          </View>
-        </View>
-      );
-    }
   }
 
   render() {
+    const { loading, description, location, amount } = this.state;
+    const { type } = this.props;
     return (
-      <View style={[styles.container, {padding: 10}]}>
+      <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
           <StatusBar
             backgroundColor="white"
             barStyle="dark-content"
           />
-          <View style={styles.container}>
-            {this.renderType()}
+          <View style={styles.space}>
+            <MWITextInput 
+              message={type === transactionType.cost ? "What did you buy?" : "How did you come across this money?"}
+              placeholder={placeholders.description}
+              value={description}
+              onChange={description => this.setState({description})}
+              getRef={desc => { this.descriptionInput = desc }}
+              width={SCREEN_WIDTH - 20}
+            />
           </View>
+          <View style={styles.space}>
+            <MWITextInput
+              message={`How much did you ${type === transactionType.cost ? "spend" : "save"}?`} 
+              getRef={amt => { this.amountInput = amt }}
+              onChange={amount => this.setState({amount})}
+              placeholder={placeholders.amount}
+              value={amount}
+              keyboardType="decimal-pad"
+              width={SCREEN_WIDTH - 20}
+            />
+          </View>
+          {type === transactionType.cost ? (
+              <View style={styles.space}>
+                <MWITextInput
+                  message="Where did you buy it?" 
+                  getRef={loc => { this.locationInput = loc }}
+                  onChange={location => this.setState({location})}
+                  placeholder={placeholders.location}
+                  value={location}
+                  width={SCREEN_WIDTH - 20}
+                  textContentType="location"
+                />
+              </View>
+          ) : null }
           <View style={[styles.space, { borderRadius: 10, width: SCREEN_WIDTH - 20}]}>
             <Button
               title="Add"
               onPress={this.save}
               color={Colors.main}
-              disabled={this.state.loading ? true : false }
+              disabled={loading}
             />
           </View>
-          <View style={styles.loading}>
-            {this.renderLoading()}
-          </View>
+          {loading &&
+            <View style={styles.loading}>
+              <ActivityIndicator
+                size="large"
+                color={Colors.main}
+              />
+            </View>
+          }
         </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loading: {
-    padding: 10
-  },
-  space: {
-    marginTop: 10,
-  },
-  question: {
-    fontSize: 18,
-    fontWeight: '400'
-  },
-  inputStyle: {
-    height: 40, 
-    width: SCREEN_WIDTH - 20,
-    borderColor: 'gray', 
-    borderWidth: 1,
-    borderRadius: 10
-  }
-});
 
 export default AddTransaction;

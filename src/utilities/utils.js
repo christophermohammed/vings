@@ -19,3 +19,5 @@ export const IMAGE_WIDTH = ((IMAGE_HEIGHT / 4) * 3);
 export const to2Dp = (amt) => {
     return Math.round(amt * 100) / 100;
 }
+
+export const emptyRegex = /^\s*$/;
