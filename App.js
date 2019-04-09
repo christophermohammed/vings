@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import AppContainer from './src/navigation/app-container';
 import Offline from './src/screens/offline';
 import { setPhotosToAsync } from './src/utilities/async';
 import { photos } from './src/data/photos';
+import store from './src/state/store';
 
 class App extends Component { 
   constructor(){
@@ -30,7 +32,7 @@ class App extends Component {
 
   render() {
     if(this.state.isConnected){
-      return <AppContainer />;
+      return <Provider store={store}><AppContainer /></Provider>;
     }else{
       return <Offline />;
     }

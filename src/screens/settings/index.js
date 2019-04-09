@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
+import { connect } from 'react-redux';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
-import { Colors, SCREEN_WIDTH, isIOS } from '../../utilities/utils';
-import { saveUser } from './settings-logic';
+import { Colors, SCREEN_WIDTH } from '../../utilities/utils';
 import { placeholders } from '../../utilities/terms';
 import { genders, currencies } from '../../data/utils';
-import VIcon from '../../components/v-icon';
 import styles from '../../utilities/common-styles';
+import { updateUser } from '../../state/user/actions';
 
 class Settings extends Component {
 
   constructor(props){
     super(props);
-
-    this.mounted = false;
 
     this.state = {
       age: "",
@@ -27,12 +25,7 @@ class Settings extends Component {
   }
 
   componentDidMount(){
-    this.mounted = true;
-    this.setState({genders: genders, currencies: currencies});
-  }
-
-  componentWillUnmount(){
-    this.mounted = false;
+    this.setState({genders, currencies});
   }
 
   toggleLoading = () => {
@@ -41,10 +34,10 @@ class Settings extends Component {
     });
   }
 
-  save = async () => {
+  save = () => {
     this.toggleLoading();
     let age = parseInt(this.state.age);
-    if(age < 10 || age > 100 || age === NaN) {
+    if(age < 10 || age > 100 || age === NaN || age === undefined) {
       this.clearTextInputs();
       alert("Please enter a valid age.");
     }else{
@@ -55,7 +48,7 @@ class Settings extends Component {
         currency: this.state.currency,
         uid: ""
       }
-      await saveUser(user);
+      this.props.onUpdateUser(user);
       this.props.navigation.navigate("Vings");
     }
     this.toggleLoading();
@@ -63,26 +56,11 @@ class Settings extends Component {
 
   clearTextInputs = () => {
     this.setState({age: ""});
-    this.textInput1.clear();
-  }
-
-  showGenders = () => {
-    this.setState((prevState) => {
-      return{ showingGenders: !prevState.showingGenders };
-    });
-  }
-
-  showCurrencies = () => {
-    this.setState((prevState) => {
-      return{ showingCurrencies: !prevState.showingCurrencies };
-    });
+    this.age.clear();
   }
 
   render() {
-    const { showingCurrencies, showingGenders, loading, genders, currencies, age, gender, currency } = this.state;
-    let currencyList = currencies.map( (s, i) => {
-      return <Picker.Item key={i} value={s} label={s} />
-    });
+    const { loading, genders, currencies, age, gender, currency } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar
@@ -140,11 +118,19 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
-
 const settingsStyles = StyleSheet.create({
   welcome: {
     fontSize: 26,
     fontWeight: '600'
   },
 });
+
+const mapDispatchToProps = {
+  onUpdateUser: updateUser 
+};
+
+const mapStateToProps = ({user}) => ({
+  user
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
