@@ -5,8 +5,15 @@ export default styles = StyleSheet.create({
     container: {
         flex: 0,
     },
+    center: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     space: {
-        padding: 10
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 10,
+        paddingRight: 10
     },
     button: {
         borderRadius: 5,

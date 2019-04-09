@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 export const Colors = {
     main: '#4a69bd',
@@ -21,3 +21,7 @@ export const to2Dp = (amt) => {
 }
 
 export const emptyRegex = /^\s*$/;
+
+export const isIOS = () => {
+    return (Platform.OS === 'ios' ? true : false);
+};

@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, StatusBar, TextInput, Platform, Picker, Button } from 'react-native';
-
-import { Colors, SCREEN_WIDTH } from '../../utilities/utils';
+import MWITextInput from '../../components/mwi-text-input';
+import MWIPicker from '../../components/mwi-picker';
+import { Colors, SCREEN_WIDTH, isIOS } from '../../utilities/utils';
 import { saveUser } from './settings-logic';
 import { placeholders } from '../../utilities/terms';
 import { genders, currencies } from '../../data/utils';
 import VIcon from '../../components/v-icon';
+import styles from '../../utilities/common-styles';
 
-export default class Settings extends Component {
+class Settings extends Component {
 
   constructor(props){
     super(props);
@@ -15,15 +17,12 @@ export default class Settings extends Component {
     this.mounted = false;
 
     this.state = {
-        age: "",
-        genders: [],
-        gender: 'Male',
-        currencies: [],
-        currency: '$',
-
-        loading: false,
-        showingGenders: Platform.OS === 'ios' ? false : true,
-        showingCurrencies: Platform.OS === 'ios' ? false : true,
+      age: "",
+      genders: [],
+      gender: 'Male',
+      currencies: [],
+      currency: '$',
+      loading: false
     }
   }
 
@@ -37,11 +36,9 @@ export default class Settings extends Component {
   }
 
   toggleLoading = () => {
-    if(this.mounted){
-      this.setState((prevState) => {
-        return{loading: !prevState.loading}
-      });
-    }
+    this.setState((prevState) => {
+      return{loading: !prevState.loading}
+    });
   }
 
   save = async () => {
@@ -64,17 +61,6 @@ export default class Settings extends Component {
     this.toggleLoading();
   }
 
-  renderLoading = () => {
-    if(this.state.loading){
-      return(
-        <ActivityIndicator
-          size="large"
-          color={Colors.main}
-        />
-      );
-    }
-  }
-
   clearTextInputs = () => {
     this.setState({age: ""});
     this.textInput1.clear();
@@ -93,119 +79,72 @@ export default class Settings extends Component {
   }
 
   render() {
-    let genderList = this.state.genders.map( (s, i) => {
+    const { showingCurrencies, showingGenders, loading, genders, currencies, age, gender, currency } = this.state;
+    let currencyList = currencies.map( (s, i) => {
       return <Picker.Item key={i} value={s} label={s} />
     });
-    let currencyList = this.state.currencies.map( (s, i) => {
-      return <Picker.Item key={i} value={s} label={s} />
-    });
-    const { showingCurrencies, showingGenders } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
-        <Text style={styles.welcome}>Tell us a little bit about you</Text>
         <View style={styles.space}>
-          <Text style={styles.question}>How old are you?</Text>
-          <TextInput
-            ref={input => { this.textInput1 = input }}
-            style={styles.inputStyle}
-            onChangeText={(age) => this.setState({age})}
-            value={this.state.age}
+          <Text style={settingsStyles.welcome}>Tell us a little bit about you</Text>
+        </View>
+        <View style={styles.space}>
+          <MWITextInput 
+            message="How old are you?"
+            value={age}
+            onChange={(age) => this.setState({age})}
+            getRef={(age) => this.age = age}
+            width={(SCREEN_WIDTH - 20)} 
             keyboardType="number-pad"
             placeholder={placeholders.age}
-            returnKeyType="done"
           />
         </View>
         <View style={styles.space}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.question}>What is your gender?</Text>
-            {Platform.OS === 'ios' && <VIcon action={this.showGenders} name={(showingGenders) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>}
-          </View>
-          {showingGenders && 
-          <View style={{alignItems: 'center'}}>
-            <Picker
-                selectedValue={this.state.gender}
-                onValueChange={
-                    (itemValue) => {
-                        this.setState({gender: itemValue}) 
-                    }
-                }
-                style={styles.VingsPickerStyle}
-            >
-                {genderList}
-            </Picker>
-          </View>}
+          <MWIPicker 
+            items={genders}
+            selectedValue={gender}
+            onChange={(gender) => this.setState({gender})}
+            message="What is your gender?"
+          />
         </View>
-        <View style={[styles.space, {marginTop: Platform.OS === 'ios' ? 30 : 0}]}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.question}>What is your preferred currency?</Text>
-            {Platform.OS === 'ios' && <VIcon action={this.showCurrencies} name={(showingCurrencies) ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"} size={24}/>}
-          </View>
-          {showingCurrencies && 
-          <View style={{alignItems: 'center'}}>
-            <Picker
-                selectedValue={this.state.currency}
-                onValueChange={
-                    (itemValue) => {
-                        this.setState({currency: itemValue}) 
-                    }
-                }
-                style={styles.VingsPickerStyle}
-            >
-                {currencyList}
-            </Picker>
-          </View>}
+        <View style={styles.space}>
+          <MWIPicker 
+            items={currencies}
+            selectedValue={currency}
+            onChange={(currency) => this.setState({currency})}
+            message="What is your preferred currency?"
+          />
         </View>
-        <View style={[styles.space, {marginTop: Platform.OS === 'ios' ? 30 : 0}]}>
+        <View style={styles.space}>
           <Button
             title="Save"
             onPress={this.save}
             color={Colors.main}
-            disabled={this.state.loading ? true : false }
+            disabled={loading}
           />
         </View>
-        <View style={styles.loading}>
-          {this.renderLoading()}
-        </View>
+        {loading &&
+          <View style={styles.loading}>
+            <ActivityIndicator
+              size="large"
+              color={Colors.main}
+            />
+          </View>
+        }
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    justifyContent: 'center',
-    padding: 10,
-    backgroundColor: 'white'
-  },
-  loading: {
-    padding: 10
-  },
-  space: {
-    marginTop: 10,
-  },
-  question: {
-    fontSize: 18,
-    fontWeight: '400'
-  },
+export default Settings;
+
+const settingsStyles = StyleSheet.create({
   welcome: {
     fontSize: 26,
     fontWeight: '600'
   },
-  inputStyle: {
-    height: 40, 
-    width: SCREEN_WIDTH - 20,
-    borderColor: 'gray', 
-    borderWidth: 1,
-    borderRadius: 10
-  },
-  VingsPickerStyle: {
-    width: Platform.OS === 'ios' ? SCREEN_WIDTH - 150 : SCREEN_WIDTH,
-    height: Platform.OS === 'ios' ? 165 : 40,
-    marginTop: Platform.OS === 'ios' ? -20 : 0
-  }
 });

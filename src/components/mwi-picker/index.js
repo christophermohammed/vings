@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, Picker, Platform, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Picker, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../../utilities/common-styles';
 import pickerStyle from './styles';
-import { Colors } from '../../utilities/utils';
+import { Colors, isIOS } from '../../utilities/utils';
 
 class MWIPicker extends React.Component {
   constructor(){
@@ -31,17 +31,17 @@ class MWIPicker extends React.Component {
         >
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.question}>{message}</Text>
-            {Platform.OS === 'ios' &&
+            {isIOS() &&
               <Icon 
-                name={isOpen ? "ios-arrow-up" : "ios-arrow-down"}
+                name={isOpen ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"}
                 size={30}
-                color={Colors.dark}
+                color={Colors.main}
               />
             }
           </View>
         </TouchableWithoutFeedback>
-        {((Platform.OS === 'ios' && isOpen) || Platform.OS !== 'ios') &&
-          <View style={{alignItems: 'center'}}>
+        {((isIOS() && isOpen) || !isIOS()) &&
+          <View style={{alignItems: 'center', marginBottom: 30}}>
             <Picker
                 selectedValue={this.props.selectedValue}
                 onValueChange={
