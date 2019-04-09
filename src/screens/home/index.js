@@ -32,11 +32,6 @@ class Home extends Component {
   async componentDidMount() {
     this.mounted = true;
     await this.refresh();
-    await getPhotosFromAzure();
-    let photos = await getPhotosFromAsync();
-    if(this.mounted){
-      this.setState({photos: photos});
-    }
   }
 
   async componentDidUpdate() {

@@ -1,1 +1,2 @@
-export const UPDATE_USER = "SU: Add user's email and password";
+export const UPDATE_USER = "Add user's info";
+export const UPDATE_PHOTOS = "Add photos";
