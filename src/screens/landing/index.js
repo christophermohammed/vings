@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
-import { getPhotosFromAzure } from './src/utilities/cloud';
-import { updatePhotos } from './src/state/photos/actions';
-import { updateUser } from './src/state/user/actions';
-import { updateTransactions } from './src/state/transactions/actions';
-import { getUser, getTransactions } from './src/utilities/async';
+import { getPhotosFromAzure } from '../../utilities/cloud';
+import { updatePhotos } from '../../state/photos/actions';
+import { updateUser } from '../../state/user/actions';
+import { updateTransactions } from '../../state/transactions/actions';
+import { getUser, getTransactions } from '../../utilities/async';
 
 class Landing extends Component {
   async componentDidMount() {

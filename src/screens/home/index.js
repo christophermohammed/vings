@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, StatusBar, ScrollView, RefreshControl } from 'react-native';
+import { connect } from 'react-redux';
+import { StyleSheet, Text, View, StatusBar, ScrollView, Button } from 'react-native';
 import NetSavingsCard from '../../components/netsavings-card';
 import Tip from '../../components/tip-of-the-day';
 import Carousel from '../../components/carousel';
 import styles from '../../utilities/common-styles';
+import { clearAsync } from '../../utilities/async';
 
 class Home extends Component {
   
   constructor(props){
     super(props);
-
-    this.mounted = false;
 
     this.state = {
       index: Math.floor(Math.random() * 99),
@@ -42,10 +42,10 @@ class Home extends Component {
               <Text style={[homeStyles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
               <Carousel photos={photos}/>
             </View>
-            {/* <Button 
+            <Button 
               title="Clear"
               onPress={clearAsync}
-            /> */}
+            />
           </View>
         </ScrollView>
       </View>
@@ -54,18 +54,12 @@ class Home extends Component {
 }
 
 const homeStyles = StyleSheet.create({
-  welcome: {
-    fontSize: 40,
-    padding: 10,
-    color: 'black'
-  },
   title: {
     fontSize: 30,
   },
   gallery: {
     paddingTop: 10,
     paddingBottom: 10,
-    marginTop: 20
   }
 });
 
