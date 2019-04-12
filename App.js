@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { YellowBox } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import AppWrapper from './AppWrapper';
 import Offline from './src/screens/offline';
@@ -8,7 +9,7 @@ import store from './src/state/store';
 class App extends Component { 
   constructor(){
     super();
-
+    YellowBox.ignoreWarnings(['Require cycle:']);
     this.state = {
       isConnected: true
     }

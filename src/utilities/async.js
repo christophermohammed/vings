@@ -1,23 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-export const makeCancelable = (promise) => {
-  let hasCanceled_ = false;
-
-  const wrappedPromise = new Promise((resolve, reject) => {
-    promise.then(
-      val => hasCanceled_ ? reject({isCanceled: true}) : resolve(val),
-      error => hasCanceled_ ? reject({isCanceled: true}) : reject(error)
-    );
-  });
-
-  return {
-    promise: wrappedPromise,
-    cancel() {
-      hasCanceled_ = true;
-    },
-  };
-};
-
 export const clearAsync = async () => {
   await AsyncStorage.clear();
 }
@@ -40,10 +22,6 @@ export const getUser = async () => {
   }
 }
 
-export const setUser = async (user) => {
-  await AsyncStorage.setItem("user", JSON.stringify(user));
-}
-
 export const getPhotosFromAsync = async () => {
   let photos = await AsyncStorage.getItem("photos");
   let ps = JSON.parse(photos);
@@ -52,6 +30,10 @@ export const getPhotosFromAsync = async () => {
   }else{
     return([]);
   }
+}
+
+export const setUser = async (user) => {
+  await AsyncStorage.setItem("user", JSON.stringify(user));
 }
 
 export const setPhotosToAsync = async (photos) => {

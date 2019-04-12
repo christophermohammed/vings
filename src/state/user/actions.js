@@ -1,15 +1,14 @@
 import * as actionTypes from '../actionTypes';
-import AsyncStorage from '@react-native-community/async-storage';
 import { saveUserToAzure } from '../../utilities/cloud';
+import { setUser } from '../../utilities/async';
 
-export const updateUser = (newUser) => async dispatch => {
-    let uid = await saveUserToAzure(newUser);
-    newUser.uid = uid;
-    await AsyncStorage.setItem('user', JSON.stringify(newUser));
+export const updateUser = (user) => async dispatch => {
+    saveUserToAzure(user);
+    setUser(user);
     dispatch({
         type: actionTypes.UPDATE_USER,
         payload: {
-            user: newUser
+            user
         }
     });
 }

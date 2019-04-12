@@ -1,10 +1,10 @@
 import * as actionTypes from '../actionTypes';
 
-export const updatePhotos = (newPhotos) => {
-    dispatch({
+export const updatePhotos = (photos) => {
+    return{
         type: actionTypes.UPDATE_PHOTOS,
         payload: {
-            Photos: newPhotos
+            photos
         }
-    });
+    }
 }

@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, Text, View, StatusBar, Button } from 're
 import { connect } from 'react-redux';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
-import { Colors, SCREEN_WIDTH } from '../../utilities/utils';
+import { Colors, SCREEN_WIDTH, getGUID } from '../../utilities/utils';
 import { placeholders } from '../../utilities/terms';
 import { genders, currencies } from '../../data/utils';
 import styles from '../../utilities/common-styles';
@@ -46,7 +46,7 @@ class Settings extends Component {
         gender: this.state.gender,
         netSav: 0.0,
         currency: this.state.currency,
-        uid: ""
+        uid: getGUID()
       }
       this.props.onUpdateUser(user);
       this.props.navigation.navigate("Vings");
