@@ -129,8 +129,4 @@ const mapDispatchToProps = {
   onUpdateUser: updateUser 
 };
 
-const mapStateToProps = ({user}) => ({
-  user
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(null, mapDispatchToProps)(Settings);

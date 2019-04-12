@@ -6,7 +6,7 @@ import {
 
 import Settings from '../../screens/settings';
 import Vings from '../main';
-import Blank from '../../screens/blank';
+import Landing from '../../screens/landing';
 
 const SettingsNav = createStackNavigator({
   Settings: { 
@@ -20,9 +20,9 @@ const SettingsNav = createStackNavigator({
 const AppSwitchNavigator = createSwitchNavigator({
   Settings: { screen: SettingsNav },
   Vings: { screen: Vings },
-  Blank: { screen: Blank }
+  Landing: { screen: Landing }
 },{
-  initialRouteName: 'Blank'
+  initialRouteName: 'Landing'
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
