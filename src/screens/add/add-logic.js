@@ -1,7 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
-import { getTransactions, getUser, setUser } from '../../utilities/async';
-import { saveTransactionToAzure } from '../../utilities/cloud';
-import { emptyRegex } from '../../utilities/utils';
+import { emptyRegex, getGUID } from '../../utilities/utils';
 
 export const buildTransaction = (description, location, amt, type) => {
   // amount valid
@@ -23,7 +20,7 @@ export const buildTransaction = (description, location, amt, type) => {
           location: location,
           amount: amt.toString(),
           date: new Date().toDateString(),
-          uid: ""
+          uid: getGUID()
         }
         return transaction;
       } else {
@@ -36,22 +33,4 @@ export const buildTransaction = (description, location, amt, type) => {
     alert("Please enter a valid amount.");
   }
   return null;
-}
-
-export const saveTransaction = async (transaction) => {
-  //get transactions and user from async
-  let transactions = await getTransactions();
-  let user = await getUser();
-  
-  // save to azure and get uid
-  let uid = await saveTransactionToAzure(transaction, user.uid);
-  transaction.uid = uid;
-  
-  //add to transactions
-  transactions.unshift(transaction);
-  await AsyncStorage.setItem("transactions", JSON.stringify(transactions));
-  
-  //update user net savings
-  user.netSav += parseFloat(transaction.amount);
-  await setUser(user);
-}    
+}   

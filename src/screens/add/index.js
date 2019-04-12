@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import { ActivityIndicator, View, StatusBar, Button } from 'react-native';
-import { SCREEN_WIDTH, Colors, to2Dp, emptyRegex } from '../../utilities/utils';
-import { saveTransaction, buildTransaction } from './add-logic';
+import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities/utils';
+import { buildTransaction } from './add-logic';
 import { transactionType, placeholders } from '../../utilities/terms';
 import MWITextInput from '../../components/mwi-text-input';
 import styles from '../../utilities/common-styles';
+import { updateUser } from '../../state/user/actions';
+import { addTransaction } from '../../state/transactions/actions';
+import { saveTransactionToAzure } from '../../utilities/cloud';
 
 class AddTransaction extends Component {
   constructor(props){
@@ -19,35 +23,23 @@ class AddTransaction extends Component {
       loading: false,
     }
   }   
-  
-  componentDidMount(){
-    this.mounted = true;
-  }
-
-  componentWillUnmount(){
-    this.mounted = false;
-  }
 
   toggleLoading = () => {
-    if(this.mounted){
-      this.setState((prevState) => {
-        return{ loading: !prevState.loading };
-      });
-    }
+    this.setState((prevState) => {
+      return{ loading: !prevState.loading };
+    });
   }
 
   clearTextInputs = () => {
-    if(this.mounted){
-      this.setState({amount: ""});
-      this.descriptionInput.clear();
-      this.amountInput.clear();
-      if(this.props.type === transactionType.cost){
-        this.locationInput.clear();
-      }
+    this.setState({amount: ""});
+    this.descriptionInput.clear();
+    this.amountInput.clear();
+    if(this.props.type === transactionType.cost){
+      this.locationInput.clear();
     }
   }
 
-  save = async () => {
+  save = () => {
     // alter UI on save
     this.toggleLoading();
     this.clearTextInputs();
@@ -58,7 +50,11 @@ class AddTransaction extends Component {
     // verify and save
     let transaction = buildTransaction(description, location, amt, type);
     if(transaction){
-      await saveTransaction(transaction);
+      saveTransactionToAzure(transaction, userUID);
+      this.props.addTransaction(transaction);
+      let newUser = this.props.user;
+      newUser.netSav += amt;
+      this.props.updateUser(newUser);
       goHome();
     }
     this.toggleLoading();
@@ -128,4 +124,13 @@ class AddTransaction extends Component {
   }
 }
 
-export default AddTransaction;
+const mapStateToProps = ({user}) => ({
+  user
+});
+
+const mapDispatchToProps = {
+  updateUser,
+  addTransaction 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTransaction);

@@ -8,6 +8,8 @@ import { placeholders } from '../../utilities/terms';
 import { genders, currencies } from '../../data/utils';
 import styles from '../../utilities/common-styles';
 import { updateUser } from '../../state/user/actions';
+import { saveUserToAzure } from '../../utilities/cloud';
+import { setUser } from '../../utilities/async';
 
 class Settings extends Component {
 
@@ -49,6 +51,8 @@ class Settings extends Component {
         uid: getGUID()
       }
       this.props.onUpdateUser(user);
+      saveUserToAzure(user);
+      setUser(user);
       this.props.navigation.navigate("Vings");
     }
     this.toggleLoading();

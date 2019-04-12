@@ -36,6 +36,10 @@ export const setUser = async (user) => {
   await AsyncStorage.setItem("user", JSON.stringify(user));
 }
 
+export const setTransactions = async (transactions) => {
+  await AsyncStorage.setItem("transactions", JSON.stringify(transactions));
+}
+
 export const setPhotosToAsync = async (photos) => {
   await AsyncStorage.setItem("photos", JSON.stringify(photos));
 }
