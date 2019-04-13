@@ -13,28 +13,27 @@ class TransactionCard extends React.Component {
     }
 
     render(){
+        const { deleteAction, currency, item, index } = this.props;
         const swipeSettings = {
             autoClose: true,
             onClose: () => {
                 this.setState({activeRowKey: null});
             },
             onOpen: () => {
-                this.setState({activeRowKey: this.props.index});
+                this.setState({activeRowKey: index});
             },
             right: [
                 {
                     onPress: () => {
                         let rowKey = this.state.activeRowKey;
-                        this.props.deleteAction(rowKey);
+                        deleteAction(rowKey);
                     },
                     text: 'Delete', type: 'delete'
                 }
             ],
-            rowId: this.props.index,
+            rowId: index,
             sectionId: 1,
         }
-        const amt = this.props.item.amount;
-        const { currency } = this.props;
         return(
             <Swipeout {...swipeSettings}>
                 <View style={[
@@ -43,7 +42,7 @@ class TransactionCard extends React.Component {
                     {
                         borderWidth: 3,
                         borderRightColor:   'white',
-                        borderLeftColor:    (this.props.index % 2 === 0) ? Colors.main : 'white',
+                        borderLeftColor:    (index % 2 === 0) ? Colors.main : 'white',
                         borderTopColor:     'white',
                         borderBottomColor:  'white',
                     }
@@ -51,9 +50,9 @@ class TransactionCard extends React.Component {
                     <View style={[
                         styles.vCommon 
                     ]}>
-                        <Text style={styles.descriptionText}>{this.props.item.description}</Text>
-                        <Text style={styles.descriptionText}>{this.props.item.location}</Text>
-                        <Text style={styles.descriptionText}>{this.props.item.date}</Text>
+                        <Text style={styles.descriptionText}>{item.description}</Text>
+                        <Text style={styles.descriptionText}>{item.location}</Text>
+                        <Text style={styles.descriptionText}>{item.dateString}</Text>
                     </View>
                     <View style={[
                         styles.amount, 

@@ -16,13 +16,12 @@ export default function reducer(state = [], {type, payload}) {
         case actionTypes.REMOVE_TRANSACTION:
             // get uid and amount  
             let uid = transactions[payload.index].uid;
-            let amt = parseFloat(transactions[payload.index].amount);
+            let amt = transactions[payload.index].amount;
             // adjust user netsav
             removeFromUserNetSav(amt);
             // remove from azure 
             removeTransactionFromAzure(uid);
             // remove from state
-            debugger;
             transactions.splice(payload.index, 1);
             // set to storage
             setTransactions(transactions);

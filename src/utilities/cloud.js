@@ -78,7 +78,7 @@ export const saveTransactionToAzure = async (transaction, userUID) => {
           UserUID: userUID,
           description: transaction.description,
           location: transaction.location,
-          amount: transaction.amount,
+          amount: (transaction.amount).toString(),
           date: transaction.date
         }),
     });

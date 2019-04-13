@@ -52,7 +52,7 @@ class AddTransaction extends Component {
     if(transaction){
       saveTransactionToAzure(transaction, this.props.user.uid);
       this.props.addTransaction(transaction);
-      this.props.addToUserNetSav(amt);
+      this.props.addToUserNetSav(transaction.amount);
       goHome();
     }
     this.toggleLoading();

@@ -15,12 +15,14 @@ export const buildTransaction = (description, location, amt, type) => {
         if(type === transactionType.cost){
           amt *= -1;
         }
+        let date = new Date();
         // build transaction
         let transaction = {
           description: description,
           location: location,
-          amount: amt.toString(),
-          date: new Date().toDateString(),
+          amount: amt,
+          date,
+          dateString: date.toDateString(),
           uid: getGUID()
         }
         return transaction;
