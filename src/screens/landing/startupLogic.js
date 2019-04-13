@@ -22,7 +22,7 @@ export default startup = async (updatePhotos, updateUser, updateTransactions, na
     updateTransactions(transactions);
     // navigate 
     if(!user.uid){
-      navigation.navigate("Settings");
+      navigation.navigate("Setup");
     }else{
       navigation.navigate("Main");
     }

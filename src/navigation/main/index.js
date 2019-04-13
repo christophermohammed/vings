@@ -4,6 +4,7 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from '../../screens/home';
+import Settings from '../../screens/settings';
 import Add from '../add';
 import History from '../../screens/history';
 import { Colors } from '../../utilities/utils';
@@ -32,7 +33,15 @@ const MainNav = createMaterialBottomTabNavigator({
         <Icon name="ios-list" color={tintColor} size={24} />
       )
     } 
-  }
+  },
+  Settings:{ screen : Settings,
+    navigationOptions: {
+      tabBarLabel: 'Settings',
+      tabBarIcon: ({tintColor}) => (
+        <Icon name="ios-settings" color={tintColor} size={24} />
+      )
+    } 
+  },
 },{
   navigationOptions: ({navigation}) => {
     const { routeName } = navigation.state.routes[navigation.state.index];
@@ -41,7 +50,7 @@ const MainNav = createMaterialBottomTabNavigator({
     };
   },
   initialRouteName: 'Home',
-  order: ['History','Home', 'Add'],
+  order: ['History','Home', 'Add', 'Settings'],
   activeTintColor: Colors.secondary,
   inactiveTintColor: Colors.main,
   barStyle: { backgroundColor: 'white' },

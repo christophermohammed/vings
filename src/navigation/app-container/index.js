@@ -4,21 +4,21 @@ import {
   createStackNavigator
 } from 'react-navigation';
 
-import Settings from '../../screens/settings';
+import Setup from '../../screens/setup';
 import Main from '../main';
 import Landing from '../../screens/landing';
 
-const SettingsNav = createStackNavigator({
-  Settings: { 
-    screen: Settings,
+const SetupNav = createStackNavigator({
+  Setup: { 
+    screen: Setup,
     navigationOptions: {
-      headerTitle: "Settings"
+      headerTitle: "Setup"
     } 
   }
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Settings: { screen: SettingsNav },
+  Setup: { screen: SetupNav },
   Main: { screen: Main },
   Landing: { screen: Landing }
 },{
