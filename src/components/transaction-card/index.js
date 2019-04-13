@@ -1,47 +1,31 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Swipeout from 'react-native-swipeout';
-
 import { Colors } from '../../utilities/utils';
 
 class TransactionCard extends React.Component {
     constructor(props){
         super(props);
 
-        this.mounted = false;
-
         this.state = {
             activeRowKey: null
         };
     }
 
-    componentDidMount(){
-        this.mounted = true;
-    }
-
-    componentWillUnmount(){
-        this.mounted = false;
-    }
-
     render(){
         const swipeSettings = {
             autoClose: true,
-            onClose: (secId, rowId, direction) => {
-                if(this.mounted){
-                    this.setState({activeRowKey: null});
-                }
+            onClose: () => {
+                this.setState({activeRowKey: null});
             },
-            onOpen: (secId, rowId, direction) => {
-                if(this.mounted){
-                    this.setState({activeRowKey: this.props.index});
-                }
+            onOpen: () => {
+                this.setState({activeRowKey: this.props.index});
             },
             right: [
                 {
                     onPress: () => {
                         let rowKey = this.state.activeRowKey;
                         this.props.deleteAction(rowKey);
-                        this.props.refresh(rowKey);
                     },
                     text: 'Delete', type: 'delete'
                 }

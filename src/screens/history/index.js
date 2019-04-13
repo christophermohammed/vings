@@ -1,109 +1,65 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, StatusBar, RefreshControl } from 'react-native';
-
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, StatusBar } from 'react-native';
+import { connect } from 'react-redux';
 import TransactionCard from '../../components/transaction-card';
 import { Colors } from '../../utilities/utils';
-import { getTransactions, getUser } from '../../utilities/async';
 import VIcon from '../../components/v-icon';
-import { deleteTransaction } from './history-logic';
+import styles from '../../utilities/common-styles';
+import { removeFromUserNetSav } from '../../state/user/actions';
+import { removeTransaction } from '../../state/transactions/actions';
 
 class History extends Component {
-  
   constructor(props){
     super(props);
-
-    this.mounted = false;
 
     this.state = {
       loading: false,
       deletedRowKey: null,
-      refreshing: false,
-
-      currency: "",
-      transactions: [],
     }
   }
 
-  async componentDidMount() {
-    await this.refreshFlatList();
-  }
-
-  delete = async (index) => {
-    await deleteTransaction(index, this.state.transactions, this.setTransactions, this.toggleLoading);
-  }
-
-  refreshFlatList = async () => {
-    this.setState({refreshing: true});
-    let transactions = await getTransactions();
-    let user = await getUser();
-    this.setState({transactions, refreshing: false, currency: user.currency});
-  }
-
-  refreshFlatListAfterDelete = (deletedRowKey) => {
-    this.setState(() => {
-      return{ deletedRowKey };
-    });
-  }
-
-  toggleLoading = () => {
-    this.setState((prevState) => {
-      return{ loading: !prevState.loading };
-    });
-  }
-
-  setTransactions = (transactions) => {
-    this.setState({transactions});
-  }
+  // refreshFlatListAfterDelete = (deletedRowKey) => {
+  //   this.setState({deletedRowKey});
+  // }
 
   render() {
-    const { loading, transactions } = this.state;
+    const { loading } = this.state;
+    const { transactions, currency } = this.props;
     return (
-      <View styles={[styles.container, {marginTop: 10}]}>
+      <View styles={styles.container}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
         {loading &&
-          <View style={styles.loadingStyle}>
-              <ActivityIndicator
-                size="large"
-                color={Colors.main}
-              />
+          <View style={historyStyles.loadingStyle}>
+            <ActivityIndicator
+              size="large"
+              color={Colors.main}
+            />
           </View>
         }
         {(transactions === []) &&
-          <View style={styles.empty}>
+          <View style={historyStyles.empty}>
             <Text style={{fontSize: 15}}>You don't seem to have any recent transactions...</Text>
-            <VIcon action={this.refreshFlatList} size={30} name="ios-refresh"/>
           </View>
         }
         {!loading && transactions !== [] &&
           <View>
             <FlatList
-              data={this.state.transactions}
+              showsVerticalScrollIndicator={false}
+              data={this.props.transactions}
               keyExtractor={(_item, index) => (index).toString()}
               renderItem={({item, index}) => 
                 <View>
                   <TransactionCard 
                     item={item}
                     index={index} 
-                    deleteAction={() => this.delete(index)}
-                    refresh={this.refreshFlatListAfterDelete}
-                    currency={this.state.currency}
+                    deleteAction={() => removeTransaction(index)}
+                    currency={currency}
                   />
                 </View>
               }
-              refreshControl = {
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.refreshFlatList}
-                  colors={[Colors.main]}
-                  progressBackgroundColor="white"
-                  tintColor={Colors.main}
-                  title="Pull to refresh"
-                />
-              }
-              showsVerticalScrollIndicator={false}
             />
           </View>
         }
@@ -112,11 +68,7 @@ class History extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    padding: 10
-  },
+const historyStyles = StyleSheet.create({
   loadingStyle: {
     flex: 0,
     alignItems: 'center',
@@ -131,4 +83,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default History;
+const mapStateToProps = ({user, transactions}) => ({
+  currency: user.currency,
+  transactions
+});
+
+const mapDispatchToProps = {
+  removeFromUserNetSav,
+  removeTransaction 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(History);

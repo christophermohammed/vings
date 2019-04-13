@@ -6,7 +6,7 @@ import { buildTransaction } from './add-logic';
 import { transactionType, placeholders } from '../../utilities/terms';
 import MWITextInput from '../../components/mwi-text-input';
 import styles from '../../utilities/common-styles';
-import { updateUser } from '../../state/user/actions';
+import { addToUserNetSav } from '../../state/user/actions';
 import { addTransaction } from '../../state/transactions/actions';
 import { saveTransactionToAzure } from '../../utilities/cloud';
 
@@ -50,11 +50,9 @@ class AddTransaction extends Component {
     // verify and save
     let transaction = buildTransaction(description, location, amt, type);
     if(transaction){
-      saveTransactionToAzure(transaction, userUID);
+      saveTransactionToAzure(transaction, this.props.user.uid);
       this.props.addTransaction(transaction);
-      let newUser = this.props.user;
-      newUser.netSav += amt;
-      this.props.updateUser(newUser);
+      this.props.addToUserNetSav(amt);
       goHome();
     }
     this.toggleLoading();
@@ -129,7 +127,7 @@ const mapStateToProps = ({user}) => ({
 });
 
 const mapDispatchToProps = {
-  updateUser,
+  addToUserNetSav,
   addTransaction 
 };
 

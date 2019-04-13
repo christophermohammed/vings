@@ -17,3 +17,12 @@ export const addTransaction = (transaction) => {
         }
     };
 }
+
+export const removeTransaction = (index) => {
+    return{
+        type: actionTypes.REMOVE_TRANSACTION,
+        payload: {
+            index
+        }
+    };
+}
