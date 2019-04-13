@@ -1,7 +1,10 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
 import { Colors } from '../../utilities/utils';
+import { removeTransaction } from '../../state/transactions/actions';
+import { removeFromUserNetSav } from '../../state/user/actions';
 
 class TransactionCard extends React.Component {
     constructor(props){
@@ -13,7 +16,8 @@ class TransactionCard extends React.Component {
     }
 
     render(){
-        const { deleteAction, currency, item, index } = this.props;
+        const { currency, item, index, removeFromUserNetSav, removeTransaction } = this.props;
+        amt = item.amount;
         const swipeSettings = {
             autoClose: true,
             onClose: () => {
@@ -26,7 +30,8 @@ class TransactionCard extends React.Component {
                 {
                     onPress: () => {
                         let rowKey = this.state.activeRowKey;
-                        deleteAction(rowKey);
+                        removeFromUserNetSav(amt);
+                        removeTransaction(rowKey);
                     },
                     text: 'Delete', type: 'delete'
                 }
@@ -37,16 +42,16 @@ class TransactionCard extends React.Component {
         return(
             <Swipeout {...swipeSettings}>
                 <View style={[
-                    styles.container, 
-                    styles.vCommon,
-                    {
-                        borderWidth: 3,
-                        borderRightColor:   'white',
-                        borderLeftColor:    (index % 2 === 0) ? Colors.main : 'white',
-                        borderTopColor:     'white',
-                        borderBottomColor:  'white',
-                    }
-                ]}>
+                        styles.container, 
+                        styles.vCommon,
+                        {
+                            borderWidth: 3,
+                            borderRightColor:   'white',
+                            borderLeftColor:    (index % 2 === 0) ? Colors.main : 'white',
+                            borderTopColor:     'white',
+                            borderBottomColor:  'white',
+                        }
+                    ]}>
                     <View style={[
                         styles.vCommon 
                     ]}>
@@ -97,4 +102,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default TransactionCard;
+const mapDispatchToProps = {
+  removeFromUserNetSav,
+  removeTransaction 
+};
+  
+export default connect(null, mapDispatchToProps)(TransactionCard);

@@ -2,7 +2,7 @@ import * as actionTypes from '../actionTypes';
 import { setUser } from '../../utilities/async';
 
 export default function reducer(state = {}, {type, payload}) {
-    let user = state;
+    let user = JSON.parse(JSON.stringify(state));
     switch(type){
         case actionTypes.UPDATE_USER:
             setUser(payload.user); 

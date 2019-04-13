@@ -45,14 +45,14 @@ class AddTransaction extends Component {
     this.clearTextInputs();
     // extract data 
     const { amount, description, location } = this.state;
-    const { type, goHome } = this.props;
+    const { type, goHome, addToUserNetSav, addTransaction, user } = this.props;
     let amt = to2Dp(parseFloat(amount));
     // verify and save
     let transaction = buildTransaction(description, location, amt, type);
     if(transaction){
-      saveTransactionToAzure(transaction, this.props.user.uid);
-      this.props.addTransaction(transaction);
-      this.props.addToUserNetSav(transaction.amount);
+      saveTransactionToAzure(transaction, user.uid);
+      addTransaction(transaction);
+      addToUserNetSav(transaction.amount);
       goHome();
     }
     this.toggleLoading();
