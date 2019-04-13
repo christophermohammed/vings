@@ -8,7 +8,7 @@ import Add from '../add';
 import History from '../../screens/history';
 import { Colors } from '../../utilities/utils';
 
-const VingsNav = createMaterialBottomTabNavigator({
+const MainNav = createMaterialBottomTabNavigator({
   Home:{ screen : Home,
     navigationOptions: {
       tabBarLabel: 'Home',
@@ -49,9 +49,9 @@ const VingsNav = createMaterialBottomTabNavigator({
 });
 
 const StackNav = createStackNavigator({
-  VingsNav: VingsNav 
+  MainNav: MainNav 
 });
 
-const VingsContainer = createAppContainer(StackNav);
+const MainContainer = createAppContainer(StackNav);
 
-export default VingsContainer;
+export default MainContainer;

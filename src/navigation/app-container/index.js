@@ -5,7 +5,7 @@ import {
 } from 'react-navigation';
 
 import Settings from '../../screens/settings';
-import Vings from '../main';
+import Main from '../main';
 import Landing from '../../screens/landing';
 
 const SettingsNav = createStackNavigator({
@@ -19,7 +19,7 @@ const SettingsNav = createStackNavigator({
 
 const AppSwitchNavigator = createSwitchNavigator({
   Settings: { screen: SettingsNav },
-  Vings: { screen: Vings },
+  Main: { screen: Main },
   Landing: { screen: Landing }
 },{
   initialRouteName: 'Landing'

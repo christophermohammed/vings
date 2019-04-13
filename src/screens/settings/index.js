@@ -53,7 +53,7 @@ class Settings extends Component {
       this.props.onUpdateUser(user);
       saveUserToAzure(user);
       setUser(user);
-      this.props.navigation.navigate("Vings");
+      this.props.navigation.navigate("Main");
     }
     this.toggleLoading();
   }

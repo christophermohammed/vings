@@ -24,6 +24,6 @@ export default startup = async (updatePhotos, updateUser, updateTransactions, na
     if(!user.uid){
       navigation.navigate("Settings");
     }else{
-      navigation.navigate("Vings");
+      navigation.navigate("Main");
     }
 }
