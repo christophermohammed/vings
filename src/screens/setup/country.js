@@ -2,30 +2,32 @@ import React, {Component} from 'react';
 import { Text, View, StatusBar, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import MWIDropdown from '../../components/mwi-dropdown';
-import { Colors } from '../../utilities/utils';
+import { Colors, emptyRegex } from '../../utilities/utils';
 import styles from '../../utilities/common-styles';
 import { updateUser } from '../../state/user/actions';
 import { saveUserToAzure } from '../../utilities/cloud';
 import { countries } from '../../utilities/data';
+import { currencyNames, getCurrencyFromName } from '../../utilities/currencies';
 
 class Country extends Component {
-
   constructor(props){
     super(props);
 
     this.state = {
       country: '',
-      currency: null
+      currencyName: ''
     }
   }
 
   save = () => {
-    const { country, currency } = this.state;
+    const { country, currencyName } = this.state;
     const { onUpdateUser, navigation, screenProps } = this.props;
-    if(!(emptyRegex.test(String(country)))) {
+    let currency = getCurrencyFromName(currencyName);
+
+    if(emptyRegex.test(String(country))) {
       alert("Please enter a valid country.");
     }else{
-      if(!(emptyRegex.test(String(currency)))){
+      if(currency === undefined){
         alert("Please enter a valid currency.");
       }else{
         let user = {
@@ -34,14 +36,14 @@ class Country extends Component {
           country
         }
         onUpdateUser(user);
-        saveUserToAzure(user);
+        //saveUserToAzure(user);
         screenProps.gotoMain();
       }
     }
   }
 
   render() {
-    const { currency, country } = this.state;
+    const { currencyName, country } = this.state;
     return (
       <ScrollView>
       <View style={styles.container}>
@@ -62,6 +64,20 @@ class Country extends Component {
           />
         </View>
         <View style={styles.space}>
+          <MWIDropdown
+            query={currencyName}
+            setQuery={(currencyName) => this.setState({currencyName})} 
+            data={currencyNames}
+            fullData={currencyNames}
+            message={"Main currency:"}
+          />
+        </View>
+        <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
+          <Button
+            title="Go Back"
+            onPress={() => this.props.navigation.navigate('Demographic')}
+            color={Colors.main}
+          />
           <Button
             title="Save"
             onPress={this.save}

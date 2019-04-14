@@ -80,4 +80,8 @@ export default styles = StyleSheet.create({
       fontSize: 26,
       fontWeight: '600'
     },
+    regRow: {
+        flexDirection: 'row', 
+        justifyContent: 'space-between',
+    }
 });

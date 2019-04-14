@@ -44,7 +44,7 @@ class AddTransaction extends Component {
     // verify and save
     let transaction = buildTransaction(description, location, amt, currency, type);
     if(transaction){
-      saveTransactionToAzure(transaction, user.uid);
+      //saveTransactionToAzure(transaction, user.uid);
       addTransaction(transaction);
       addToUserNetSav(transaction.amount);
       goHome();
