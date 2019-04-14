@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import CarouselCard from './card';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utilities/utils';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utilities';
 
 const IMAGE_HEIGHT = SCREEN_HEIGHT / 2;
 

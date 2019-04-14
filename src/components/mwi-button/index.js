@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Colors } from '../../utilities/utils';
+import { Colors } from '../../utilities';
 
 const MWIButton = (props) => {
     const { title, buttonStyle, buttonTextStyle, iconName = "", iconColor = Colors.light } = props;

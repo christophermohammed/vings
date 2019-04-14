@@ -3,7 +3,7 @@ import { View, Text, Picker, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../../utilities/common-styles';
 import pickerStyle from './styles';
-import { Colors, isIOS } from '../../utilities/utils';
+import { Colors, isIOS } from '../../utilities';
 
 class MWIPicker extends React.Component {
   constructor(){

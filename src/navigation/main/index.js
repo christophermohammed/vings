@@ -7,7 +7,7 @@ import Home from '../../screens/home';
 import Settings from '../../screens/settings';
 import Add from '../add/add-tab';
 import History from '../../screens/history';
-import { Colors } from '../../utilities/utils';
+import { Colors } from '../../utilities';
 
 const MainNav = createMaterialBottomTabNavigator({
   Home:{ screen : Home,

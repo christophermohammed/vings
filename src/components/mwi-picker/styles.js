@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native';
-import {SCREEN_WIDTH} from '../../utilities/utils';
+import {SCREEN_WIDTH} from '../../utilities';
 
 const pickerStyle = StyleSheet.create({
   picker: {

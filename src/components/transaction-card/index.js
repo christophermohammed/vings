@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
-import { Colors } from '../../utilities/utils';
+import { Colors } from '../../utilities';
 import { removeTransaction } from '../../state/transactions/actions';
 import { removeFromUserNetSav } from '../../state/user/actions';
 

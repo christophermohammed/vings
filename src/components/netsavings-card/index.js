@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
 import commonStyles from '../../utilities/common-styles';
-import { Colors, to2Dp } from '../../utilities/utils';
+import { Colors, to2Dp } from '../../utilities';
 
 const NetSavingsCard = (props) => {
     const { currency, netSav } = props;

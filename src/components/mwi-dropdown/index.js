@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Colors } from '../../utilities/utils';
+import { Colors } from '../../utilities';
 import styles from '../../utilities/common-styles';
 
 class MWIDropdown extends Component {

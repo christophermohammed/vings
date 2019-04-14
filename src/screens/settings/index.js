@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { updateCurrency } from '../../state/user/actions';
 import MWIPicker from '../../components/mwi-picker';
 import styles from '../../utilities/common-styles';
-import { Colors } from '../../utilities/utils';
+import { Colors } from '../../utilities';
 import Profile from '../../components/profile';
 
 class Settings extends Component {

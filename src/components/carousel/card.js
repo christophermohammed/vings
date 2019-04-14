@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
-import { SCREEN_HEIGHT, SCREEN_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, Colors } from '../../utilities/utils';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, Colors } from '../../utilities';
 import PlatformLogo from '../platform-logo';
 
 class CarouselCard extends Component {

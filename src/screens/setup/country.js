@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Text, View, StatusBar, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import MWIDropdown from '../../components/mwi-dropdown';
-import { Colors, emptyRegex } from '../../utilities/utils';
+import { Colors, emptyRegex } from '../../utilities';
 import styles from '../../utilities/common-styles';
 import { updateUser } from '../../state/user/actions';
 import { saveUserToAzure } from '../../utilities/cloud';
