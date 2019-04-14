@@ -5,7 +5,7 @@ import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
 import { Colors, SCREEN_WIDTH, getGUID } from '../../utilities/utils';
 import { placeholders } from '../../utilities/terms';
-import { genders, currencies } from '../../data/utils';
+import { genders, currencies } from '../../utilities/data';
 import styles from '../../utilities/common-styles';
 import { updateUser } from '../../state/user/actions';
 import { saveUserToAzure } from '../../utilities/cloud';
@@ -58,7 +58,7 @@ class Setup extends Component {
           barStyle="dark-content"
         />
         <View style={styles.space}>
-          <Text style={setupStyles.welcome}>Tell us a little bit about you</Text>
+          <Text style={styles.welcome}>Tell us a little bit about you</Text>
         </View>
         <View style={styles.space}>
           <MWITextInput 
@@ -84,7 +84,7 @@ class Setup extends Component {
             items={currencies}
             selectedValue={currency}
             onChange={(currency) => this.setState({currency})}
-            message="What is your preferred currency?"
+            message="What is your main currency?"
           />
         </View>
         <View style={styles.space}>
@@ -99,13 +99,6 @@ class Setup extends Component {
     );
   }
 }
-
-const setupStyles = StyleSheet.create({
-  welcome: {
-    fontSize: 26,
-    fontWeight: '600'
-  },
-});
 
 const mapDispatchToProps = {
   onUpdateUser: updateUser 

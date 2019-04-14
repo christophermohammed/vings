@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { ScrollView, View, StatusBar, Button } from 'react-native';
 import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities/utils';
 import { buildTransaction } from './add-logic';
-import { transactionType, placeholders } from '../../utilities/terms';
+import { transactionType, placeholders } from '../../utilities/data';
 import MWITextInput from '../../components/mwi-text-input';
+import MWIPicker from '../../components/mwi-picker';
 import styles from '../../utilities/common-styles';
 import { addToUserNetSav } from '../../state/user/actions';
 import { addTransaction } from '../../state/transactions/actions';
@@ -93,6 +94,14 @@ class AddTransaction extends Component {
               />
             </View>
         ) : null }
+        <View style={styles.space}>
+          <MWIPicker 
+            items={currencies}
+            selectedValue={currency}
+            onChange={(currency) => this.setState({currency})}
+            message={`What currency did you ${type === transactionType.cost ? "spend" : "save"}?`}
+          />
+        </View>
         <View style={[styles.space, { borderRadius: 10, width: SCREEN_WIDTH - 20}]}>
           <Button
             title="Add"

@@ -11,3 +11,7 @@ export const transactionType = {
     cost: "Cost",
     savings: "Savings",
 }
+
+export const genders = ["Male", "Female" , "Non-Binary"];
+
+export const currencies = ["$", "£", "€", "¥"];
