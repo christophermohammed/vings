@@ -16,7 +16,7 @@ class TransactionCard extends React.Component {
     }
 
     render(){
-        const { currency, item, index, removeFromUserNetSav, removeTransaction } = this.props;
+        const { item, index, removeFromUserNetSav, removeTransaction } = this.props;
         amt = item.amount;
         const swipeSettings = {
             autoClose: true,
@@ -71,8 +71,8 @@ class TransactionCard extends React.Component {
                         >
                             {
                                 (amt < 0) 
-                                ? `-${currency}${(Math.round(amt * 100) / 100) * -1}` 
-                                : `${currency}${Math.round(amt * 100) / 100}`
+                                ? `-${item.currency}${(Math.round(amt * 100) / 100) * -1}` 
+                                : `${item.currency}${Math.round(amt * 100) / 100}`
                             }
                         </Text>
                     </View>

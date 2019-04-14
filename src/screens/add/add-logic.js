@@ -1,7 +1,7 @@
 import { emptyRegex, getGUID } from '../../utilities/utils';
 import { transactionType } from '../../utilities/data';
 
-export const buildTransaction = (description, location, amt, type) => {
+export const buildTransaction = (description, location, amt, currency, type) => {
   // amount valid
   if(!isNaN(amt) && amt > 0){
     // description valid
@@ -22,6 +22,7 @@ export const buildTransaction = (description, location, amt, type) => {
           location: location,
           amount: amt,
           date,
+          currency,
           dateString: date.toDateString(),
           uid: getGUID()
         }

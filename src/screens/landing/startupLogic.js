@@ -13,6 +13,7 @@ export default startup = async (updatePhotos, updateUser, updateTransactions, na
         tr.amount = parseFloat(tr.amount);
         tr.dateString = tr.date;
         tr.date = new Date(tr.dateString);
+        tr.currency = user.currency;
         return tr
       });
     }

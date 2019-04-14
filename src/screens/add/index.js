@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ScrollView, View, StatusBar, Button } from 'react-native';
 import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities/utils';
 import { buildTransaction } from './add-logic';
-import { transactionType, placeholders } from '../../utilities/data';
+import { transactionType, placeholders, currencies } from '../../utilities/data';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
 import styles from '../../utilities/common-styles';
@@ -21,6 +21,7 @@ class AddTransaction extends Component {
       description: "",
       location: "",
       amount: "",
+      currency: ""
     }
   }   
 
@@ -37,11 +38,11 @@ class AddTransaction extends Component {
     // alter UI on save
     this.clearTextInputs();
     // extract data 
-    const { amount, description, location } = this.state;
+    const { amount, description, location, currency } = this.state;
     const { type, goHome, addToUserNetSav, addTransaction, user } = this.props;
     let amt = to2Dp(parseFloat(amount));
     // verify and save
-    let transaction = buildTransaction(description, location, amt, type);
+    let transaction = buildTransaction(description, location, amt, currency, type);
     if(transaction){
       saveTransactionToAzure(transaction, user.uid);
       addTransaction(transaction);
@@ -51,11 +52,11 @@ class AddTransaction extends Component {
   }
 
   render() {
-    const { description, location, amount } = this.state;
+    const { description, location, amount, currency } = this.state;
     const { type } = this.props;
     return (
       <ScrollView>
-      <View style={[styles.container, {justifyContent: 'center', alignItems: 'center'}]}>
+      <View style={[styles.container, styles.center]}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
@@ -94,7 +95,7 @@ class AddTransaction extends Component {
               />
             </View>
         ) : null }
-        <View style={styles.space}>
+        <View style={[styles.space, {width: SCREEN_WIDTH}]}>
           <MWIPicker 
             items={currencies}
             selectedValue={currency}

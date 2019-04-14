@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
 import { Colors, SCREEN_WIDTH, getGUID } from '../../utilities/utils';
-import { placeholders } from '../../utilities/terms';
+import { placeholders } from '../../utilities/data';
 import { genders, currencies } from '../../utilities/data';
 import styles from '../../utilities/common-styles';
 import { updateUser } from '../../state/user/actions';
