@@ -3,8 +3,8 @@ import { Text, View, StatusBar, Button, ScrollView } from 'react-native';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
 import { Colors, SCREEN_WIDTH, getGUID } from '../../utilities/utils';
-import { placeholders } from '../../utilities/data';
-import { genders } from '../../utilities/data';
+import { placeholders } from '../../utilities';
+import { genders } from '../../utilities';
 import styles from '../../utilities/common-styles';
 
 class Demographic extends Component {

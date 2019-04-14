@@ -176,6 +176,6 @@ export const getCurrencyFromName = (val) => {
   return res[0];
 }
 
-export const convertCurrency = (amount, base, dest) => {
-  return (amount / base.rate) * dest.rate;
+export const convertCurrency = (amount, baseRate, destRate) => {
+  return (amount / baseRate) * destRate;
 }

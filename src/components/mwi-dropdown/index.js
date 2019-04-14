@@ -18,7 +18,7 @@ class MWIDropdown extends Component {
         this.state = {
             data: props.data,
             fullData: props.fullData,
-            isOpen: false,
+            isOpen: true,
             isListOpen: true
         }
     }

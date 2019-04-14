@@ -6,7 +6,7 @@ import { Colors, emptyRegex } from '../../utilities/utils';
 import styles from '../../utilities/common-styles';
 import { updateUser } from '../../state/user/actions';
 import { saveUserToAzure } from '../../utilities/cloud';
-import { countries } from '../../utilities/data';
+import { countries } from '../../utilities';
 import { currencyNames, getCurrencyFromName } from '../../utilities/currencies';
 
 class Country extends Component {
@@ -73,16 +73,20 @@ class Country extends Component {
           />
         </View>
         <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
-          <Button
-            title="Go Back"
-            onPress={() => this.props.navigation.navigate('Demographic')}
-            color={Colors.main}
-          />
-          <Button
-            title="Save"
-            onPress={this.save}
-            color={Colors.main}
-          />
+          <View style={{ borderRadius: 10, width: 50}}>
+            <Button
+              title="Go Back"
+              onPress={() => this.props.navigation.navigate('Demographic')}
+              color={Colors.main}
+            />
+          </View>
+          <View style={{ borderRadius: 10, width: 50}}>
+            <Button
+              title="Save"
+              onPress={this.save}
+              color={Colors.main}
+            />
+          </View>
         </View>
       </View>
       </ScrollView>

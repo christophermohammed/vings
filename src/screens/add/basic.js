@@ -1,27 +1,20 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
 import { ScrollView, View, StatusBar, Button } from 'react-native';
-import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities/utils';
+import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities';
 import { buildTransaction } from './add-logic';
-import { transactionType, placeholders } from '../../utilities/data';
+import { transactionType, placeholders } from '../../utilities';
 import MWITextInput from '../../components/mwi-text-input';
-import MWIPicker from '../../components/mwi-picker';
 import styles from '../../utilities/common-styles';
-import { addToUserNetSav } from '../../state/user/actions';
-import { addTransaction } from '../../state/transactions/actions';
 import { saveTransactionToAzure } from '../../utilities/cloud';
 
-class AddTransaction extends Component {
+class Basic extends Component {
   constructor(props){
     super(props);
-
-    this.mounted = false;
 
     this.state = {
       description: "",
       location: "",
       amount: "",
-      currency: ""
     }
   }   
 
@@ -34,20 +27,17 @@ class AddTransaction extends Component {
     }
   }
 
-  save = () => {
+  next = () => {
     // alter UI on save
     this.clearTextInputs();
     // extract data 
-    const { amount, description, location, currency } = this.state;
-    const { type, goHome, addToUserNetSav, addTransaction, user } = this.props;
+    const { amount, description, location } = this.state;
+    const { type, navigation, addToUserNetSav, addTransaction, user } = this.props;
     let amt = to2Dp(parseFloat(amount));
     // verify and save
-    let transaction = buildTransaction(description, location, amt, currency, type);
+    let transaction = buildTransaction(description, location, amt, type);
     if(transaction){
-      //saveTransactionToAzure(transaction, user.uid);
-      addTransaction(transaction);
-      addToUserNetSav(transaction.amount);
-      goHome();
+      navigation.navigate('More', {transaction});
     }
   }
 
@@ -95,18 +85,10 @@ class AddTransaction extends Component {
               />
             </View>
         ) : null }
-        <View style={[styles.space, {width: SCREEN_WIDTH}]}>
-          <MWIPicker 
-            items={[]}
-            selectedValue={currency}
-            onChange={(currency) => this.setState({currency})}
-            message={`What currency did you ${type === transactionType.cost ? "spend" : "save"}?`}
-          />
-        </View>
         <View style={[styles.space, { borderRadius: 10, width: SCREEN_WIDTH - 20}]}>
           <Button
-            title="Add"
-            onPress={this.save}
+            title="Next"
+            onPress={this.next}
             color={Colors.main}
           />
         </View>
@@ -116,13 +98,4 @@ class AddTransaction extends Component {
   }
 }
 
-const mapStateToProps = ({user}) => ({
-  user
-});
-
-const mapDispatchToProps = {
-  addToUserNetSav,
-  addTransaction 
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddTransaction);
+export default Basic;

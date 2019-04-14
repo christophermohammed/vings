@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from '../../screens/home';
 import Settings from '../../screens/settings';
-import Add from '../add';
+import Add from '../add/add-tab';
 import History from '../../screens/history';
 import { Colors } from '../../utilities/utils';
 

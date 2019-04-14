@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 
-import AddTransaction from '../../screens/add';
+import AddTransaction from '../../screens/add/basic';
 import { Colors } from '../../utilities/utils';
-import { transactionType } from '../../utilities/data';
+import { transactionType } from '../../utilities';
 
 class AddCost extends Component {
   goHome = () => {
@@ -38,7 +38,8 @@ const AddNav = createMaterialTopTabNavigator({
   AddSaving:{ screen : AddSaving,
     navigationOptions: {
       tabBarLabel: 'Savings',
-    } }
+    } 
+  }
 },{
   initialRouteName: 'AddCost',
   order: ['AddCost', 'AddSaving' ],
