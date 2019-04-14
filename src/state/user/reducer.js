@@ -15,6 +15,10 @@ export default function reducer(state = {}, {type, payload}) {
             user.netSav -= payload.amt;
             setUser(user);
             return user;
+        case actionTypes.UPDATE_CURRENCY:
+            user.currency = payload.cur;
+            setUser(user);
+            return user;
         default:
             return state;
     }

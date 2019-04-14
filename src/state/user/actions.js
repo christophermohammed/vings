@@ -26,3 +26,12 @@ export const removeFromUserNetSav = (amt) => {
         }
     };
 }
+
+export const updateCurrency = (cur) => {
+    return{
+        type: actionTypes.UPDATE_CURRENCY,
+        payload: {
+            cur
+        }
+    };
+}

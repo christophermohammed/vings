@@ -2,6 +2,7 @@
 export const UPDATE_USER = "Add user's info";
 export const ADD_TO_USER_NET_SAV = "Add a transaction amount to user's net savings";
 export const REMOVE_FROM_USER_NET_SAV = "Remove a transaction amount from user's net savings";
+export const UPDATE_CURRENCY = "Update user's default currency";
 //PHOTOS
 export const UPDATE_PHOTOS = "Add photos";
 //TRANSACTIONS

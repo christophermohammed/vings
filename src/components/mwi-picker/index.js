@@ -8,7 +8,7 @@ import { Colors, isIOS } from '../../utilities/utils';
 class MWIPicker extends React.Component {
   constructor(){
     super();
-    this.state = {isOpen: false};
+    this.state = {isOpen: true};
   }
 
   toggleIsOpen = () => {
@@ -28,12 +28,13 @@ class MWIPicker extends React.Component {
       <View>
         <TouchableWithoutFeedback 
           onPress={this.toggleIsOpen}
+          style={{height: 30}}
         >
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.question}>{message}</Text>
             {isIOS() &&
               <Icon 
-                name={isOpen ? "ios-arrow-dropup-circle" : "ios-arrow-dropdown-circle"}
+                name={isOpen ? "ios-arrow-up" : "ios-arrow-down"}
                 size={30}
                 color={Colors.main}
               />
@@ -45,9 +46,9 @@ class MWIPicker extends React.Component {
             <Picker
                 selectedValue={this.props.selectedValue}
                 onValueChange={
-                    (itemValue) => {
-                      this.props.onChange(itemValue) 
-                    }
+                  (itemValue) => {
+                    this.props.onChange(itemValue) 
+                  }
                 }
                 style={pickerStyle.picker}
             >

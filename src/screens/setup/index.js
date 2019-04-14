@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, StatusBar, Button } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
@@ -18,26 +18,12 @@ class Setup extends Component {
 
     this.state = {
       age: "",
-      genders: [],
       gender: 'Male',
-      currencies: [],
       currency: '$',
-      loading: false
     }
   }
 
-  componentDidMount(){
-    this.setState({genders, currencies});
-  }
-
-  toggleLoading = () => {
-    this.setState((prevState) => {
-      return{loading: !prevState.loading}
-    });
-  }
-
   save = () => {
-    this.toggleLoading();
     let age = parseInt(this.state.age);
     if(age < 10 || age > 100 || age === NaN || age === undefined) {
       this.clearTextInputs();
@@ -55,7 +41,6 @@ class Setup extends Component {
       setUser(user);
       this.props.navigation.navigate("Main");
     }
-    this.toggleLoading();
   }
 
   clearTextInputs = () => {
@@ -64,8 +49,9 @@ class Setup extends Component {
   }
 
   render() {
-    const { loading, genders, currencies, age, gender, currency } = this.state;
+    const { age, gender, currency } = this.state;
     return (
+      <ScrollView>
       <View style={styles.container}>
         <StatusBar
           backgroundColor="white"
@@ -106,18 +92,10 @@ class Setup extends Component {
             title="Save"
             onPress={this.save}
             color={Colors.main}
-            disabled={loading}
           />
         </View>
-        {loading &&
-          <View style={styles.loading}>
-            <ActivityIndicator
-              size="large"
-              color={Colors.main}
-            />
-          </View>
-        }
       </View>
+      </ScrollView>
     );
   }
 }
