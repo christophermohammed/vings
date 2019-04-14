@@ -4,11 +4,11 @@ import {
   createStackNavigator
 } from 'react-navigation';
 
-import Setup from '../../screens/setup';
+import Setup from '../setup';
 import Main from '../main';
 import Landing from '../../screens/landing';
 
-const SetupNav = createStackNavigator({
+const SetupWithHeader = createStackNavigator({
   Setup: { 
     screen: Setup,
     navigationOptions: {
@@ -18,7 +18,7 @@ const SetupNav = createStackNavigator({
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Setup: { screen: SetupNav },
+  Setup: { screen: SetupWithHeader },
   Main: { screen: Main },
   Landing: { screen: Landing }
 },{

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, StatusBar, ScrollView, Button, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { currencies } from '../../utilities/data';
 import { updateCurrency } from '../../state/user/actions';
 import MWIPicker from '../../components/mwi-picker';
 import styles from '../../utilities/common-styles';
@@ -35,7 +34,7 @@ class Settings extends Component {
             </View>
             <View style={styles.space}>
               <MWIPicker 
-                items={currencies}
+                items={[]}
                 selectedValue={currency}
                 onChange={(currency) => this.setState({currency})}
                 message="What's your main currency?"

@@ -1,29 +1,23 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, StatusBar, Button, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
+import { Text, View, StatusBar, Button, ScrollView } from 'react-native';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIPicker from '../../components/mwi-picker';
 import { Colors, SCREEN_WIDTH, getGUID } from '../../utilities/utils';
 import { placeholders } from '../../utilities/data';
-import { genders, currencies } from '../../utilities/data';
+import { genders } from '../../utilities/data';
 import styles from '../../utilities/common-styles';
-import { updateUser } from '../../state/user/actions';
-import { saveUserToAzure } from '../../utilities/cloud';
-import { setUser } from '../../utilities/async';
 
-class Setup extends Component {
-
+class Demographic extends Component {
   constructor(props){
     super(props);
 
     this.state = {
       age: "",
       gender: 'Male',
-      currency: '$',
     }
   }
 
-  save = () => {
+  next = () => {
     let age = parseInt(this.state.age);
     if(age < 10 || age > 100 || age === NaN || age === undefined) {
       this.clearTextInputs();
@@ -33,13 +27,9 @@ class Setup extends Component {
         age: this.state.age,
         gender: this.state.gender,
         netSav: 0.0,
-        currency: this.state.currency,
         uid: getGUID()
       }
-      this.props.onUpdateUser(user);
-      saveUserToAzure(user);
-      setUser(user);
-      this.props.navigation.navigate("Main");
+      this.props.navigation.navigate("Country", {user});
     }
   }
 
@@ -49,7 +39,7 @@ class Setup extends Component {
   }
 
   render() {
-    const { age, gender, currency } = this.state;
+    const { age, gender } = this.state;
     return (
       <ScrollView>
       <View style={styles.container}>
@@ -80,17 +70,9 @@ class Setup extends Component {
           />
         </View>
         <View style={styles.space}>
-          <MWIPicker 
-            items={currencies}
-            selectedValue={currency}
-            onChange={(currency) => this.setState({currency})}
-            message="What is your main currency?"
-          />
-        </View>
-        <View style={styles.space}>
           <Button
-            title="Save"
-            onPress={this.save}
+            title="Next"
+            onPress={this.next}
             color={Colors.main}
           />
         </View>
@@ -100,8 +82,4 @@ class Setup extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  onUpdateUser: updateUser 
-};
-
-export default connect(null, mapDispatchToProps)(Setup);
+export default Demographic;
