@@ -30,7 +30,7 @@ class TransactionCard extends React.Component {
                 {
                     onPress: () => {
                         let rowKey = this.state.activeRowKey;
-                        removeFromUserNetSav(amt);
+                        // removeFromUserNetSav(amt);
                         removeTransaction(rowKey);
                     },
                     text: 'Delete', type: 'delete'

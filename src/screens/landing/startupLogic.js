@@ -1,11 +1,11 @@
-import { getUser, getTransactions } from '../../utilities/async';
+import { getItemFromAsync } from '../../utilities/async';
 import { getPhotosFromAzure } from '../../utilities/cloud';
 import { getCurrencyFromName } from '../../utilities/currencies';
 
 export default startup = async (updatePhotos, updateUser, updateTransactions, navigation) => {
     // get data from storage
-    let transactions = await getTransactions();
-    let user = await getUser();
+    let transactions = await getItemFromAsync("transactions", []);
+    let user = await getItemFromAsync("user");
     let photos = await getPhotosFromAzure();
     // handle backwards compat
     if(typeof(user.currency) === "string"){

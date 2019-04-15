@@ -1,4 +1,4 @@
-import { setPhotosToAsync, getUser } from './async';
+import { getUser } from './async';
 
 export const getPhotosFromAzure = async () => {
   let url = 'https://vingsgallery.azurewebsites.net/api/GetPhotos?code=bAVDlZbfCJtiu5rDbk2DWBpVC95KvwnRqgoSHseEjw/77XXgOdzFdA==';
@@ -45,7 +45,7 @@ export const saveUserToAzure = async (user) => {
 }
 
 export const removeTransactionFromAzure = async (uid) => {
-  let user = await getUser();
+  let user = await getItemFromAsync("user");
   let url = 'https://vingsazure.azurewebsites.net/api/RemoveTransaction/';
   try {
       let response = await fetch(url, {

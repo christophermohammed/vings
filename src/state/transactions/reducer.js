@@ -1,5 +1,5 @@
 import * as actionTypes from '../actionTypes';
-import { setTransactions } from '../../utilities/async';
+import { setItemToAsync } from '../../utilities/async';
 import { removeTransactionFromAzure } from '../../utilities/cloud';
 
 export default function reducer(state = [], {type, payload}) {
@@ -7,12 +7,12 @@ export default function reducer(state = [], {type, payload}) {
     
     switch(type){
         case actionTypes.UPDATE_TRANSACTIONS:
-            setTransactions(payload.transactions); 
+            setItemToAsync("transactions", payload.transactions); 
             return payload.transactions;
 
         case actionTypes.ADD_TRANSACTION: 
             transactions.unshift(payload.transaction);
-            setTransactions(transactions) 
+            setItemToAsync("transactions", transactions) 
             return transactions;
 
         case actionTypes.REMOVE_TRANSACTION:
@@ -23,7 +23,7 @@ export default function reducer(state = [], {type, payload}) {
             // remove from state
             transactions.splice(payload.index, 1);
             // set to storage
-            setTransactions(transactions);
+            setItemToAsync("transactions", transactions);
             return transactions;
 
         default:

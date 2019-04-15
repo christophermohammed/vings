@@ -38,7 +38,7 @@ class More extends Component {
     if(transaction){
       //saveTransactionToAzure(transaction, user.uid);
       addTransaction(updatedTransaction);
-      addToUserNetSav(updatedTransaction.localAmount);
+      // addToUserNetSav(updatedTransaction.localAmount);
       navigation.navigate('Basic');
       screenProps.goHome();
     }
