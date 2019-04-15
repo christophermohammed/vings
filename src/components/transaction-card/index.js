@@ -71,8 +71,8 @@ class TransactionCard extends React.Component {
                         >
                             {
                                 (amt < 0) 
-                                ? `-${item.currency}${(Math.round(amt * 100) / 100) * -1}` 
-                                : `${item.currency}${Math.round(amt * 100) / 100}`
+                                ? `-${(Math.round(amt * 100) / 100) * -1}` 
+                                : `${Math.round(amt * 100) / 100}`
                             }
                         </Text>
                     </View>

@@ -5,12 +5,12 @@ import {
 } from 'react-navigation';
 import CardStackStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 
-import Demographic from '../../screens/setup/demographic';
-import Country from '../../screens/setup/country';
+import Basic from '../../screens/add/basic';
+import More from '../../screens/add/more-details';
 
-const SetupNav = createStackNavigator({
-  Demographic,
-  Country
+const AddNav = createStackNavigator({
+  Basic,
+  More
 },{
     transitionConfig: () => ({
         screenInterpolator: CardStackStyleInterpolator.forHorizontal,
@@ -22,17 +22,14 @@ const SetupNav = createStackNavigator({
     }
 });
 
-const AppContainer = createAppContainer(SetupNav);
+const AppContainer = createAppContainer(AddNav);
 
-class SetupStack extends Component {
-    gotoMain = () => {
-        this.props.navigation.navigate('Main');
-    }
+class AddStack extends Component {
     render() {
         return (
-            <AppContainer screenProps={{gotoMain:this.gotoMain}}/>
+            <AppContainer screenProps={{goHome: this.props.goHome, type: this.props.type}}/>
         );
     }
 }
 
-export default SetupStack;
+export default AddStack;

@@ -73,14 +73,14 @@ class Country extends Component {
           />
         </View>
         <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
-          <View style={{ borderRadius: 10, width: 50}}>
+          <View style={{ borderRadius: 10}}>
             <Button
               title="Go Back"
               onPress={() => this.props.navigation.navigate('Demographic')}
               color={Colors.main}
             />
           </View>
-          <View style={{ borderRadius: 10, width: 50}}>
+          <View style={{ borderRadius: 10}}>
             <Button
               title="Save"
               onPress={this.save}

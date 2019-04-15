@@ -5,7 +5,6 @@ import { buildTransaction } from './add-logic';
 import { transactionType, placeholders } from '../../utilities';
 import MWITextInput from '../../components/mwi-text-input';
 import styles from '../../utilities/common-styles';
-import { saveTransactionToAzure } from '../../utilities/cloud';
 
 class Basic extends Component {
   constructor(props){
@@ -22,7 +21,7 @@ class Basic extends Component {
     this.setState({amount: ""});
     this.descriptionInput.clear();
     this.amountInput.clear();
-    if(this.props.type === transactionType.cost){
+    if(this.props.screenProps.type === transactionType.cost){
       this.locationInput.clear();
     }
   }
@@ -32,26 +31,27 @@ class Basic extends Component {
     this.clearTextInputs();
     // extract data 
     const { amount, description, location } = this.state;
-    const { type, navigation, addToUserNetSav, addTransaction, user } = this.props;
+    const { screenProps, navigation } = this.props;
     let amt = to2Dp(parseFloat(amount));
     // verify and save
-    let transaction = buildTransaction(description, location, amt, type);
+    let transaction = buildTransaction(description, location, amt, screenProps.type);
     if(transaction){
       navigation.navigate('More', {transaction});
     }
   }
 
   render() {
-    const { description, location, amount, currency } = this.state;
-    const { type } = this.props;
+    const { description, location, amount } = this.state;
+    const { screenProps } = this.props;
+    let type = screenProps.type;
     return (
       <ScrollView>
-      <View style={[styles.container, styles.center]}>
+      <View style={styles.container}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
-        <View style={styles.space}>
+        <View style={[styles.space, styles.center]}>
           <MWITextInput 
             message={type === transactionType.cost ? "What did you buy?" : "How did you come across this money?"}
             placeholder={placeholders.description}
@@ -61,7 +61,7 @@ class Basic extends Component {
             width={SCREEN_WIDTH - 20}
           />
         </View>
-        <View style={styles.space}>
+        <View style={[styles.space, styles.center]}>
           <MWITextInput
             message={`How much did you ${type === transactionType.cost ? "spend" : "save"}?`} 
             getRef={amt => { this.amountInput = amt }}
@@ -73,7 +73,7 @@ class Basic extends Component {
           />
         </View>
         {type === transactionType.cost ? (
-            <View style={styles.space}>
+            <View style={[styles.space, styles.center]}>
               <MWITextInput
                 message="Where did you buy it?" 
                 getRef={loc => { this.locationInput = loc }}
@@ -85,12 +85,14 @@ class Basic extends Component {
               />
             </View>
         ) : null }
-        <View style={[styles.space, { borderRadius: 10, width: SCREEN_WIDTH - 20}]}>
-          <Button
-            title="Next"
-            onPress={this.next}
-            color={Colors.main}
-          />
+        <View style={[styles.space, { alignItems: 'flex-end', marginRight: 15}]}>
+          <View style={{borderRadius: 10}}>
+            <Button
+              title="Next"
+              onPress={this.next}
+              color={Colors.main}
+            />
+          </View>
         </View>
       </View>
       </ScrollView>

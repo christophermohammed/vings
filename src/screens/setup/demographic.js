@@ -69,12 +69,14 @@ class Demographic extends Component {
             message="What is your gender?"
           />
         </View>
-        <View style={[styles.space, {alignItems: 'flex-end', marginRight: 15}]}>
-          <Button
-            title="Next"
-            onPress={this.next}
-            color={Colors.main}
-          />
+        <View style={[styles.space, { alignItems: 'flex-end', marginRight: 15}]}>
+          <View style={{borderRadius: 10}}>
+            <Button
+              title="Next"
+              onPress={this.next}
+              color={Colors.main}
+            />
+          </View>
         </View>
       </View>
       </ScrollView>
