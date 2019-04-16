@@ -1,5 +1,5 @@
-import { emptyRegex, getGUID } from '../../utilities';
-import { transactionType } from '../../utilities';
+import { emptyRegex, getGUID } from '../utilities';
+import { transactionType } from '../utilities';
 
 export const buildTransaction = (description, location, amt, type) => {
   // amount valid

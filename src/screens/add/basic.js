@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { ScrollView, View, StatusBar, Button } from 'react-native';
 import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities';
-import { buildTransaction } from './add-logic';
+import { buildTransaction } from '../../logic/add';
 import { transactionType, placeholders } from '../../utilities';
 import MWITextInput from '../../components/mwi-text-input';
 import styles from '../../utilities/common-styles';

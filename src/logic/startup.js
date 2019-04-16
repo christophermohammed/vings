@@ -1,7 +1,7 @@
-import { getItemFromAsync } from '../../logic/async';
-import { getPhotosFromAzure } from '../../logic/cloud';
-import { getCurrencyFromCode } from '../../logic/currencies';
-import defaultCurrencies from '../../data/currencies';
+import { getItemFromAsync } from './async';
+import { getPhotosFromAzure } from './cloud';
+import { getCurrencyFromCode } from './currencies';
+import defaultCurrencies from '../data/currencies';
 
 export default startup = async (updatePhotos, updateUser, updateTransactions, updateCurrencies, navigation) => {
     // get data from storage

@@ -5,7 +5,7 @@ import { updatePhotos } from '../../state/photos/actions';
 import { updateUser } from '../../state/user/actions';
 import { updateTransactions } from '../../state/transactions/actions';
 import { updateCurrencies } from '../../state/currencies/actions';
-import startup from './startupLogic';
+import startup from '../../logic/startup';
 
 class Landing extends Component {
   async componentDidMount() {
