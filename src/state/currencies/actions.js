@@ -1,5 +1,14 @@
 import * as actionTypes from '../actionTypes';
 
+export const updateCurrencies = (currencies) => {
+    return{
+        type: actionTypes.UPDATE_CURRENCIES,
+        payload: {
+            currencies
+        }
+    };
+}
+
 export const updateRates = (rates) => {
     return{
         type: actionTypes.UPDATE_RATES,

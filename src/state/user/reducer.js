@@ -8,7 +8,7 @@ export default function reducer(state = {}, {type, payload}) {
             setItemToAsync("user", payload.user); 
             return payload.user;
         case actionTypes.UPDATE_CURRENCY:
-            user.currency = payload.cur;
+            user.currencyCode = payload.code;
             setItemToAsync("user", user);
             return user;
         default:

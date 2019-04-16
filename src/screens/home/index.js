@@ -6,6 +6,7 @@ import Tip from '../../components/tip-of-the-day';
 import Carousel from '../../components/carousel';
 import styles from '../../utilities/common-styles';
 import { clearAsync } from '../../utilities/async';
+import { getCurrencyFromCode } from '../../utilities/currencies';
 
 class Home extends Component {
   
@@ -30,7 +31,7 @@ class Home extends Component {
             {/* Net savings section */}
             <View style={styles.space}>
               <Text style={homeStyles.title}>Savings</Text>
-              <NetSavingsCard netSav={user.netSav} currency={user.currency}/>
+              <NetSavingsCard netSav={user.netSav} currency={getCurrencyFromCode(user.currencyCode)}/>
             </View>
             {/* Tip section */}
             <View style={styles.space}>

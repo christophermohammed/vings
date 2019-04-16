@@ -8,3 +8,12 @@ export const updateUser = (user) => {
         }
     };
 }
+
+export const updateCurrencyCode = (code) => {
+    return{
+        type: actionTypes.UPDATE_USER,
+        payload: {
+            code
+        }
+    };
+}

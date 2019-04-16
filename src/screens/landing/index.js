@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { updatePhotos } from '../../state/photos/actions';
 import { updateUser } from '../../state/user/actions';
 import { updateTransactions } from '../../state/transactions/actions';
+import { updateCurrencies } from '../../state/currencies/actions';
 import startup from './startupLogic';
 
 class Landing extends Component {
@@ -34,7 +35,8 @@ class Landing extends Component {
 const mapDispatchToProps = {
   updatePhotos,
   updateUser,
-  updateTransactions 
+  updateTransactions,
+  updateCurrencies 
 };
 
 export default connect(null, mapDispatchToProps)(Landing);

@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import styles from '../../utilities/common-styles';
+import { getCurrencyFromCode } from '../../utilities/currencies';
 
 const Profile = (props) => {
     const { user } = props;
+    let currency = getCurrencyFromCode(user.currencyCode);
     return (
         <View style={styles.container}>
             <View>
@@ -19,7 +21,7 @@ const Profile = (props) => {
             </View>
             <View style={profileStyles.row}>
                 <Text style={styles.question}>Currency:</Text>
-                <Text style={styles.question}>{user.currency}</Text>
+                <Text style={styles.question}>{`${currency.name} ${currency.code}`}</Text>
             </View>
         </View>
     );

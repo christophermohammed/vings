@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ScrollView, View, StatusBar, Button } from 'react-native';
 import MWIDropdown from '../../components/mwi-dropdown';
 import { Colors, transactionType } from '../../utilities';
-import { currencyNames, getCurrencyFromName, convertCurrency } from '../../utilities/currencies';
+import { currencyNames, getCurrencyFromName, convertCurrency, getCurrencyFromCode } from '../../utilities/currencies';
 import styles from '../../utilities/common-styles';
 import { addToUserNetSav } from '../../state/user/actions';
 import { addTransaction } from '../../state/transactions/actions';
@@ -26,7 +26,8 @@ class More extends Component {
     let date = new Date();
     let currency = getCurrencyFromName(currencyName);
     let transaction = navigation.getParam('transaction');
-    let localAmount = convertCurrency(transaction.amount, currency.rate, user.currency.rate);
+    let userCurrency = getCurrencyFromCode(user.currencyCode);
+    let localAmount = convertCurrency(transaction.amount, currency.rate, userCurrency.rate);
 
     let updatedTransaction = {
       ...transaction,

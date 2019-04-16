@@ -1,4 +1,20 @@
-export const currencies = [
+export const currencyNames = defaultCurrencies.map(cur => `${cur.name} (${cur.code})`);
+
+export const getCurrencyFromName = (val) => {
+  let res = defaultCurrencies.filter(cur => `${cur.name} (${cur.code})` === val);
+  return res[0];
+}
+
+export const getCurrencyFromCode = (code) => {
+  let res = defaultCurrencies.filter(cur => cur.code === code);
+  return res[0];
+}
+
+export const convertCurrency = (amount, baseRate, destRate) => {
+  return (amount / baseRate) * destRate;
+}
+
+export const defaultCurrencies = [
     {code: 'AED', symbol: 'د.إ',   name: 'United Arab Emirates dirham',                netSav: 0, rate: 3.673104},
     {code: 'AFN', symbol: 'Af',    name: 'Afghan afghani',                             netSav: 0, rate: 77.459504},
     {code: 'ALL', symbol: 'L',     name: 'Albanian lek',                               netSav: 0, rate: 109.070403},
@@ -167,15 +183,4 @@ export const currencies = [
     {code: 'ZMK', symbol: 'ZK',    name: 'Zambian Kwacha',                             netSav: 0, rate: 9001.203593},
     {code: 'ZMW', symbol: 'ZK',    name: 'Zambian Kwacha',                             netSav: 0, rate: 12.508037},
     {code: 'ZWL', symbol: '$',     name: 'Zimbabwe Dollar',                            netSav: 0, rate: 322.355011}
-]
-
-export const currencyNames = currencies.map(cur => `${cur.name} (${cur.code})`);
-
-export const getCurrencyFromName = (val) => {
-  let res = currencies.filter(cur => `${cur.name} (${cur.code})` === val);
-  return res[0];
-}
-
-export const convertCurrency = (amount, baseRate, destRate) => {
-  return (amount / baseRate) * destRate;
-}
+];

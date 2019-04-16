@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar, ScrollView, Button, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { updateCurrency } from '../../state/user/actions';
+import { updateCurrencyCode } from '../../state/user/actions';
 import MWIPicker from '../../components/mwi-picker';
 import styles from '../../utilities/common-styles';
 import { Colors } from '../../utilities';
@@ -12,12 +12,12 @@ class Settings extends Component {
       super(props);
 
       this.state = {
-        currency: '$',
+        currency: '',
       }
     }
 
     render() {
-      const { updateCurrency, user } = this.props;
+      const { updateCurrencyCode, user } = this.props;
       const { currency } = this.state;
       return (
         <ScrollView>
@@ -43,7 +43,7 @@ class Settings extends Component {
             <View style={styles.space}>
               <Button
                 title="Save"
-                onPress={() => updateCurrency(this.state.currency)}
+                onPress={() => updateCurrencyCode(currency)}
                 color={Colors.main}
               />
             </View>
@@ -58,7 +58,7 @@ const mapStateToProps = ({user}) => ({
 });
 
 const mapDispatchToProps = {
-  updateCurrency 
+  updateCurrencyCode 
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

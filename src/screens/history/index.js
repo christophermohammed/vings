@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, FlatList, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import TransactionCard from '../../components/transaction-card';
 import styles from '../../utilities/common-styles';
+import { getCurrencyFromCode } from '../../utilities/currencies';
 
 class History extends Component {
   render() {
@@ -52,7 +53,7 @@ const historyStyles = StyleSheet.create({
 });
 
 const mapStateToProps = ({user, transactions}) => ({
-  currency: user.currency,
+  currency: getCurrencyFromCode(user.currencyCode),
   transactions
 });
 
