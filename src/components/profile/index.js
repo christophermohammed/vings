@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import styles from '../../utilities/common-styles';
-import { getCurrencyFromCode } from '../../utilities/currencies';
+import { getCurrencyFromCode } from '../../logic/currencies';
 
 const Profile = (props) => {
     const { user } = props;

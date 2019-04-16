@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { categories } from '../../utilities/tips';
+import { categories } from '../../data/tips';
 
 const TipIcons = (props) => {
     const getIconNames = (category) => {

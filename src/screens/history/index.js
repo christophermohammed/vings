@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import TransactionCard from '../../components/transaction-card';
 import styles from '../../utilities/common-styles';
-import { getCurrencyFromCode } from '../../utilities/currencies';
+import { getCurrencyFromCode } from '../../logic/currencies';
 
 class History extends Component {
   render() {

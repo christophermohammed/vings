@@ -1,5 +1,5 @@
 import * as actionTypes from '../actionTypes';
-import { setItemToAsync } from '../../utilities/async';
+import { setItemToAsync } from '../../logic/async';
 
 export default function reducer(state = {}, {type, payload}) {
     let user = JSON.parse(JSON.stringify(state));

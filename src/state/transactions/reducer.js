@@ -1,6 +1,6 @@
 import * as actionTypes from '../actionTypes';
-import { setItemToAsync } from '../../utilities/async';
-import { removeTransactionFromAzure } from '../../utilities/cloud';
+import { setItemToAsync } from '../../logic/async';
+import { removeTransactionFromAzure } from '../../logic/cloud';
 
 export default function reducer(state = [], {type, payload}) {
     let transactions = JSON.parse(JSON.stringify(state));

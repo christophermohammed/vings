@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { ScrollView, View, StatusBar, Button } from 'react-native';
 import MWIDropdown from '../../components/mwi-dropdown';
 import { Colors, transactionType } from '../../utilities';
-import { currencyNames, getCurrencyFromName, convertCurrency, getCurrencyFromCode } from '../../utilities/currencies';
+import { currencyNames, getCurrencyFromName, convertCurrency, getCurrencyFromCode } from '../../logic/currencies';
 import styles from '../../utilities/common-styles';
 import { addToUserNetSav } from '../../state/user/actions';
 import { addTransaction } from '../../state/transactions/actions';
-import { saveTransactionToAzure } from '../../utilities/cloud';
+import { saveTransactionToAzure } from '../../logic/cloud';
 
 class More extends Component {
   constructor(props){

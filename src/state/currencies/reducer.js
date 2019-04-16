@@ -1,6 +1,7 @@
 import * as actionTypes from '../actionTypes';
-import { setItemToAsync } from '../../utilities/async';
-import { defaultCurrencies, convertCurrency } from '../../utilities/currencies';
+import { setItemToAsync } from '../../logic/async';
+import { convertCurrency } from '../../logic/currencies';
+import defaultCurrencies from '../../data/currencies';
 
 export default function reducer(state = {}, {type, payload}) {
     switch(type){

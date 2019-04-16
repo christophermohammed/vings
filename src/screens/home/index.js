@@ -5,8 +5,8 @@ import NetSavingsCard from '../../components/netsavings-card';
 import Tip from '../../components/tip-of-the-day';
 import Carousel from '../../components/carousel';
 import styles from '../../utilities/common-styles';
-import { clearAsync } from '../../utilities/async';
-import { getCurrencyFromCode } from '../../utilities/currencies';
+import { clearAsync } from '../../logic/async';
+import { getCurrencyFromCode } from '../../logic/currencies';
 
 class Home extends Component {
   

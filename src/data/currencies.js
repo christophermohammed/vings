@@ -1,20 +1,4 @@
-export const currencyNames = defaultCurrencies.map(cur => `${cur.name} (${cur.code})`);
-
-export const getCurrencyFromName = (val) => {
-  let res = defaultCurrencies.filter(cur => `${cur.name} (${cur.code})` === val);
-  return res[0];
-}
-
-export const getCurrencyFromCode = (code) => {
-  let res = defaultCurrencies.filter(cur => cur.code === code);
-  return res[0];
-}
-
-export const convertCurrency = (amount, baseRate, destRate) => {
-  return (amount / baseRate) * destRate;
-}
-
-export const defaultCurrencies = [
+export default defaultCurrencies = [
     {code: 'AED', symbol: 'د.إ',   name: 'United Arab Emirates dirham',                netSav: 0, rate: 3.673104},
     {code: 'AFN', symbol: 'Af',    name: 'Afghan afghani',                             netSav: 0, rate: 77.459504},
     {code: 'ALL', symbol: 'L',     name: 'Albanian lek',                               netSav: 0, rate: 109.070403},
