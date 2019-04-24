@@ -31,7 +31,7 @@ class Country extends Component {
       }else{
         let user = {
           ...navigation.getParam('user'),
-          currency,
+          currencyCode: currency.code,
           country
         }
         onUpdateUser(user);

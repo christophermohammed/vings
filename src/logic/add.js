@@ -1,7 +1,9 @@
 import { emptyRegex, getGUID } from '../utilities';
 import { transactionType } from '../utilities';
+import { isACurrencyName } from './currencies';
 
-export const buildTransaction = (description, location, amt, type) => {
+export const buildBasicTransaction = (description, location, amt, type) => {
+  let transaction = {};
   // amount valid
   if(!isNaN(amt) && amt > 0){
     // description valid
@@ -16,13 +18,12 @@ export const buildTransaction = (description, location, amt, type) => {
           amt *= -1;
         }
         // build transaction
-        let transaction = {
+        transaction = {
           description: description,
           location: location,
           amount: amt,
           uid: getGUID()
         }
-        return transaction;
       } else {
         alert("Please enter a valid location.");
       }
@@ -32,5 +33,25 @@ export const buildTransaction = (description, location, amt, type) => {
   }else{
     alert("Please enter a valid amount.");
   }
-  return null;
-}   
+  return transaction;
+}
+
+export const buildRestOfTransaction = (transaction, currency, date, tags) => {
+  let updatedTransaction = {};
+  if(date){
+    if(currency && currency.name && isACurrencyName(`${currency.name} (${currency.code})`)){
+      updatedTransaction = {
+        ...transaction,
+        currency,
+        date,
+        dateString: date.toDateString(),
+        tags
+      };
+    }else{
+      alert("Please select a valid currency");
+    }
+  }else{
+    alert("Please select a valid date");
+  }
+  return updatedTransaction;
+}

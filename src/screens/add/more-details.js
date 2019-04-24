@@ -1,62 +1,78 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, StatusBar, Button } from 'react-native';
+import { ScrollView, View, StatusBar, Button, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import MWIDropdown from '../../components/mwi-dropdown';
-import { Colors, transactionType } from '../../utilities';
-import { currencyNames, getCurrencyFromName, convertCurrency, getCurrencyFromCode } from '../../logic/currencies';
-import styles from '../../utilities/common-styles';
-import { addToUserNetSav } from '../../state/user/actions';
+import { Colors, transactionType, SCREEN_WIDTH } from '../../utilities';
+import { currencyNames, getCurrencyFromName } from '../../logic/currencies';
+import { addToNetSav } from '../../state/currencies/actions';
 import { addTransaction } from '../../state/transactions/actions';
+import { addTag } from '../../state/tags/actions';
 import { saveTransactionToAzure } from '../../logic/cloud';
+import DateModal from '../../components/date-modal';
+import TagsModal from '../../components/tags-modal';
+import commonStyles from '../../utilities/common-styles';
+import { buildRestOfTransaction } from '../../logic/add';
 
 class More extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      currencyName: ""
+      currencyName: "",
+      isDateOpen: false,
+      isTodayDisabled: true,
+      isTagsOpen: false,
+      date: new Date,
+      localTags: []
     }
   }   
 
   save = () => {
     // extract data 
-    const { currencyName } = this.state;
-    const { screenProps, addToUserNetSav, addTransaction, navigation, user } = this.props;
-    // verify and save
-    let date = new Date();
+    const { currencyName, date, localTags } = this.state;
+    const { screenProps, addTransaction, navigation, user, addToNetSav } = this.props;
     let currency = getCurrencyFromName(currencyName);
     let transaction = navigation.getParam('transaction');
-    let userCurrency = getCurrencyFromCode(user.currencyCode);
-    let localAmount = convertCurrency(transaction.amount, currency.rate, userCurrency.rate);
-
-    let updatedTransaction = {
-      ...transaction,
-      localAmount,
-      currency,
-      date,
-      dateString: date.toDateString()
-    };
-    if(transaction){
+    let updatedTransaction = buildRestOfTransaction(transaction, currency, date, localTags);
+    // verify and save
+    if(updatedTransaction){
       //saveTransactionToAzure(transaction, user.uid);
       addTransaction(updatedTransaction);
-      // addToUserNetSav(updatedTransaction.localAmount);
+      addToNetSav(updatedTransaction.amount, updatedTransaction.currency);
       navigation.navigate('Basic');
       screenProps.goHome();
     }
   }
 
+  addTagToLocal = (tag) => {
+    let newTags = JSON.parse(JSON.stringify(this.state.localTags));
+    newTags.push(tag);
+    this.setState({localTags: newTags});
+  }
+
+  removeTagFromLocal = (index) => {
+    let newTags = JSON.parse(JSON.stringify(this.state.localTags));
+    newTags.splice(index, 1);
+    this.setState({localTags: newTags});
+  }
+
   render() {
-    const { currencyName } = this.state;
-    const { screenProps } = this.props;
+    const { currencyName, date, isDateOpen, isTagsOpen, isTodayDisabled, localTags } = this.state;
+    const { screenProps, tags, addTag } = this.props;
     let type = screenProps.type;
     return (
       <ScrollView>
-      <View style={styles.container}>
+      <View style={[commonStyles.container, {opacity: (isDateOpen || isTagsOpen) ? 0.5 : 1}]}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
-        <View style={styles.space}>
+
+        {/* Currency Mod */}
+        <View style={commonStyles.space}>
+          <Text style={commonStyles.detailTitle}>Currency</Text>
+        </View>
+        <View style={commonStyles.space}>
           <MWIDropdown
             query={currencyName}
             setQuery={(currencyName) => this.setState({currencyName})} 
@@ -65,7 +81,92 @@ class More extends Component {
             message={`What currency did you ${type === transactionType.cost ? "spend" : "save"}?`}
           />
         </View>
-        <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
+
+        {/* Date mod */}
+        <View style={commonStyles.space}>
+          <Text style={commonStyles.detailTitle}>Date</Text>
+        </View>
+        <View style={commonStyles.center}>
+          <DateModal 
+            visible={isDateOpen}
+            closeDateModal={() => this.setState({isDateOpen: false})}
+            setDate={d => this.setState({date: d})}
+          />
+          <Text style={{fontSize: 18}}>{date ? date.toDateString() : ""}</Text>
+        </View>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-around', marginRight: 15, marginLeft: 15}]}>
+          <View style={{ borderRadius: 10}}>
+            <Button
+              title="Today"
+              onPress={() => this.setState({date: new Date})}
+              color={Colors.main}
+              disabled={isTodayDisabled}
+            />
+          </View>
+          <View style={{ borderRadius: 10}}>
+            <Button
+              title="Select Date"
+              onPress={() => this.setState({isDateOpen: true, isTodayDisabled: false})}
+              color={Colors.main}
+            />
+          </View>
+        </View>
+
+        {/* Tags Mod */}
+        <View style={commonStyles.space}>
+          <Text style={commonStyles.detailTitle}>Tags</Text>
+        </View>
+        <View style={commonStyles.center}>
+          <TagsModal 
+            visible={isTagsOpen}
+            closeTagsModal={() => this.setState({isTagsOpen: false})}
+            addTag={addTag}
+          />
+        </View>
+        <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={{fontSize: 18}}>Your tags</Text>
+            <FlatList 
+              data={tags}
+              keyExtractor={(_item, index) => (index).toString()}
+              renderItem = {
+                ({item, index})=>(
+                  <TouchableOpacity onPress={() => this.addTagToLocal(item)} style={[commonStyles.regRow, {marginTop: 5, height: 30}]}>
+                    <View style={[styles.tagColor, {backgroundColor: item.color}]}></View>
+                    <Text style={{fontSize: 15}}>{item.name}</Text>
+                  </TouchableOpacity>
+                )
+              }
+            />
+          </View>
+          <View style={{alignItems: 'center'}}>
+            <Text style={{fontSize: 18}}>Tagged</Text>
+            <FlatList 
+              data={localTags}
+              keyExtractor={(_item, index) => (index).toString()}
+              renderItem = {
+                ({item, index})=>(
+                  <TouchableOpacity onPress={() => this.removeTagFromLocal(index)} style={[commonStyles.regRow, {marginTop: 5, height: 30}]}>
+                    <View style={[styles.tagColor, {backgroundColor: item.color}]} />
+                    <Text style={{fontSize: 15}}>{item.name}</Text>
+                  </TouchableOpacity>
+                )
+              }
+            />
+          </View>
+        </View>
+        <View style={[commonStyles.space, { alignItems: 'flex-end', marginRight: 15}]}>
+          <View style={{borderRadius: 10}}>
+            <Button
+              title="Add New Tag"
+              onPress={() => this.setState({isTagsOpen: true})}
+              color={Colors.main}
+            />
+          </View>
+        </View>
+
+        {/* Save / go back */}
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Go Back"
@@ -87,13 +188,22 @@ class More extends Component {
   }
 }
 
-const mapStateToProps = ({user}) => ({
-  user
+const styles = StyleSheet.create({
+  tagColor: {
+    height: 20, 
+    width: 20, 
+    borderRadius: 10,  
+  }
+});
+
+const mapStateToProps = ({user, tags}) => ({
+  user, tags
 });
 
 const mapDispatchToProps = {
-  addToUserNetSav,
-  addTransaction 
+  addToNetSav,
+  addTransaction,
+  addTag 
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(More);

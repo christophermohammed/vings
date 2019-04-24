@@ -1,3 +1,5 @@
+import { getItemFromAsync } from './async';
+
 export const getPhotosFromAzure = async () => {
   let url = 'https://vingsgallery.azurewebsites.net/api/GetPhotos?code=bAVDlZbfCJtiu5rDbk2DWBpVC95KvwnRqgoSHseEjw/77XXgOdzFdA==';
   try {

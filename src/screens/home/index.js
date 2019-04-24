@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, StatusBar, ScrollView, Button } from 'react-native';
 import NetSavingsCard from '../../components/netsavings-card';
+import MWIPicker from '../../components/mwi-picker';
+import { genders } from '../../utilities';
 import Tip from '../../components/tip-of-the-day';
 import Carousel from '../../components/carousel';
 import styles from '../../utilities/common-styles';
 import { clearAsync } from '../../logic/async';
 import { getCurrencyFromCode } from '../../logic/currencies';
+// import { AdMobBanner } from 'expo-ads-admob';
 
 class Home extends Component {
   
@@ -19,7 +22,8 @@ class Home extends Component {
   }
 
   render() {
-    const { user, photos } = this.props;
+    const { photos, user, currencies } = this.props;
+    let currency = getCurrencyFromCode(user.currencyCode, currencies);
     return (
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -30,19 +34,15 @@ class Home extends Component {
             />
             {/* Net savings section */}
             <View style={styles.space}>
-              <Text style={homeStyles.title}>Savings</Text>
-              <NetSavingsCard netSav={user.netSav} currency={getCurrencyFromCode(user.currencyCode)}/>
+              <NetSavingsCard currency={currency}/>
             </View>
+            {/* <AdMobBanner
+              bannerSize="smartBannerPortrait"
+              adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
+              testDeviceID="EMULATOR"
+              onDidFailToReceiveAdWithError={() => {}} 
+            /> */}
             {/* Tip section */}
-            <View style={styles.space}>
-              <Text style={homeStyles.title}>Tips</Text>
-              <Tip index={this.state.index}/>
-            </View>
-            {/* Gallery section */}
-            <View style={homeStyles.gallery}>
-              <Text style={[homeStyles.title, {paddingLeft: 10, paddingRight: 10}]}>Gallery</Text>
-              <Carousel photos={photos}/>
-            </View>
             <Button 
               title="Clear"
               onPress={clearAsync}
@@ -64,8 +64,9 @@ const homeStyles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({user, photos}) => ({
+const mapStateToProps = ({user, photos, currencies}) => ({
   user,
+  currencies,
   photos
 });
 

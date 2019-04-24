@@ -1,6 +1,6 @@
 //USER
 export const UPDATE_USER = "Add user's info";
-export const UPDATE_CURRENCY = "Update user's default currency";
+export const UPDATE_CURRENCY_CODE = "Update user's default currency";
 //CURRENCY
 export const UPDATE_CURRENCIES = "Update currencies";
 export const UPDATE_RATES = "Update rates to current forex rates";
@@ -12,3 +12,7 @@ export const UPDATE_PHOTOS = "Add photos";
 export const UPDATE_TRANSACTIONS = "Update list of transactions";
 export const ADD_TRANSACTION = "Add a transaction";
 export const REMOVE_TRANSACTION = "Remove a transaction";
+// TAGS
+export const UPDATE_TAGS = "Update list of tags";
+export const ADD_TAG = "Add a tag to list";
+export const REMOVE_TAG = "Remove a tag from list";

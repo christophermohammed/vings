@@ -26,7 +26,6 @@ class Demographic extends Component {
       let user = {
         age: this.state.age,
         gender: this.state.gender,
-        netSav: 0.0,
         uid: getGUID()
       }
       this.props.navigation.navigate("Country", {user});
@@ -59,6 +58,7 @@ class Demographic extends Component {
             width={(SCREEN_WIDTH - 20)} 
             keyboardType="number-pad"
             placeholder={placeholders.age}
+            maxLength={3}
           />
         </View>
         <View style={styles.space}>

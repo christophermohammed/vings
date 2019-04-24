@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
+// setters
 import { updatePhotos } from '../../state/photos/actions';
 import { updateUser } from '../../state/user/actions';
 import { updateTransactions } from '../../state/transactions/actions';
 import { updateCurrencies } from '../../state/currencies/actions';
+import { updateTags } from '../../state/tags/actions';
 import startup from '../../logic/startup';
 
 class Landing extends Component {
   async componentDidMount() {
     // actions from props
-    const { updateUser, updatePhotos, updateTransactions } = this.props;
+    const { updateUser, updatePhotos, updateTransactions, updateCurrencies, updateTags } = this.props;
     // call startup
     await startup(
       updatePhotos,
       updateUser,
       updateTransactions,
+      updateCurrencies,
+      updateTags,
       this.props.navigation
     );
   }
@@ -36,7 +40,8 @@ const mapDispatchToProps = {
   updatePhotos,
   updateUser,
   updateTransactions,
-  updateCurrencies 
+  updateCurrencies,
+  updateTags 
 };
 
 export default connect(null, mapDispatchToProps)(Landing);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Picker, TouchableWithoutFeedback } from 'react-native';
+import { WheelPicker } from 'react-native-wheel-picker-android';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../../utilities/common-styles';
 import pickerStyle from './styles';
@@ -18,42 +19,39 @@ class MWIPicker extends React.Component {
   }
 
   render(){
-    let pickerList = this.props.items.map( (s, i) => {
-      return <Picker.Item key={i} value={s} label={s} />
-    });
-    let { message } = this.props;
+    // let pickerList = this.props.items.map( (s, i) => {
+    //   return <Picker.Item key={i} value={s} label={s} />
+    // });
+    let { message, items } = this.props;
     let {isOpen} = this.state;
 
     return(
       <View>
-        <TouchableWithoutFeedback 
+        <TouchableWithoutFeedback
           onPress={this.toggleIsOpen}
           style={{height: 30}}
         >
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.question}>{message}</Text>
-            {isIOS() &&
-              <Icon 
-                name={isOpen ? "ios-arrow-up" : "ios-arrow-down"}
-                size={30}
-                color={Colors.main}
-              />
-            }
+            <Icon
+              name={isOpen ? "ios-arrow-up" : "ios-arrow-down"}
+              size={30}
+              color={Colors.main}
+            />
           </View>
         </TouchableWithoutFeedback>
-        {((isIOS() && isOpen) || !isIOS()) &&
-          <View style={{alignItems: 'center', marginBottom: 30}}>
-            <Picker
-                selectedValue={this.props.selectedValue}
-                onValueChange={
-                  (itemValue) => {
-                    this.props.onChange(itemValue) 
-                  }
+        {isOpen &&
+          <View style={{alignItems: 'center', marginBottom: isIOS() ? 30 : -30}}>
+            <WheelPicker
+              data={items}
+              selectedItem={this.props.selectedValue}
+              onItemSelected={
+                (index) => {
+                  this.props.onChange(index)
                 }
-                style={pickerStyle.picker}
-            >
-              {pickerList}
-            </Picker>
+              }
+              //style={pickerStyle.picker}
+            />
           </View>
         }
       </View>

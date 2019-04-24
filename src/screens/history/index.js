@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, FlatList, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
-import TransactionCard from '../../components/transaction-card';
+import TransactionCard from '../../components/transactions-card/swipeable-card';
 import styles from '../../utilities/common-styles';
-import { getCurrencyFromCode } from '../../logic/currencies';
+import { removeTransaction } from '../../state/transactions/actions';
+import { removeFromNetSav } from '../../state/currencies/actions';
 
 class History extends Component {
   render() {
-    const { transactions, currency } = this.props;
+    const { transactions, removeFromNetSav, removeTransaction } = this.props;
     return (
       <View styles={styles.container}>
         <StatusBar
@@ -31,7 +32,8 @@ class History extends Component {
                   <TransactionCard 
                     item={item}
                     index={index} 
-                    currency={currency}
+                    removeFromNetSav={removeFromNetSav}
+                    removeTransaction={removeTransaction}
                   />
                 </View>
               }
@@ -52,9 +54,13 @@ const historyStyles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({user, transactions}) => ({
-  currency: getCurrencyFromCode(user.currencyCode),
+const mapStateToProps = ({transactions}) => ({
   transactions
 });
 
-export default connect(mapStateToProps)(History);
+const mapDispatchToProps = {
+  removeFromNetSav,
+  removeTransaction 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(History);

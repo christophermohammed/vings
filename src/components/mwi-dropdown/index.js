@@ -18,7 +18,7 @@ class MWIDropdown extends Component {
         this.state = {
             data: props.data,
             fullData: props.fullData,
-            isOpen: true,
+            isOpen: props.isOpen,
             isListOpen: true
         }
     }
@@ -41,7 +41,7 @@ class MWIDropdown extends Component {
 
     render(){
         const {data, isOpen, isListOpen} = this.state;
-        const { query } = this.props;
+        const { query, borderColor, noClear } = this.props;
         return (
             <View>
                 <TouchableOpacity 
@@ -52,16 +52,31 @@ class MWIDropdown extends Component {
                     <Icon 
                       name={isOpen ? "ios-arrow-up" : "ios-arrow-down"}
                       size={30}
-                      color={Colors.dark}
+                      color={Colors.main}
                     />
                 </TouchableOpacity>
                 {isOpen && 
                     <View>
-                        <TextInput
-                            style={styles.inputStyle} 
-                            onChangeText={(text) => this.handleSearch(text)}  
-                            value = {query}
-                        />
+                        <View style={[styles.inputStyle, {flexDirection: 'row'}]}>
+                            <View style={{borderColor, flex: 1}}>
+                                <TextInput
+                                    style={{height: 40, marginLeft: 5}} 
+                                    onChangeText={(text) => this.handleSearch(text)}  
+                                    value = {query}
+                                    returnKeyType="done"
+                                />
+                            </View>
+                            {!noClear &&
+                                <View style={[styles.center, {marginRight: 5}]}>
+                                    <Icon 
+                                        name="ios-close-circle-outline"
+                                        color={'gray'}
+                                        size={30}
+                                        onPress={() => this.handleSearch('')}
+                                    />
+                                </View>
+                            }
+                        </View>
                         {isListOpen && 
                             <View style={{height: 165, borderBottomWidth: 1}}>
                                 <FlatList 
@@ -74,7 +89,7 @@ class MWIDropdown extends Component {
                                                     this.setState({isListOpen: false});
                                                     this.props.setQuery(item);
                                                 }}
-                                                style={{justifyContent: 'center', alignItems: 'center', height: 30}}
+                                                style={{justifyContent: 'center', alignItems: 'center', height: 40}}
                                             > 
                                                 <Text style={{fontSize: 15}}>{item}</Text>
                                             </TouchableOpacity>

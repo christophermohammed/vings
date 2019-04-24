@@ -18,20 +18,22 @@ export const updateRates = (rates) => {
     };
 }
 
-export const addToNetSav = (amount) => {
+export const addToNetSav = (amount, base) => {
     return{
         type: actionTypes.ADD_TO_NET_SAV,
         payload: {
-            amount
+            amount,
+            base
         }
     };
 }
 
-export const removeFromNetSav = (amount) => {
+export const removeFromNetSav = (amount, base) => {
     return{
         type: actionTypes.REMOVE_FROM_NET_SAV,
         payload: {
-            amount
+            amount,
+            base
         }
     };
 }

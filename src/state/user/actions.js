@@ -11,7 +11,7 @@ export const updateUser = (user) => {
 
 export const updateCurrencyCode = (code) => {
     return{
-        type: actionTypes.UPDATE_USER,
+        type: actionTypes.UPDATE_CURRENCY_CODE,
         payload: {
             code
         }

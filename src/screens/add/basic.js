@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { ScrollView, View, StatusBar, Button } from 'react-native';
+import { ScrollView, View, StatusBar, Button, Text } from 'react-native';
 import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities';
-import { buildTransaction } from '../../logic/add';
+import { buildBasicTransaction } from '../../logic/add';
 import { transactionType, placeholders } from '../../utilities';
 import MWITextInput from '../../components/mwi-text-input';
 import styles from '../../utilities/common-styles';
@@ -34,7 +34,7 @@ class Basic extends Component {
     const { screenProps, navigation } = this.props;
     let amt = to2Dp(parseFloat(amount));
     // verify and save
-    let transaction = buildTransaction(description, location, amt, screenProps.type);
+    let transaction = buildBasicTransaction(description, location, amt, screenProps.type);
     if(transaction){
       navigation.navigate('More', {transaction});
     }
@@ -51,6 +51,9 @@ class Basic extends Component {
           backgroundColor="white"
           barStyle="dark-content"
         />
+        <View style={styles.space}>
+          <Text style={styles.detailTitle}>Basic info</Text>
+        </View>
         <View style={[styles.space, styles.center]}>
           <MWITextInput 
             message={type === transactionType.cost ? "What did you buy?" : "How did you come across this money?"}
@@ -59,6 +62,7 @@ class Basic extends Component {
             onChange={description => this.setState({description})}
             getRef={desc => { this.descriptionInput = desc }}
             width={SCREEN_WIDTH - 20}
+            maxLength={50}
           />
         </View>
         <View style={[styles.space, styles.center]}>
@@ -70,6 +74,7 @@ class Basic extends Component {
             value={amount}
             keyboardType="decimal-pad"
             width={SCREEN_WIDTH - 20}
+            maxLength={12}
           />
         </View>
         {type === transactionType.cost ? (
@@ -82,6 +87,7 @@ class Basic extends Component {
                 value={location}
                 width={SCREEN_WIDTH - 20}
                 textContentType="location"
+                maxLength={50}
               />
             </View>
         ) : null }

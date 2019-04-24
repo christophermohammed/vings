@@ -1,9 +1,9 @@
 import * as actionTypes from '../actionTypes';
 import { setItemToAsync } from '../../logic/async';
 import { convertCurrency } from '../../logic/currencies';
-import defaultCurrencies from '../../data/currencies';
 
-export default function reducer(state = {}, {type, payload}) {
+export default function reducer(state = [], {type, payload}) {
+    let newCurrencies = JSON.parse(JSON.stringify(state));
     switch(type){
         case actionTypes.UPDATE_CURRENCIES:
             return payload.currencies;
@@ -13,9 +13,8 @@ export default function reducer(state = {}, {type, payload}) {
             break;
 
         case actionTypes.ADD_TO_NET_SAV:
-            const { amount, base } = payload;            
-            let newCurrencies = defaultCurrencies.map(cur => {
-                var localAmount = convertCurrency(amount, base.rate, cur.rate);
+            newCurrencies = state.map(cur => {
+                var localAmount = convertCurrency(payload.amount, payload.base && payload.base.rate, cur.rate);
                 cur.netSav += localAmount;
                 return cur;
             });
@@ -23,9 +22,8 @@ export default function reducer(state = {}, {type, payload}) {
             return newCurrencies;
 
         case actionTypes.REMOVE_FROM_NET_SAV:
-            const { amount, base } = payload;            
-            let newCurrencies = defaultCurrencies.map(cur => {
-                var localAmount = convertCurrency(amount, base.rate, cur.rate);
+            newCurrencies = state.map(cur => {
+                var localAmount = convertCurrency(payload.amount, payload.base && payload.base.rate, cur.rate);
                 cur.netSav -= localAmount;
                 return cur;
             });

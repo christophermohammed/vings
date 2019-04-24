@@ -2,23 +2,24 @@ import React, { Component } from 'react';
 import { View, StatusBar, ScrollView, Button, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { updateCurrencyCode } from '../../state/user/actions';
-import MWIPicker from '../../components/mwi-picker';
+import MWIDropdown from '../../components/mwi-dropdown';
 import styles from '../../utilities/common-styles';
 import { Colors } from '../../utilities';
 import Profile from '../../components/profile';
+import {currencyNames, getCurrencyFromName, getCurrencyFromCode} from '../../logic/currencies';
 
 class Settings extends Component {
     constructor(props){
       super(props);
 
       this.state = {
-        currency: '',
+        currencyName: '',
       }
     }
 
     render() {
       const { updateCurrencyCode, user } = this.props;
-      const { currency } = this.state;
+      const { currencyName } = this.state;
       return (
         <ScrollView>
           <View>
@@ -27,23 +28,28 @@ class Settings extends Component {
               barStyle="dark-content"
             />
             <View style={styles.space}>
-              <Profile user={user}/>
+              <Profile user={user} currencyName={currencyName}/>
             </View>
             <View style={styles.space}>
                 <Text style={styles.welcome}>Edit</Text>
             </View>
             <View style={styles.space}>
-              <MWIPicker 
-                items={[]}
-                selectedValue={currency}
-                onChange={(currency) => this.setState({currency})}
-                message="What's your main currency?"
+              <MWIDropdown
+                query={currencyName}
+                setQuery={(currencyName) => this.setState({currencyName})} 
+                data={currencyNames}
+                fullData={currencyNames}
+                message="Change your main currency"
               />
             </View>
             <View style={styles.space}>
               <Button
                 title="Save"
-                onPress={() => updateCurrencyCode(currency)}
+                onPress={() => {
+                  let code = getCurrencyFromName(currencyName).code;
+                  updateCurrencyCode(code);
+                  this.props.navigation.navigate('Home');
+                }}
                 color={Colors.main}
               />
             </View>

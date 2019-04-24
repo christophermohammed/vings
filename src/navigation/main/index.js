@@ -7,6 +7,7 @@ import Home from '../../screens/home';
 import Settings from '../../screens/settings';
 import Add from '../add/add-tab';
 import History from '../../screens/history';
+import Converter from '../../screens/converter';
 import { Colors } from '../../utilities';
 
 const MainNav = createMaterialBottomTabNavigator({
@@ -42,15 +43,26 @@ const MainNav = createMaterialBottomTabNavigator({
       )
     } 
   },
+  Converter:{ screen : Converter,
+    navigationOptions: {
+      tabBarLabel: 'Converter',
+      tabBarIcon: ({tintColor}) => (
+        <Icon name="ios-expand" color={tintColor} size={24} />
+      )
+    } 
+  },
 },{
   navigationOptions: ({navigation}) => {
     const { routeName } = navigation.state.routes[navigation.state.index];
     return {
-      headerTitle: routeName
+      headerTitle: routeName,
+      headerTitleStyle: {
+        color: Colors.main
+      },
     };
   },
   initialRouteName: 'Home',
-  order: ['History','Home', 'Add', 'Settings'],
+  order: ['Converter','History','Home', 'Add', 'Settings'],
   activeTintColor: Colors.secondary,
   inactiveTintColor: Colors.main,
   barStyle: { backgroundColor: 'white' },

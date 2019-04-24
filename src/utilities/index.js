@@ -2,10 +2,17 @@ import { Dimensions, Platform } from 'react-native';
 
 export const Colors = {
   main: '#4a69bd',
+  secondary: '#1e3799',
+  soft: '#f3ffff',
   red: '#eb4d4b',
   green: '#6ab04c',
-  secondary: '#1e3799',
-  soft: '#f3ffff'
+
+  tagRed: '#d10000',
+  tagOrange: '#ff6622',
+  tagYellow: '#ffda21',
+  tagGreen: '#33dd00',
+  tagBlue: '#1133cc',
+  tagViolet: '#220066'
 }
 
 export const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -34,10 +41,11 @@ export const getGUID = () => {
 }
 
 export const placeholders = {
-  description: (Platform.OS === 'ios') ? " Description" : "\tDescription",
-  location: (Platform.OS === 'ios') ? " Location" : "\tLocation",
-  amount: (Platform.OS === 'ios') ? " 0.00" : "\t0.00",
-  age: (Platform.OS === 'ios') ? " Age" : "\tAge",
+  description: "Description",
+  location: "Location",
+  amount: "0.00",
+  age: "Age",
+  name: "Name",
 }
 
 export const transactionType = {

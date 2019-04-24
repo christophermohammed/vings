@@ -42,7 +42,6 @@ export default styles = StyleSheet.create({
       fontWeight: '400'
     },
     inputStyle: {
-      height: 40, 
       borderColor: 'gray', 
       borderWidth: 1,
       borderRadius: 10
@@ -83,5 +82,15 @@ export default styles = StyleSheet.create({
     regRow: {
         flexDirection: 'row', 
         justifyContent: 'space-between',
+    },
+    shadow: {
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        shadowOffset: {width: 1, height: 1},
+    },
+    homeCard: {
+        flex: 0, 
+        backgroundColor: 'white', 
+        borderRadius: 10
     }
 });
