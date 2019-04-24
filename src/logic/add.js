@@ -37,7 +37,7 @@ export const buildBasicTransaction = (description, location, amt, type) => {
 }
 
 export const buildRestOfTransaction = (transaction, currency, date, tags) => {
-  let updatedTransaction = {};
+  let updatedTransaction = null;
   if(date){
     if(currency && currency.name && isACurrencyName(`${currency.name} (${currency.code})`)){
       updatedTransaction = {

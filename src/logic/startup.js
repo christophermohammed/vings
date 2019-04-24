@@ -35,7 +35,6 @@ export default startup = async (
     updateCurrencies(currencies);
     updateTags(tags);
     // navigate
-    debugger;
     if(!user.age){
       navigation.navigate("Setup");
     }else{

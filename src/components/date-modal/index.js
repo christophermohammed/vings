@@ -12,14 +12,14 @@ const DateModal = (props) => {
             transparent={true}
             visible={visible}
         >
-            <View style={[{backgroundColor: 'rgba(255, 255, 255, 0.9)', height: SCREEN_HEIGHT, width: SCREEN_WIDTH}]}>
+            <View style={[commonStyles.center, {backgroundColor: 'rgba(255, 255, 255, 0.9)', height: SCREEN_HEIGHT, width: SCREEN_WIDTH}]}>
                 <View style={commonStyles.space}>
-                    <DatePicker 
-                      onDateSelected={setDate}
-                      hideHours
-                      hideMinutes
-                      hideAm
-                    />
+                  <DatePicker 
+                    onDateSelected={setDate}
+                    hideHours
+                    hideMinutes
+                    hideAm
+                  />
                 </View>
                 <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-around', marginRight: 15, marginLeft: 15}]}>
                   <View style={{ borderRadius: 10}}>

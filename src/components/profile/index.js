@@ -21,7 +21,7 @@ const Profile = (props) => {
             </View>
             <View style={profileStyles.row}>
                 <Text style={styles.question}>Currency:</Text>
-                <Text style={styles.question}>{currency && currency.code}</Text>
+                <Text style={styles.question}>{user.currencyCode}</Text>
             </View>
         </View>
     );
