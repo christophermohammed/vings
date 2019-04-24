@@ -2,6 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>NSCalendarsUsageDescription</key>
+  <string>Allow Vings to access your calendar</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Allow Vings to use the camera</string>
+  <key>NSContactsUsageDescription</key>
+  <string>Allow Vings experiences to access your contacts</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>Allow Vings to use your location</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Allow Vings to use your location</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Allow Vings to use your location</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Allow Vings to access your microphone</string>
+  <key>NSMotionUsageDescription</key>
+  <string>Allow Vings to access your device's accelerometer</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Give Vings periences permission to save photos</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Give Vings periences permission to access your photos</string>
+  <key>NSRemindersUsageDescription</key>
+  <string>Allow Vings to access your reminders</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -13,7 +35,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
+	<string>Vings</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

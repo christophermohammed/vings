@@ -4,6 +4,16 @@ import android.app.Application;
 
 import com.oblador.vectoricons.VectorIconsPackage;
 
+import org.unimodules.adapters.react.ReactAdapterPackage;
+import org.unimodules.adapters.react.ModuleRegistryAdapter;
+import org.unimodules.adapters.react.ReactModuleRegistryProvider;
+import org.unimodules.core.interfaces.Package;
+import org.unimodules.core.interfaces.SingletonModule;
+
+import expo.modules.constants.ConstantsPackage;
+import expo.modules.permissions.PermissionsPackage;
+import expo.modules.filesystem.FileSystemPackage;
+
 import com.facebook.react.ReactApplication;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
@@ -20,6 +30,13 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
+  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(Arrays.<Package>asList(
+    new ReactAdapterPackage(),
+    new ConstantsPackage(),
+    new PermissionsPackage(),
+    new FileSystemPackage()
+  ), Arrays.<SingletonModule>asList());
+  
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -30,10 +47,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new AsyncStoragePackage(),
-            new NetInfoPackage(),
+          new AsyncStoragePackage(),
+          new NetInfoPackage(),
           new VectorIconsPackage(),
-          new RNGestureHandlerPackage()  
+          new RNGestureHandlerPackage(),
+          new ModuleRegistryAdapter(mModuleRegistryProvider)  
       );
     }
 
