@@ -15,7 +15,6 @@ class SwipeableCard extends Component {
 
     render(){
         const { item, index, removeFromNetSav, removeTransaction } = this.props;
-        console.log(index);
         let amt = item.amount;
         const swipeSettings = {
             autoClose: true,
