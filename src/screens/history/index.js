@@ -26,7 +26,7 @@ class History extends Component {
         />
         {localTransactions.length < 1 &&
           <View style={historyStyles.empty}>
-            <Text style={{fontSize: 15}}>You don't seem to have any recent transactions...</Text>
+            <Text style={{fontSize: 15}}>You don't seem to have any transactions...</Text>
           </View>
         }
         {localTransactions.length > 0 &&

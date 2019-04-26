@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Modal, Button } from 'react-native';
 import {DatePicker} from 'react-native-wheel-picker-android';
 import commonStyles from '../../utilities/common-styles';
-import { Colors, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utilities';
+import { Colors } from '../../utilities';
 
 const DateModal = (props) => {
     const { visible, closeDateModal, setDate } = props;
