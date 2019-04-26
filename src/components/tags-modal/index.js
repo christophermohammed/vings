@@ -15,14 +15,14 @@ class TagsModal extends React.Component {
 
     render(){
         const { visible, closeTagsModal, addTag } = this.props;
-        const { name, color, redSelected, orangeSelected, yellowSelected, greenSelected, blueSelected, violetSelected } = this.state;
+        const { name, color } = this.state;
         return(
             <Modal
                 animationType="fade"
                 transparent={true}
                 visible={visible}
             >
-                <View style={[{backgroundColor: 'rgba(255, 255, 255, 0.9)', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, justifyContent: 'center'}]}>
+                <View style={commonStyles.modalBG}>
                     <View style={commonStyles.center}>
                         <View style={[commonStyles.regRow, {marginTop: 5, height: 50}]}>
                           <View style={[styles.tagColor, {backgroundColor: color}]}></View>

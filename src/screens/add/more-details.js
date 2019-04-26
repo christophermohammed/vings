@@ -12,6 +12,7 @@ import DateModal from '../../components/date-modal';
 import TagsModal from '../../components/tags-modal';
 import commonStyles from '../../utilities/common-styles';
 import { buildRestOfTransaction } from '../../logic/add';
+import moment from 'moment';
 
 class More extends Component {
   constructor(props){
@@ -20,7 +21,6 @@ class More extends Component {
     this.state = {
       currencyName: "",
       isDateOpen: false,
-      isTodayDisabled: true,
       isTagsOpen: false,
       date: new Date,
       localTags: []
@@ -57,7 +57,7 @@ class More extends Component {
   }
 
   render() {
-    const { currencyName, date, isDateOpen, isTagsOpen, isTodayDisabled, localTags } = this.state;
+    const { currencyName, date, isDateOpen, isTagsOpen, localTags } = this.state;
     const { screenProps, tags, addTag } = this.props;
     let type = screenProps.type;
     return (
@@ -100,13 +100,13 @@ class More extends Component {
               title="Today"
               onPress={() => this.setState({date: new Date})}
               color={Colors.main}
-              disabled={isTodayDisabled}
+              disabled={moment(date).isSame(new Date, 'day')}
             />
           </View>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Select Date"
-              onPress={() => this.setState({isDateOpen: true, isTodayDisabled: false})}
+              onPress={() => this.setState({isDateOpen: true})}
               color={Colors.main}
             />
           </View>

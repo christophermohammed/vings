@@ -12,7 +12,7 @@ const DateModal = (props) => {
             transparent={true}
             visible={visible}
         >
-            <View style={[commonStyles.center, {backgroundColor: 'rgba(255, 255, 255, 0.9)', height: SCREEN_HEIGHT, width: SCREEN_WIDTH}]}>
+            <View style={commonStyles.modalBG}>
                 <View style={commonStyles.space}>
                   <DatePicker 
                     onDateSelected={setDate}
@@ -21,7 +21,7 @@ const DateModal = (props) => {
                     hideAm
                   />
                 </View>
-                <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-around', marginRight: 15, marginLeft: 15}]}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                   <View style={{ borderRadius: 10}}>
                     <Button
                       title="Cancel"

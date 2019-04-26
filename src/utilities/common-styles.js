@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '.';
+import { Colors, SCREEN_HEIGHT, SCREEN_WIDTH } from '../utilities';
 
 export default styles = StyleSheet.create({
     container: {
@@ -92,5 +92,12 @@ export default styles = StyleSheet.create({
         flex: 0, 
         backgroundColor: 'white', 
         borderRadius: 10
+    },
+    modalBG: {
+        backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+        height: SCREEN_HEIGHT, 
+        width: SCREEN_WIDTH, 
+        alignItems: 'center', 
+        marginTop: SCREEN_HEIGHT / 8
     }
 });
