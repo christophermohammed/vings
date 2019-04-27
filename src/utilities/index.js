@@ -40,6 +40,15 @@ export const getGUID = () => {
   });
 }
 
+export const getPhotoIndicies = () => {
+  var arr = []
+  while(arr.length < 3){
+    var r = Math.floor(Math.random()*99);
+    if(arr.indexOf(r) === -1) arr.push(r);
+  }
+  return(arr);
+}
+
 export const placeholders = {
   description: "Description",
   location: "Location",

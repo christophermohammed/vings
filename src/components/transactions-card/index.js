@@ -1,25 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors, to2Dp } from '../../utilities';
+import commonStyles from '../../utilities/common-styles';
 
 const TransactionCard = (props) => {
     const { item } = props;
     let amt = item.amount;
     let cardColor = amt < 0 ? Colors.red : Colors.green;
     return (
-        <View style={[styles.vCommon, {
+        <View style={{}}>
+            <View style={[styles.vCommon, {
                 flexDirection: 'row',
                 borderWidth: 3,
                 borderRightColor:   'white',
                 borderLeftColor:    cardColor,
                 borderTopColor:     'white',
                 borderBottomColor:  'white',
-            }]}>
-            <View style={styles.vCommon}>
-                <Text style={{fontSize: 18}}>{item.description}</Text>
-            </View>
-            <View style={[{alignItems: 'center'}, styles.vCommon]}>
-                <Text style={{fontSize: 30, color: cardColor}}>{to2Dp(amt)}</Text>
+                }]}>
+                <View style={{flex: 1, justifyContent: 'center'}}>
+                    <Text style={{fontSize: 18, marginLeft: 5}}>{item.description}</Text>
+                </View>
+                <View style={commonStyles.center}>
+                    <Text style={{fontSize: 30, color: cardColor, marginRight: 15}}>{to2Dp(amt)}</Text>
+                </View>
             </View>
         </View>
     );
@@ -28,7 +31,7 @@ const TransactionCard = (props) => {
 const styles = StyleSheet.create({
     vCommon: {
         flex: 1,
-        padding: 10,
+        padding: 5,
         backgroundColor: 'white',
     }
 });

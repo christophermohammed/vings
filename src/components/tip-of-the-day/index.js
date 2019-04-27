@@ -5,8 +5,7 @@ import { tips } from '../../data/tips';
 import TipIcons from '../tip-icons';
 
 const Tip = (props) => {
-    const { index } = props;
-    const tip = tips[index];
+    const { tip } = props;
     return (
         <View style={styles.tipContainer}>
             <View style={[styles.section, styles.titleContainer]}>

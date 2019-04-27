@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, StatusBar, ScrollView, Button, FlatList } from 'react-native';
 import NetSavingsCard from '../../components/netsavings-card';
-import MWIPicker from '../../components/mwi-picker';
-import { genders } from '../../utilities';
-import Tip from '../../components/tip-of-the-day';
 import Carousel from '../../components/carousel';
 import commonStyles from '../../utilities/common-styles';
 import { clearAsync } from '../../logic/async';
@@ -13,15 +10,6 @@ import TransactionCard from '../../components/transactions-card';
 // import { AdMobBanner } from 'expo-ads-admob';
 
 class Home extends Component {
-  
-  constructor(props){
-    super(props);
-
-    this.state = {
-      index: Math.floor(Math.random() * 99),
-    }
-  }
-
   render() {
     const { photos, currency, localTransactions } = this.props;
     return (
@@ -64,7 +52,13 @@ class Home extends Component {
                 }
               </View>
             </View>
-            {/* Tip section */}
+            {/* Tips section */}
+            <View style={commonStyles.space}>
+              <Text style={commonStyles.detailTitle}>Tips</Text>
+            </View>
+            <View style={homeStyles.gallery}>
+              <Carousel photos={photos}/>
+            </View>
             <Button 
               title="Clear"
               onPress={clearAsync}
