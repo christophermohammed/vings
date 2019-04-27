@@ -18,7 +18,7 @@ const TransactionCard = (props) => {
                 borderBottomColor:  'white',
                 }]}>
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <Text style={{fontSize: 18, marginLeft: 5}}>{item.description}</Text>
+                    <Text style={[{marginLeft: 5}, commonStyles.detailSubtitle]}>{item.description}</Text>
                 </View>
                 <View style={commonStyles.center}>
                     <Text style={{fontSize: 30, color: cardColor, marginRight: 15}}>{to2Dp(amt)}</Text>

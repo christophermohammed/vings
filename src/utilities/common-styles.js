@@ -75,10 +75,6 @@ export default styles = StyleSheet.create({
     loading: {
       padding: 10
     },
-    welcome: {
-      fontSize: 26,
-      fontWeight: '600'
-    },
     regRow: {
         flexDirection: 'row', 
         justifyContent: 'space-between',

@@ -47,7 +47,7 @@ class Demographic extends Component {
           barStyle="dark-content"
         />
         <View style={styles.space}>
-          <Text style={styles.welcome}>Tell us a little bit about you</Text>
+          <Text style={styles.detailTitle}>Tell us a little bit about you</Text>
         </View>
         <View style={styles.space}>
           <MWITextInput 

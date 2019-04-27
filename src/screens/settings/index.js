@@ -31,7 +31,7 @@ class Settings extends Component {
               <Profile user={user} currencyName={currencyName}/>
             </View>
             <View style={styles.space}>
-                <Text style={styles.welcome}>Edit</Text>
+                <Text style={styles.detailTitle}>Edit</Text>
             </View>
             <View style={styles.space}>
               <MWIDropdown

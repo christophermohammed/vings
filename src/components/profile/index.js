@@ -9,7 +9,7 @@ const Profile = (props) => {
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.welcome}>Profile</Text>
+                <Text style={styles.detailTitle}>Profile</Text>
             </View>
             <View style={[{marginTop: 0}, profileStyles.row]}>
                 <Text style={styles.question}>Age:</Text>

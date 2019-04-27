@@ -51,7 +51,7 @@ class Country extends Component {
           barStyle="dark-content"
         />
         <View style={styles.space}>
-          <Text style={styles.welcome}>Currency Info</Text>
+          <Text style={styles.detailTitle}>Currency Info</Text>
         </View>
         <View style={styles.space}>
           <MWIDropdown

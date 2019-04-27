@@ -40,7 +40,7 @@ const CarouselCard = (props) => {
                     <View style={{paddingTop: 2}}>
                         <Icon name="ios-camera" color="black" size={25}/>
                     </View>
-                    <Text style={{fontSize: 18}}>  :  {image.Username}  </Text>
+                    <Text style={commonStyles.detailSubtitle}>  :  {image.Username}  </Text>
                     <PlatformLogo platform={image.Platform}/>
                 </TouchableOpacity>
             </View>

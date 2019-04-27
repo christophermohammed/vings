@@ -92,7 +92,7 @@ class More extends Component {
             closeDateModal={() => this.setState({isDateOpen: false})}
             setDate={d => this.setState({date: d})}
           />
-          <Text style={{fontSize: 18}}>{date ? date.toDateString() : ""}</Text>
+          <Text style={commonStyles.detailSubtitle}>{date ? date.toDateString() : ""}</Text>
         </View>
         <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-around', marginRight: 15, marginLeft: 15}]}>
           <View style={{ borderRadius: 10}}>
@@ -125,7 +125,7 @@ class More extends Component {
         </View>
         <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontSize: 18}}>Your tags</Text>
+            <Text style={commonStyles.detailSubtitle}>Your tags</Text>
             <FlatList 
               data={tags}
               keyExtractor={(_item, index) => (index).toString()}
@@ -140,7 +140,7 @@ class More extends Component {
             />
           </View>
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontSize: 18}}>Tagged</Text>
+            <Text style={commonStyles.detailSubtitle}>Tagged</Text>
             <FlatList 
               data={localTags}
               keyExtractor={(_item, index) => (index).toString()}
