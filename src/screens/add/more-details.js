@@ -120,7 +120,10 @@ class More extends Component {
           <TagsModal 
             visible={isTagsOpen}
             closeTagsModal={() => this.setState({isTagsOpen: false})}
-            addTag={addTag}
+            addTag={tag => {
+              addTag(tag);
+              this.addTagToLocal(tag);
+            }}
           />
         </View>
         <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
@@ -165,11 +168,11 @@ class More extends Component {
           </View>
         </View>
 
-        {/* Save / go back */}
+        {/* Save / Back */}
         <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
           <View style={{ borderRadius: 10}}>
             <Button
-              title="Go Back"
+              title="Back"
               onPress={() => this.props.navigation.navigate('Basic')}
               color={Colors.main}
             />

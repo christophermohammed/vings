@@ -12,8 +12,22 @@ class History extends Component {
     super(props);
 
     this.state = {
-      localTransactions: props.transactions.slice(0, 100)
+      localTransactions: []
     };
+  }
+
+  componentDidMount(){
+    this.setState({localTransactions: this.props.transactions.slice(0, 100)});
+  }
+
+  componentDidUpdate(){
+    const { localTransactions } = this.state;
+    const { transactions } = this.props;
+    let i = Math.ceil(localTransactions.length / 100);
+    let visibleTransactions = transactions.slice(0, i * 100);
+    if(localTransactions.length !== visibleTransactions.length){
+      this.setState({localTransactions: visibleTransactions});
+    }
   }
 
   render() {
@@ -45,7 +59,6 @@ class History extends Component {
                     remove={(transaction, rowKey) => {
                       removeFromNetSav(transaction.amount, transaction.currency);
                       removeTransaction(rowKey);
-                      this.setState({localTransactions: localTransactions.length === 1 ? [] : localTransactions.splice(rowKey, 1)});
                     }}
                     renderCard={item => (
                       <TransactionCard 

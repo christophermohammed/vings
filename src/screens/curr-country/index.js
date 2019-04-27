@@ -47,7 +47,7 @@ class Country extends Component {
 
   render() {
     const { currencyName, country } = this.state;
-    const { goBack } = this.props;
+    const { goBack, isSetup } = this.props;
     return (
       <ScrollView>
       <View style={commonStyles.container}>
@@ -76,18 +76,38 @@ class Country extends Component {
             message={"Main currency:"}
           />
         </View>
-        <View style={[commonStyles.space, {alignItems: 'flex-start', marginLeft: 10}]}>
+        {!isSetup && 
+          <View style={[commonStyles.space, {alignItems: 'flex-start', marginLeft: 10}]}>
+            <View style={{ borderRadius: 10}}>
+              <Button
+                title="Back"
+                onPress={() => {
+                  this.save();
+                  goBack();
+                }}
+                color={Colors.main}
+              />
+            </View>
+          </View>
+        }
+        {isSetup && 
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
           <View style={{ borderRadius: 10}}>
             <Button
-              title="Go Back"
-              onPress={() => {
-                this.save();
-                goBack();
-              }}
+              title="Back"
+              onPress={goBack}
+              color={Colors.main}
+            />
+          </View>
+          <View style={{ borderRadius: 10}}>
+            <Button
+              title="Save"
+              onPress={this.save}
               color={Colors.main}
             />
           </View>
         </View>
+        }
       </View>
       </ScrollView>
     );
