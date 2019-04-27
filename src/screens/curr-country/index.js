@@ -3,7 +3,7 @@ import { Text, View, StatusBar, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import MWIDropdown from '../../components/mwi-dropdown';
 import { Colors, emptyRegex, countries } from '../../utilities';
-import styles from '../../utilities/common-styles';
+import commonStyles from '../../utilities/common-styles';
 import { updateUser } from '../../state/user/actions';
 import { saveUserToAzure } from '../../logic/cloud';
 import { currencyNames, getCurrencyFromName } from '../../logic/currencies';
@@ -50,15 +50,15 @@ class Country extends Component {
     const { goBack } = this.props;
     return (
       <ScrollView>
-      <View style={styles.container}>
+      <View style={commonStyles.container}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
-        <View style={styles.space}>
-          <Text style={styles.detailTitle}>Currency Info</Text>
+        <View style={commonStyles.space}>
+          <Text style={commonStyles.detailTitle}>Currency Info</Text>
         </View>
-        <View style={styles.space}>
+        <View style={commonStyles.space}>
           <MWIDropdown
             query={country}
             setQuery={(country) => this.setState({country})} 
@@ -67,7 +67,7 @@ class Country extends Component {
             message={"Main country:"}
           />
         </View>
-        <View style={styles.space}>
+        <View style={commonStyles.space}>
           <MWIDropdown
             query={currencyName}
             setQuery={(currencyName) => this.setState({currencyName})} 
@@ -76,7 +76,7 @@ class Country extends Component {
             message={"Main currency:"}
           />
         </View>
-        <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Go Back"

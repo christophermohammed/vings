@@ -132,7 +132,7 @@ class More extends Component {
               renderItem = {
                 ({item, index})=>(
                   <TouchableOpacity onPress={() => this.addTagToLocal(item)} style={[commonStyles.regRow, {marginTop: 5, height: 30}]}>
-                    <View style={[styles.tagColor, {backgroundColor: item.color}]}></View>
+                    <View style={[styles.tagColor, {backgroundColor: item.color, marginRight: 5}]}></View>
                     <Text style={{fontSize: 15}}>{item.name}</Text>
                   </TouchableOpacity>
                 )
@@ -147,7 +147,7 @@ class More extends Component {
               renderItem = {
                 ({item, index})=>(
                   <TouchableOpacity onPress={() => this.removeTagFromLocal(index)} style={[commonStyles.regRow, {marginTop: 5, height: 30}]}>
-                    <View style={[styles.tagColor, {backgroundColor: item.color}]} />
+                    <View style={[styles.tagColor, {backgroundColor: item.color, marginRight: 5}]} />
                     <Text style={{fontSize: 15}}>{item.name}</Text>
                   </TouchableOpacity>
                 )

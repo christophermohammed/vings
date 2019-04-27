@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, FlatList, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
-import TransactionCard from '../../components/transactions-card/swipeable-card';
+import SwipeCard from '../../components/transactions-card/swipeable-card';
+import TransactionCard from '../../components/transactions-card';
 import styles from '../../utilities/common-styles';
 import { removeTransaction } from '../../state/transactions/actions';
 import { removeFromNetSav } from '../../state/currencies/actions';
@@ -18,6 +19,7 @@ class History extends Component {
   render() {
     const { transactions, removeFromNetSav, removeTransaction } = this.props;
     const { localTransactions } = this.state;
+    console.log(localTransactions.length);
     return (
       <View styles={styles.container}>
         <StatusBar
@@ -38,11 +40,19 @@ class History extends Component {
               keyExtractor={(_item, index) => (index).toString()}
               renderItem={({item, index}) => 
                 <View>
-                  <TransactionCard 
+                  <SwipeCard 
                     item={item}
                     index={index} 
-                    removeFromNetSav={removeFromNetSav}
-                    removeTransaction={removeTransaction}
+                    remove={(transaction, rowKey) => {
+                      removeFromNetSav(transaction.amount, transaction.currency);
+                      removeTransaction(rowKey);
+                      this.setState({localTransactions: localTransactions.length === 1 ? [] : localTransactions.splice(rowKey, 1)});
+                    }}
+                    renderCard={item => (
+                      <TransactionCard 
+                        item={item}
+                      />
+                    )}
                   />
                 </View>
               }

@@ -25,7 +25,7 @@ class TagsModal extends React.Component {
                 <View style={commonStyles.modalBG}>
                     <View style={commonStyles.center}>
                         <View style={[commonStyles.regRow, {marginTop: 5, height: 50}]}>
-                          <View style={[styles.tagColor, {backgroundColor: color}]}></View>
+                          <View style={[styles.tagColor, {backgroundColor: color, marginRight: 10}]}></View>
                           <Text style={{fontSize: 30}}>{name}</Text>
                         </View>
                     </View>

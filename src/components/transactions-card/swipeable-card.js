@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swipeout from 'react-native-swipeout';
-import TransactionCard from './';
 // import { AdMobBanner } from 'expo';
 
 class SwipeableCard extends Component {
@@ -14,8 +13,7 @@ class SwipeableCard extends Component {
     }
 
     render(){
-        const { item, index, removeFromNetSav, removeTransaction } = this.props;
-        let amt = item.amount;
+        const { item, index, remove, renderCard } = this.props;
         const swipeSettings = {
             autoClose: true,
             onClose: () => {
@@ -28,8 +26,7 @@ class SwipeableCard extends Component {
                 {
                     onPress: () => {
                         let rowKey = this.state.activeRowKey;
-                        removeFromNetSav(amt, item.currency);
-                        removeTransaction(rowKey);
+                        remove(item, rowKey);
                     },
                     text: 'Delete', type: 'delete'
                 }
@@ -40,18 +37,8 @@ class SwipeableCard extends Component {
         return(
             <View>
                 <Swipeout {...swipeSettings}>
-                    <TransactionCard 
-                        item={item}
-                    />
+                    {renderCard(item)}
                 </Swipeout>
-                {/* {(index + 1) % 5 === 0 &&
-                    <AdMobBanner
-                        bannerSize="smartBannerPortrait"
-                        adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
-                        testDeviceID="EMULATOR"
-                        onDidFailToReceiveAdWithError={() => {}} 
-                    />
-                } */}
             </View>
         );
     }
