@@ -19,7 +19,7 @@ class Demographic extends Component {
 
   next = () => {
     let age = parseInt(this.state.age);
-    if(age < 10 || age > 100 || age === NaN || age === undefined) {
+    if(isNaN(age) || age === undefined || age < 10 || age > 100) {
       this.clearTextInputs();
       alert("Please enter a valid age.");
     }else{
@@ -28,7 +28,7 @@ class Demographic extends Component {
         gender: this.state.gender,
         uid: getGUID()
       }
-      this.props.navigation.navigate("Country", {user});
+      this.props.navigation.navigate("CurrCountryContainer", {user});
     }
   }
 

@@ -44,7 +44,7 @@ class TagsModal extends React.Component {
                         <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 5}}>
                             <TouchableOpacity onPress={() => this.setState({color: Colors.tagRed})} style={[styles.tagColor, {backgroundColor: Colors.tagRed}]}></TouchableOpacity>
                             <TouchableOpacity onPress={() => this.setState({color: Colors.tagOrange})} style={[styles.tagColor, {backgroundColor: Colors.tagOrange}]}></TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setState({color: tagYellow})} style={[styles.tagColor, {backgroundColor: Colors.tagYellow}]}></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.setState({color: Colors.tagYellow})} style={[styles.tagColor, {backgroundColor: Colors.tagYellow}]}></TouchableOpacity>
                         </View> 
                         <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 10}}>
                             <TouchableOpacity onPress={() => this.setState({color: Colors.tagGreen})} style={[styles.tagColor, {backgroundColor: Colors.tagGreen}]}></TouchableOpacity>

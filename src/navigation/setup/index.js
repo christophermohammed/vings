@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   createAppContainer,
   createStackNavigator
@@ -6,11 +6,23 @@ import {
 import CardStackStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 
 import Demographic from '../../screens/setup/demographic';
-import Country from '../../screens/setup/country';
+import CurrCountry from '../../screens/curr-country';
+
+const CurrCountryContainer = (props) => {
+    const { screenProps, navigation } = props;
+    return(
+        <CurrCountry 
+            screenProps={screenProps} 
+            user={navigation.getParam('user')} 
+            isSetup={true}
+            goBack={() => navigation.navigate('Demographic')}
+        />
+    );
+}
 
 const SetupNav = createStackNavigator({
   Demographic,
-  Country
+  CurrCountryContainer
 },{
     transitionConfig: () => ({
         screenInterpolator: CardStackStyleInterpolator.forHorizontal,
@@ -24,15 +36,13 @@ const SetupNav = createStackNavigator({
 
 const AppContainer = createAppContainer(SetupNav);
 
-class SetupStack extends Component {
+const SetupStack = (props) => {
     gotoMain = () => {
-        this.props.navigation.navigate('Main');
+        props.navigation.navigate('Main');
     }
-    render() {
-        return (
-            <AppContainer screenProps={{gotoMain:this.gotoMain}}/>
-        );
-    }
+    return (
+        <AppContainer screenProps={{gotoMain}}/>
+    );
 }
 
 export default SetupStack;

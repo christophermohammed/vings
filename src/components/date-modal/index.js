@@ -12,9 +12,10 @@ const DateModal = (props) => {
             transparent={true}
             visible={visible}
         >
-            <View style={commonStyles.modalBG}>
+            <View style={[commonStyles.modalBG, {alignItems: 'center'}]}>
                 <View style={commonStyles.space}>
-                  <DatePicker 
+                  <DatePicker
+                    mode="date" 
                     onDateSelected={setDate}
                     hideHours
                     hideMinutes

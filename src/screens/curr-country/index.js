@@ -20,7 +20,7 @@ class Country extends Component {
 
   save = () => {
     const { country, currencyName } = this.state;
-    const { onUpdateUser, navigation, screenProps } = this.props;
+    const { onUpdateUser, user, screenProps, goBack, isSetup } = this.props;
     let currency = getCurrencyFromName(currencyName);
 
     if(emptyRegex.test(String(country))) {
@@ -29,20 +29,25 @@ class Country extends Component {
       if(currency === undefined){
         alert("Please enter a valid currency.");
       }else{
-        let user = {
-          ...navigation.getParam('user'),
+        let newUser = {
+          ...user,
           currencyCode: currency.code,
           country
         }
-        onUpdateUser(user);
+        onUpdateUser(newUser);
         //saveUserToAzure(user);
-        screenProps.gotoMain();
+        if(isSetup){
+          screenProps.gotoMain();
+        }else{
+          goBack();
+        }
       }
     }
   }
 
   render() {
     const { currencyName, country } = this.state;
+    const { goBack } = this.props;
     return (
       <ScrollView>
       <View style={styles.container}>
@@ -75,7 +80,7 @@ class Country extends Component {
           <View style={{ borderRadius: 10}}>
             <Button
               title="Go Back"
-              onPress={() => this.props.navigation.navigate('Demographic')}
+              onPress={goBack}
               color={Colors.main}
             />
           </View>

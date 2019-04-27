@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import styles from '../../utilities/common-styles';
-import { getCurrencyFromName } from '../../logic/currencies';
 
 const Profile = (props) => {
     const { user, currencyName } = props;
-    let currency = getCurrencyFromName(currencyName);
     return (
         <View style={styles.container}>
             <View>
@@ -22,6 +20,10 @@ const Profile = (props) => {
             <View style={profileStyles.row}>
                 <Text style={styles.question}>Currency:</Text>
                 <Text style={styles.question}>{user.currencyCode}</Text>
+            </View>
+            <View style={profileStyles.row}>
+                <Text style={styles.question}>Country:</Text>
+                <Text style={styles.question}>{user.country}</Text>
             </View>
         </View>
     );

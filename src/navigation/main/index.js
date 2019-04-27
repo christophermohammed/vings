@@ -4,7 +4,7 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from '../../screens/home';
-import Settings from '../../screens/settings';
+import Settings from '../settings';
 import Add from '../add/add-tab';
 import History from '../../screens/history';
 import Converter from '../../screens/converter';
