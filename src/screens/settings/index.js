@@ -1,53 +1,53 @@
 import React, { Component } from 'react';
-import { View, StatusBar, ScrollView, Button, Text } from 'react-native';
+import { View, StatusBar, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
-import styles from '../../utilities/common-styles';
 import { Colors } from '../../utilities';
 import Profile from '../../components/profile';
+import commonStyles from '../../utilities/common-styles';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class Settings extends Component {
-    constructor(props){
-      super(props);
-
-      this.state = {
-        currencyName: '',
-      }
-    }
-
-    render() {
-      const { user, navigation } = this.props;
-      const { currencyName } = this.state;
-      return (
-        <ScrollView>
-          <View>
-            <StatusBar
-              backgroundColor="white"
-              barStyle="dark-content"
-            />
-            <View style={styles.space}>
-              <Profile user={user} currencyName={currencyName}/>
-            </View>
-            <View style={styles.space}>
-                <Text style={styles.detailTitle}>Edit</Text>
-            </View>
-            <View style={styles.space}>
-              <Button
-                title="Currency and Country"
-                onPress={() => navigation.navigate('CurrCountryContainer')}
-                color={Colors.main}
-              />
-            </View>
-            <View style={styles.space}>
-              <Button
-                title="Tags"
-                onPress={() => navigation.navigate('Tags')}
-                color={Colors.main}
-              />
-            </View>
+  render() {
+    const { user, navigation } = this.props;
+    return (
+      <ScrollView>
+        <View>
+          <StatusBar
+            backgroundColor="white"
+            barStyle="dark-content"
+          />
+          <View style={commonStyles.space}>
+            <Profile user={user}/>
           </View>
-        </ScrollView>
-      );
-    }
+          <View style={[commonStyles.space, {marginTop: 20}]}>
+              <Text style={commonStyles.detailTitle}>Edit</Text>
+          </View>
+          <View style={commonStyles.space}>
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('CurrCountryContainer')}
+              style={[{height: 30, flex: 1, alignItems: 'center'}, commonStyles.regRow]}
+            >
+              <Text style={[{color: Colors.main}, commonStyles.detailSubtitle]}>Currency and Country</Text>
+              <View style={{marginRight: 15}}>
+                <Icon name="ios-arrow-dropright" size={25} color={Colors.main}/>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={commonStyles.space}>
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('Tags')}
+              style={[{height: 30, flex: 1, alignItems: 'center'}, commonStyles.regRow]}
+            >
+              <Text style={[{color: Colors.main}, commonStyles.detailSubtitle]}>Tags</Text>
+              <View style={{marginRight: 15}}>
+                <Icon name="ios-arrow-dropright" size={25} color={Colors.main}/>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 const mapStateToProps = ({user}) => ({

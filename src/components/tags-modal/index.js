@@ -62,8 +62,9 @@ class TagsModal extends React.Component {
                         </View>
                         <View style={{borderRadius: 10}}>
                           <Button
-                            title="Select"
+                            title="Add"
                             onPress={() => {
+                              this.setState({name: '', color: ''});
                               addTag({name, color});
                               closeTagsModal();
                             }}

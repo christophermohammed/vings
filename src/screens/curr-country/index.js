@@ -76,21 +76,6 @@ class Country extends Component {
             message={"Main currency:"}
           />
         </View>
-        {!isSetup && 
-          <View style={[commonStyles.space, {alignItems: 'flex-start', marginLeft: 10}]}>
-            <View style={{ borderRadius: 10}}>
-              <Button
-                title="Back"
-                onPress={() => {
-                  this.save();
-                  goBack();
-                }}
-                color={Colors.main}
-              />
-            </View>
-          </View>
-        }
-        {isSetup && 
         <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
           <View style={{ borderRadius: 10}}>
             <Button
@@ -107,7 +92,6 @@ class Country extends Component {
             />
           </View>
         </View>
-        }
       </View>
       </ScrollView>
     );

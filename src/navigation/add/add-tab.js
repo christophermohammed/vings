@@ -37,7 +37,7 @@ const AddNav = createMaterialTopTabNavigator({
   },
   AddSaving:{ screen : AddSaving,
     navigationOptions: {
-      tabBarLabel: 'Savings',
+      tabBarLabel: 'Saving',
     } 
   }
 },{

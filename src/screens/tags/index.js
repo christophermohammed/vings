@@ -49,6 +49,15 @@ class Tags extends Component {
             }
           />
         </View>
+        <View style={commonStyles.center}>
+          <View style={{ borderRadius: 10}}>
+            <Button
+              title="Add New Tag"
+              onPress={() => this.setState({isTagsOpen: true})}
+              color={Colors.main}
+            />
+          </View>
+        </View>
         <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
           <View style={{ borderRadius: 10}}>
             <Button
@@ -59,8 +68,8 @@ class Tags extends Component {
           </View>
           <View style={{ borderRadius: 10}}>
             <Button
-              title="Add New Tag"
-              onPress={() => this.setState({isTagsOpen: true})}
+              title="Save"
+              onPress={() => navigation.navigate('Settings')}
               color={Colors.main}
             />
           </View>
