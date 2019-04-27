@@ -85,7 +85,7 @@ class Converter extends Component {
         <View style={[commonStyles.space, {alignItems: 'flex-end'}]}>
           <Text style={commonStyles.detailDescription}>{`Conversion through USD valid from ${(new Date).toDateString()}`}</Text>
         </View>
-        <View style={[styles.space, { alignItems: 'flex-end', marginRight: 15}]}>
+        <View style={[styles.space, { alignItems: 'flex-end', marginRight: 10}]}>
           <View style={{borderRadius: 10}}>
             <Button
               title="Convert"

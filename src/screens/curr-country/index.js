@@ -76,18 +76,14 @@ class Country extends Component {
             message={"Main currency:"}
           />
         </View>
-        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 15, marginLeft: 15}]}>
+        <View style={[commonStyles.space, {alignItems: 'flex-start', marginLeft: 10}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Go Back"
-              onPress={goBack}
-              color={Colors.main}
-            />
-          </View>
-          <View style={{ borderRadius: 10}}>
-            <Button
-              title="Save"
-              onPress={this.save}
+              onPress={() => {
+                this.save();
+                goBack();
+              }}
               color={Colors.main}
             />
           </View>

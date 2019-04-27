@@ -35,7 +35,7 @@ class SwipeableCard extends Component {
             sectionId: 1,
         }
         return(
-            <View>
+            <View style={{backgroundColor: 'white'}}>
                 <Swipeout {...swipeSettings}>
                     {renderCard(item)}
                 </Swipeout>

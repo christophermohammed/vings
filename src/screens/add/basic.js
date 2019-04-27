@@ -91,7 +91,7 @@ class Basic extends Component {
               />
             </View>
         ) : null }
-        <View style={[styles.space, { alignItems: 'flex-end', marginRight: 15}]}>
+        <View style={[styles.space, { alignItems: 'flex-end', marginRight: 10}]}>
           <View style={{borderRadius: 10}}>
             <Button
               title="Next"

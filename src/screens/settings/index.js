@@ -37,6 +37,13 @@ class Settings extends Component {
                 color={Colors.main}
               />
             </View>
+            <View style={styles.space}>
+              <Button
+                title="Tags"
+                onPress={() => navigation.navigate('Tags')}
+                color={Colors.main}
+              />
+            </View>
           </View>
         </ScrollView>
       );

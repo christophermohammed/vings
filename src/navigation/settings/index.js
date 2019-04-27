@@ -6,19 +6,21 @@ import CardStackStyleInterpolator from 'react-navigation-stack/dist/views/StackV
 
 import Settings from '../../screens/settings';
 import CurrCountryContainer from './curr-country';
+import Tags from '../../screens/tags';
 
 const SettingsNav = createStackNavigator({
   Settings,
-  CurrCountryContainer
+  CurrCountryContainer,
+  Tags
 },{
-    transitionConfig: () => ({
-        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
-    }),
-    defaultNavigationOptions: () => {
-        return {
-            header: null
-        };
-    }
+  transitionConfig: () => ({
+    screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+  }),
+  defaultNavigationOptions: () => {
+    return {
+      header: null
+    };
+  }
 });
 
 const AppContainer = createAppContainer(SettingsNav);
