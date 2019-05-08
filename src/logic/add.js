@@ -36,7 +36,7 @@ export const buildBasicTransaction = (description, location, amt, type) => {
   return transaction;
 }
 
-export const buildRestOfTransaction = (transaction, currency, date, tags) => {
+export const buildRestOfTransaction = (transaction, currency, date) => {
   let updatedTransaction = null;
   if(date){
     if(currency && currency.name && isACurrencyName(`${currency.name} (${currency.code})`)){
@@ -45,7 +45,6 @@ export const buildRestOfTransaction = (transaction, currency, date, tags) => {
         currency,
         date,
         dateString: date.toDateString(),
-        tags
       };
     }else{
       alert("Please select a valid currency");

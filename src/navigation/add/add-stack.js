@@ -7,10 +7,12 @@ import CardStackStyleInterpolator from 'react-navigation-stack/dist/views/StackV
 
 import Basic from '../../screens/add/basic';
 import More from '../../screens/add/more-details';
+import Tags from '../../screens/add/tags';
 
 const AddNav = createStackNavigator({
   Basic,
-  More
+  More,
+  Tags
 },{
     transitionConfig: () => ({
         screenInterpolator: CardStackStyleInterpolator.forHorizontal,

@@ -6,7 +6,7 @@ import CardStackStyleInterpolator from 'react-navigation-stack/dist/views/StackV
 
 import Settings from '../../screens/settings';
 import CurrCountryContainer from './curr-country';
-import Tags from '../../screens/tags';
+import Tags from '../../screens/settings/tags';
 
 const SettingsNav = createStackNavigator({
   Settings,
