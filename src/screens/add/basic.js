@@ -4,7 +4,7 @@ import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities';
 import { buildBasicTransaction } from '../../logic/add';
 import { transactionType, placeholders } from '../../utilities';
 import MWITextInput from '../../components/mwi-text-input';
-import styles from '../../utilities/common-styles';
+import commonStyles from '../../utilities/common-styles';
 
 class Basic extends Component {
   constructor(props){
@@ -46,15 +46,15 @@ class Basic extends Component {
     let type = screenProps.type;
     return (
       <ScrollView>
-      <View style={styles.container}>
+      <View style={commonStyles.container}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
-        <View style={styles.space}>
-          <Text style={styles.detailTitle}>Basic info</Text>
+        <View style={commonStyles.space}>
+          <Text style={commonStyles.detailTitle}>Basic info</Text>
         </View>
-        <View style={[styles.space, styles.center]}>
+        <View style={[commonStyles.space, commonStyles.center]}>
           <MWITextInput 
             message={type === transactionType.cost ? "What did you buy?" : "How did you come across this money?"}
             placeholder={placeholders.description}
@@ -65,7 +65,7 @@ class Basic extends Component {
             maxLength={50}
           />
         </View>
-        <View style={[styles.space, styles.center]}>
+        <View style={[commonStyles.space, commonStyles.center]}>
           <MWITextInput
             message={`How much did you ${type === transactionType.cost ? "spend" : "save"}?`} 
             getRef={amt => { this.amountInput = amt }}
@@ -78,7 +78,7 @@ class Basic extends Component {
           />
         </View>
         {type === transactionType.cost ? (
-            <View style={[styles.space, styles.center]}>
+            <View style={[commonStyles.space, commonStyles.center]}>
               <MWITextInput
                 message="Where did you buy it?" 
                 getRef={loc => { this.locationInput = loc }}
@@ -91,7 +91,7 @@ class Basic extends Component {
               />
             </View>
         ) : null }
-        <View style={[styles.space, { alignItems: 'flex-end', marginRight: 10}]}>
+        <View style={[commonStyles.space, { alignItems: 'flex-end', marginRight: 10}]}>
           <View style={{borderRadius: 10}}>
             <Button
               title="Next"

@@ -43,8 +43,7 @@ class More extends Component {
           backgroundColor="white"
           barStyle="dark-content"
         />
-
-        {/* Currency Mod */}
+        {/* Currency */}
         <View style={commonStyles.space}>
           <Text style={commonStyles.detailTitle}>Currency</Text>
         </View>
@@ -57,8 +56,7 @@ class More extends Component {
             message={`What currency did you ${type === transactionType.cost ? "spend" : "save"}?`}
           />
         </View>
-
-        {/* Date mod */}
+        {/* Date */}
         <View style={commonStyles.space}>
           <Text style={commonStyles.detailTitle}>Date</Text>
         </View>

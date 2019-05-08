@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, FlatList, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, FlatList, StatusBar, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import SwipeCard from '../../components/transactions-card/swipeable-card';
 import TransactionCard from '../../components/transactions-card';
@@ -31,7 +31,7 @@ class History extends Component {
   }
 
   render() {
-    const { transactions, removeFromNetSav, removeTransaction } = this.props;
+    const { transactions, removeFromNetSav, removeTransaction, navigation } = this.props;
     const { localTransactions } = this.state;
     return (
       <View styles={styles.container}>
@@ -61,9 +61,11 @@ class History extends Component {
                       removeTransaction(rowKey);
                     }}
                     renderCard={item => (
-                      <TransactionCard 
-                        item={item}
-                      />
+                      <TouchableOpacity onPress={() => navigation.navigate('Edit', { transaction: localTransactions[index] })}>
+                        <TransactionCard 
+                          item={item}
+                        />
+                      </TouchableOpacity>
                     )}
                   />
                 </View>

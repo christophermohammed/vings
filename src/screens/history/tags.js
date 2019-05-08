@@ -9,7 +9,7 @@ import { saveTransactionToAzure } from '../../logic/cloud';
 import TagsModal from '../../components/tags-modal';
 import commonStyles from '../../utilities/common-styles';
 
-class Tags extends Component {
+class More extends Component {
   constructor(props){
     super(props);
 
@@ -157,4 +157,4 @@ const mapDispatchToProps = {
   addTag 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tags);
+export default connect(mapStateToProps, mapDispatchToProps)(More);
