@@ -1,5 +1,5 @@
 import { getItemFromAsync } from './async';
-import { getPhotosFromAzure } from './cloud';
+import { getPhotosFromAzure, getRatesFromAzure } from './cloud';
 import { getCurrencyFromCode } from './currencies';
 import defaultCurrencies from '../data/currencies';
 
@@ -8,7 +8,8 @@ export default startup = async (
     updateUser, 
     updateTransactions, 
     updateCurrencies, 
-    updateTags, 
+    updateTags,
+    updateRates, 
     navigation
   ) => {
     // get data from storage
@@ -17,6 +18,7 @@ export default startup = async (
     let user = await getItemFromAsync("user");
     let photos = await getPhotosFromAzure();
     let tags = await getItemFromAsync("tags", []);
+    let rates = await getRatesFromAzure();
     // handle backwards compat
     if(user && user.currency !== undefined){
       user.currencyCode = "USD";
@@ -34,8 +36,9 @@ export default startup = async (
     updateTransactions(transactions);
     updateCurrencies(currencies);
     updateTags(tags);
+    updateRates(rates);
     // navigate
-    if(!user.age){
+    if(user === undefined){
       navigation.navigate("Setup");
     }else{
       navigation.navigate("Main");

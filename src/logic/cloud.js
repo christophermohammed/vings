@@ -19,6 +19,25 @@ export const getPhotosFromAzure = async () => {
   }
 }
 
+export const getRatesFromAzure = async () => {
+  let url = 'https://currencyservice2019.azurewebsites.net/api/GetRates?code=XYLaADC2dIJ2a6ifGolV2rZo/R7l7QCSaFAEu9VebAwU90PjC2YSqg==';
+  try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({})
+      });
+      let resJson = await response.json();
+      let fromAzure = JSON.parse(resJson);
+      return(fromAzure);
+    } catch (error) {
+      console.error(error);
+  }
+}
+
 export const saveUserToAzure = async (user) => {
   let url = 'https://vingsazure.azurewebsites.net/api/CreateUser/';
   try {

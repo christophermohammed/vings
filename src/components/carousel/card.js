@@ -30,8 +30,7 @@ const CarouselCard = (props) => {
                     />
                 </View>
                 <View style={styles.imageContainer}>
-                    <Image source={{uri: image.URI, cache: 'force-cache'}} style={styles.homeImage}/>
-                    <View style={[{position: 'absolute', backgroundColor: 'rgba(255, 255, 255, 0.7)'}, styles.homeImage, styles.imageContainer]} />
+                    <Image source={{uri: image.URI, cache: 'force-cache'}} style={styles.homeImage} blurRadius={15}/>
                     <View style={[{position: 'absolute'}, styles.homeImage, styles.imageContainer, commonStyles.center]}>
                         <Tip tip={tip} />
                     </View>

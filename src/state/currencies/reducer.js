@@ -9,8 +9,13 @@ export default function reducer(state = [], {type, payload}) {
             return payload.currencies;
             
         case actionTypes.UPDATE_RATES:
-            //todo
-            break;
+            const { rates } = payload;
+            for(var i = 0; i < newCurrencies.length; i++){
+                if(newCurrencies[i].code === rates[i].RowKey){
+                    newCurrencies[i].rate = rates[i].Rate;
+                }
+            }
+            return newCurrencies;
 
         case actionTypes.ADD_TO_NET_SAV:
             newCurrencies = state.map(cur => {

@@ -49,13 +49,16 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: "800",
-        fontSize: 15
+        fontSize: 15,
+        color: 'white'
     },
     body: {
         fontWeight: "400",
+        color: 'white'
     },
     author: {
-        fontWeight: "600"
+        fontWeight: "600",
+        color: 'white'
     }
 })
 

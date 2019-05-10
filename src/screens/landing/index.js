@@ -7,12 +7,13 @@ import { updateUser } from '../../state/user/actions';
 import { updateTransactions } from '../../state/transactions/actions';
 import { updateCurrencies } from '../../state/currencies/actions';
 import { updateTags } from '../../state/tags/actions';
+import { updateRates } from '../../state/currencies/actions';
 import startup from '../../logic/startup';
 
 class Landing extends Component {
   async componentDidMount() {
     // actions from props
-    const { updateUser, updatePhotos, updateTransactions, updateCurrencies, updateTags } = this.props;
+    const { updateUser, updatePhotos, updateTransactions, updateCurrencies, updateTags, updateRates, navigation } = this.props;
     // call startup
     await startup(
       updatePhotos,
@@ -20,7 +21,8 @@ class Landing extends Component {
       updateTransactions,
       updateCurrencies,
       updateTags,
-      this.props.navigation
+      updateRates,
+      navigation
     );
   }
 
@@ -41,7 +43,8 @@ const mapDispatchToProps = {
   updateUser,
   updateTransactions,
   updateCurrencies,
-  updateTags 
+  updateTags,
+  updateRates 
 };
 
 export default connect(null, mapDispatchToProps)(Landing);

@@ -38,7 +38,6 @@ class History extends Component {
   render() {
     const { transactions, removeFromNetSav, removeTransaction, navigation } = this.props;
     const { localTransactions, editWasMade } = this.state;
-    console.log(editWasMade);
     return (
       <View styles={styles.container}>
         <StatusBar
