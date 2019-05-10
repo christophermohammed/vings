@@ -8,53 +8,25 @@ import { removeTransaction } from '../../state/transactions/actions';
 import { removeFromNetSav } from '../../state/currencies/actions';
 
 class History extends Component {
-  constructor(props){
-    super(props);
-
-    this.state = {
-      localTransactions: [],
-      editWasMade: false
-    };
-  }
-
-  componentDidMount(){
-    this.setState({localTransactions: this.props.transactions.slice(0, 100)});
-  }
-
-  setEditWasMade = () => {
-    this.setState({editWasMade: true});
-  }
-
-  componentDidUpdate(){
-    const { localTransactions, editWasMade } = this.state;
-    const { transactions } = this.props;
-    let i = Math.ceil(localTransactions.length / 100);
-    let visibleTransactions = transactions.slice(0, i * 100);
-    if(editWasMade || visibleTransactions.length !== localTransactions.length){
-      this.setState({editWasMade: false, localTransactions: visibleTransactions});
-    }
-  }
-
   render() {
     const { transactions, removeFromNetSav, removeTransaction, navigation } = this.props;
-    const { localTransactions, editWasMade } = this.state;
     return (
       <View styles={styles.container}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
-        {localTransactions.length < 1 &&
+        {transactions.length < 1 &&
           <View style={historyStyles.empty}>
             <Text style={{fontSize: 15}}>You don't seem to have any transactions...</Text>
           </View>
         }
-        {localTransactions.length > 0 &&
+        {transactions.length > 0 &&
           <View>
             <FlatList
-              extraData={this.state}
+              extraData={this.props}
               showsVerticalScrollIndicator={false}
-              data={localTransactions}
+              data={transactions}
               keyExtractor={(_item, index) => (index).toString()}
               renderItem={({item, index}) => 
                 <View>
@@ -75,12 +47,6 @@ class History extends Component {
                   />
                 </View>
               }
-              onEndReachedThreshold={0.5}
-              onEndReached={() => {
-                var i = Math.ceil(localTransactions.length / 100);
-                i++;
-                this.setState({localTransactions: transactions.slice(0, i * 100)});
-              }}
             />
           </View>
         }

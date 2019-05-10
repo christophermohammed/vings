@@ -10,7 +10,7 @@ export const buildBasicTransaction = (description, location, amt, type, uid = ""
     if(!(emptyRegex.test(String(description)))){
       // location valid
       if(
-          ((!(emptyRegex.test(String(description)))) && type === transactionType.cost) ||
+          ((!(emptyRegex.test(String(location)))) && type === transactionType.cost) ||
           (type === transactionType.savings) 
         ){
         // flip if cost

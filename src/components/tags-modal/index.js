@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Modal, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import MWITextInput from '../../components/mwi-text-input';
 import commonStyles from '../../utilities/common-styles';
-import { Colors, SCREEN_HEIGHT, SCREEN_WIDTH, placeholders } from '../../utilities';
+import { Colors, SCREEN_HEIGHT, SCREEN_WIDTH, placeholders, emptyRegex, contains } from '../../utilities';
 
 class TagsModal extends React.Component {
     constructor(){
@@ -13,8 +13,18 @@ class TagsModal extends React.Component {
         }
     }
 
+    isAlreadyATag = (tags, name, color) => {
+        var i = tags.length;
+        while (i--) {
+          if (tags[i].name === name && tags[i].color === color) {
+            return true;
+          }
+        }
+        return false;
+    }
+
     render(){
-        const { visible, closeTagsModal, addTag } = this.props;
+        const { visible, closeTagsModal, addTag, tags } = this.props;
         const { name, color } = this.state;
         return(
             <Modal
@@ -64,9 +74,21 @@ class TagsModal extends React.Component {
                           <Button
                             title="Add"
                             onPress={() => {
-                              this.setState({name: '', color: ''});
-                              addTag({name, color});
-                              closeTagsModal();
+                              if(color !== ''){
+                                if(!(emptyRegex.test(String(name)))){
+                                    if(!this.isAlreadyATag(tags, name, color)){
+                                        this.setState({name: '', color: ''});
+                                        addTag({name, color});
+                                        closeTagsModal();
+                                    }else{
+                                        alert('Seems like you laready have a tag like that')
+                                    }
+                                }else{
+                                    alert('Please enter a valid name');
+                                }
+                              }else{
+                                alert('Please select a colour');
+                              }
                             }}
                             color={Colors.main}
                           />

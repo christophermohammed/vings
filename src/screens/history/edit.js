@@ -36,7 +36,7 @@ class Edit extends Component {
   }
 
   save = () => {
-    const { navigation, transactions, updateTransactions, addToNetSav } = this.props;
+    const { navigation, transactions, updateTransactions, addToNetSav, tags } = this.props;
     let index = navigation.getParam('index');
     let oldTransaction = transactions[index];
     const { localDescription, localAmount, localLocation, localDate, localTags, currencyName } = this.state;
@@ -54,7 +54,6 @@ class Edit extends Component {
         updateTransactions(newTransactions);
         addToNetSav(oldTransaction.amount * -1, oldTransaction.currency);
         addToNetSav(finalTransaction.amount, finalTransaction.currency);
-        navigation.getParam('setEditWasMade')();
         navigation.navigate('History');
       }
     }
@@ -172,6 +171,7 @@ class Edit extends Component {
         </View>
         <View style={commonStyles.center}>
           <TagsModal 
+            tags={tags}
             visible={isTagsOpen}
             closeTagsModal={() => this.setState({isTagsOpen: false})}
             addTag={tag => {

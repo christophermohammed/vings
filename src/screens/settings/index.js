@@ -27,7 +27,7 @@ class Settings extends Component {
               onPress={() => navigation.navigate('CurrCountryContainer')}
               style={[{height: 30, flex: 1, alignItems: 'center'}, commonStyles.regRow]}
             >
-              <Text style={[{color: Colors.main}, commonStyles.detailSubtitle]}>Currency and Country</Text>
+              <Text style={[{color: 'black'}, commonStyles.detailSubtitle]}>Currency and Country</Text>
               <View style={{marginRight: 15}}>
                 <Icon name="ios-arrow-dropright" size={25} color={Colors.main}/>
               </View>
@@ -38,7 +38,7 @@ class Settings extends Component {
               onPress={() => navigation.navigate('Tags')}
               style={[{height: 30, flex: 1, alignItems: 'center'}, commonStyles.regRow]}
             >
-              <Text style={[{color: Colors.main}, commonStyles.detailSubtitle]}>Tags</Text>
+              <Text style={[{color: 'black'}, commonStyles.detailSubtitle]}>Tags</Text>
               <View style={{marginRight: 15}}>
                 <Icon name="ios-arrow-dropright" size={25} color={Colors.main}/>
               </View>

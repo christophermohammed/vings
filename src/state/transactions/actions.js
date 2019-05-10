@@ -26,3 +26,12 @@ export const removeTransaction = (index) => {
         }
     };
 }
+
+export const removeTagFromTransactions = (tag) => {
+    return{
+        type: actionTypes.REMOVE_TAG_FROM_TRANSACTIONS,
+        payload: {
+            tag
+        }
+    };
+}

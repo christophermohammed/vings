@@ -26,6 +26,18 @@ export default function reducer(state = [], {type, payload}) {
             setItemToAsync("transactions", transactions);
             return transactions;
 
+        case actionTypes.REMOVE_TAG_FROM_TRANSACTIONS:
+            transactions = transactions.map(tr => {
+                tr.tags = tr.tags.filter(tag => {
+                    if(tag.name === payload.tag.name && tag.color === payload.tag.color){
+                        return false;
+                    }
+                    return true;
+                });
+                return tr;
+            });
+            return transactions;
+
         default:
             return state;
     }

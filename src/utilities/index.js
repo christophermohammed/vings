@@ -37,7 +37,7 @@ export const contains = (a, obj) => {
   var i = a.length;
   while (i--) {
     if (a[i] === obj) {
-        return true;
+      return true;
     }
   }
   return false;

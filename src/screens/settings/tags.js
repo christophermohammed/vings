@@ -6,6 +6,7 @@ import commonStyles from '../../utilities/common-styles';
 import SwipeCard from '../../components/transactions-card/swipeable-card';
 import { Colors, SCREEN_WIDTH } from '../../utilities';
 import TagsModal from '../../components/tags-modal';
+import { removeTagFromTransactions } from '../../state/transactions/actions';
 
 class Tags extends Component {
   constructor(){
@@ -15,12 +16,13 @@ class Tags extends Component {
   }
 
   render(){
-    const { addTag, removeTag, tags, navigation } = this.props;
+    const { addTag, removeTag, tags, navigation, removeTagFromTransactions } = this.props;
     const { isTagsOpen } = this.state;
     return(
       <React.Fragment>
         <View style={commonStyles.center}>
           <TagsModal 
+            tags={tags}
             visible={isTagsOpen}
             closeTagsModal={() => this.setState({isTagsOpen: false})}
             addTag={addTag}
@@ -38,7 +40,10 @@ class Tags extends Component {
               <SwipeCard 
                 item={item}
                 index={index}
-                remove={rowKey => removeTag(rowKey)}
+                remove={(item, rowKey) => {
+                  removeTag(rowKey);
+                  removeTagFromTransactions(item);
+                }}
                 renderCard={() => (
                   <View style={[commonStyles.center, {height: 50, width: SCREEN_WIDTH, backgroundColor: 'white', flexDirection: 'row'}]}>
                     <View style={[styles.tagColor, {backgroundColor: item.color, marginRight: 5}]} />
@@ -94,7 +99,8 @@ const mapStateToProps = ({tags}) => ({
 
 const mapDispatchToProps = {
   removeTag,
-  addTag 
+  addTag,
+  removeTagFromTransactions 
 };
   
 export default connect(mapStateToProps, mapDispatchToProps)(Tags);

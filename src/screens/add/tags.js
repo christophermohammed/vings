@@ -65,7 +65,8 @@ class Tags extends Component {
           <Text style={commonStyles.detailTitle}>Tags</Text>
         </View>
         <View style={commonStyles.center}>
-          <TagsModal 
+          <TagsModal
+            tags={tags}
             visible={isTagsOpen}
             closeTagsModal={() => this.setState({isTagsOpen: false})}
             addTag={tag => {

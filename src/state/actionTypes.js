@@ -12,6 +12,7 @@ export const UPDATE_PHOTOS = "Add photos";
 export const UPDATE_TRANSACTIONS = "Update list of transactions";
 export const ADD_TRANSACTION = "Add a transaction";
 export const REMOVE_TRANSACTION = "Remove a transaction";
+export const REMOVE_TAG_FROM_TRANSACTIONS = "Remove a tag that has been deleted from transactions with that tag";
 // TAGS
 export const UPDATE_TAGS = "Update list of tags";
 export const ADD_TAG = "Add a tag to list";
