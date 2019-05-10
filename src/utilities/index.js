@@ -33,6 +33,16 @@ export const isIOS = () => {
     return (Platform.OS === 'ios' ? true : false);
 };
 
+export const contains = (a, obj) => {
+  var i = a.length;
+  while (i--) {
+    if (a[i] === obj) {
+        return true;
+    }
+  }
+  return false;
+}
+
 export const getGUID = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);

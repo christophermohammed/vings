@@ -1,39 +1,86 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Button, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Button, ScrollView, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import MWITextInput from '../../components/mwi-text-input';
 import MWIDropdown from '../../components/mwi-dropdown';
 import DateModal from '../../components/date-modal';
+import TagsModal from '../../components/tags-modal';
 import { currencyNames, getCurrencyFromName } from '../../logic/currencies';
 import {updateTransactions} from '../../state/transactions/actions';
+import { addToNetSav } from '../../state/currencies/actions';
+import { addTag } from '../../state/tags/actions';
 import commonStyles from '../../utilities/common-styles';
-import { SCREEN_WIDTH, Colors } from '../../utilities';
+import { SCREEN_WIDTH, Colors, contains, to2Dp, transactionType } from '../../utilities';
+import {buildBasicTransaction, buildRestOfTransaction} from '../../logic/add';
 import moment from 'moment';
 
 class Edit extends Component {
   constructor(props) {
     super(props);
     
-    const { description, amount, location, date, currency } = props.navigation.getParam('transaction');
+    let index = props.navigation.getParam('index');
+    let oldTransaction = props.transactions[index];
+    const { description, amount, location, date, currency, tags, type } = oldTransaction;
 
     this.state = {
-        localDescription: description || "",
-        localAmount: amount.toString() || "",
-        localLocation: location || "",
-        localDate: new Date(date) || null,
+      localDescription: description || "",
+      localAmount: (amount && (type === transactionType.cost ? amount * -1 : amount).toString()) || "",
+      localLocation: location || "",
+      localDate: new Date(date) || null,
+      localTags: tags,
 
-        isDateOpen: false,
-        currencyName: `${currency.name} (${currency.code})`
+      isDateOpen: false,
+      isTagsOpen: false,
+      currencyName: `${currency.name} (${currency.code})`
     };
   }
 
   save = () => {
-    navigation.navigate('History');
+    const { navigation, transactions, updateTransactions, addToNetSav } = this.props;
+    let index = navigation.getParam('index');
+    let oldTransaction = transactions[index];
+    const { localDescription, localAmount, localLocation, localDate, localTags, currencyName } = this.state;
+    // build transaction
+    let transaction = buildBasicTransaction(localDescription, localLocation, to2Dp(parseFloat(localAmount)), oldTransaction.type ,oldTransaction.uid);
+    if(transaction){
+      let updatedTransaction = buildRestOfTransaction(transaction, getCurrencyFromName(currencyName), localDate);
+      if(updatedTransaction){
+        let finalTransaction = {
+          ...updatedTransaction,
+          tags: localTags
+        }
+        let newTransactions = JSON.parse(JSON.stringify(transactions));
+        newTransactions.splice(index, 1, finalTransaction);
+        updateTransactions(newTransactions);
+        addToNetSav(oldTransaction.amount * -1, oldTransaction.currency);
+        addToNetSav(finalTransaction.amount, finalTransaction.currency);
+        navigation.getParam('setEditWasMade')();
+        navigation.navigate('History');
+      }
+    }
+  }
+
+  addTagToLocal = (tag) => {
+    const { localTags } = this.state;
+    if(!contains(localTags, tag)){
+      let newTags = JSON.parse(JSON.stringify(localTags));
+      newTags.push(tag);
+      this.setState({localTags: newTags});
+    }
+  }
+
+  removeTagFromLocal = (index) => {
+    let newTags = JSON.parse(JSON.stringify(this.state.localTags));
+    newTags.splice(index, 1);
+    this.setState({localTags: newTags});
   }
 
   render() {
-    const { description, amount, location, date } = this.props.navigation.getParam('transaction');
-    const { localDescription, localAmount, localLocation, localDate, isDateOpen, currencyName } = this.state;
+    const { addTag, tags, navigation, transactions } = this.props;
+    let index = navigation.getParam('index');
+    let oldTransaction = transactions[index];
+    const { description, amount, location, type } = oldTransaction;
+    const { localDescription, localAmount, localLocation, localDate, localTags, isDateOpen, isTagsOpen, currencyName } = this.state;
     return (
     <ScrollView showsVerticalScrollIndicator={false}> 
       <View style={commonStyles.container}>
@@ -41,15 +88,6 @@ class Edit extends Component {
           backgroundColor="white"
           barStyle="dark-content"
         />
-        <View style={[commonStyles.space, commonStyles.center]}>
-            <View style={{ borderRadius: 10}}>
-                <Button
-                  title="Tags"
-                  onPress={() => this.props.navigation.navigate('Tags')}
-                  color={Colors.main}
-                />
-            </View>
-        </View>
         {/* Basic Info */}
         <View style={[commonStyles.space, commonStyles.center]}>
           <MWITextInput 
@@ -67,26 +105,26 @@ class Edit extends Component {
             message="Amount"
             getRef={amt => { this.amountInput = amt }}
             onChange={localAmount => this.setState({localAmount})}
-            placeholder={amount.toString()}
+            placeholder={amount && (type === transactionType.cost ? amount * -1 : amount).toString()}
             value={localAmount}
             keyboardType="decimal-pad"
             width={SCREEN_WIDTH - 20}
             maxLength={12}
           />
         </View>
-        {amount < 0 ? (
-            <View style={[commonStyles.space, commonStyles.center]}>
-              <MWITextInput
-                message="Location" 
-                getRef={loc => { this.locationInput = loc }}
-                onChange={localLocation => this.setState({localLocation})}
-                placeholder={location}
-                value={localLocation}
-                width={SCREEN_WIDTH - 20}
-                textContentType="location"
-                maxLength={50}
-              />
-            </View>
+        {type === transactionType.cost ? (
+          <View style={[commonStyles.space, commonStyles.center]}>
+            <MWITextInput
+              message="Location" 
+              getRef={loc => { this.locationInput = loc }}
+              onChange={localLocation => this.setState({localLocation})}
+              placeholder={location}
+              value={localLocation}
+              width={SCREEN_WIDTH - 20}
+              textContentType="location"
+              maxLength={50}
+            />
+          </View>
         ) : null }
         {/* Currency */}
         <View style={commonStyles.space}>
@@ -128,12 +166,73 @@ class Edit extends Component {
             />
           </View>
         </View>
-
+        {/* Tags Mod */}
+        <View style={commonStyles.space}>
+            <Text style={commonStyles.detailSubtitle}>Tags</Text>
+        </View>
+        <View style={commonStyles.center}>
+          <TagsModal 
+            visible={isTagsOpen}
+            closeTagsModal={() => this.setState({isTagsOpen: false})}
+            addTag={tag => {
+              addTag(tag);
+              this.addTagToLocal(tag);
+            }}
+          />
+        </View>
+        <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={commonStyles.detailSubtitle}>Your tags</Text>
+            <FlatList 
+              data={tags}
+              keyExtractor={(_item, index) => (index).toString()}
+              renderItem = {
+                ({item, index})=>(
+                  <TouchableOpacity onPress={() => this.addTagToLocal(item)} style={[commonStyles.regRow, {marginTop: 5, height: 30}]}>
+                    <View style={[styles.tagColor, {backgroundColor: item.color, marginRight: 5}]}></View>
+                    <Text style={{fontSize: 15}}>{item.name}</Text>
+                  </TouchableOpacity>
+                )
+              }
+            />
+          </View>
+          <View style={{alignItems: 'center'}}>
+            <Text style={commonStyles.detailSubtitle}>Tagged</Text>
+            <FlatList 
+              data={localTags}
+              keyExtractor={(_item, index) => (index).toString()}
+              renderItem = {
+                ({item, index})=>(
+                  <TouchableOpacity onPress={() => this.removeTagFromLocal(index)} style={[commonStyles.regRow, {marginTop: 5, height: 30}]}>
+                    <View style={[styles.tagColor, {backgroundColor: item.color, marginRight: 5}]} />
+                    <Text style={{fontSize: 15}}>{item.name}</Text>
+                  </TouchableOpacity>
+                )
+              }
+            />
+          </View>
+        </View>
+        <View style={[commonStyles.space, { alignItems: 'flex-end', marginRight: 10}]}>
+          <View style={{borderRadius: 10}}>
+            <Button
+              title="Add New Tag"
+              onPress={() => this.setState({isTagsOpen: true})}
+              color={Colors.main}
+            />
+          </View>
+        </View>
         {/* Save / Back */}
-        <View style={[commonStyles.space, commonStyles.center]}>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
           <View style={{ borderRadius: 10}}>
             <Button
-              title="Tags"
+              title="Back"
+              onPress={() => this.props.navigation.navigate('History')}
+              color={Colors.main}
+            />
+          </View>
+          <View style={{ borderRadius: 10}}>
+            <Button
+              title="Save"
               onPress={this.save}
               color={Colors.main}
             />
@@ -145,12 +244,22 @@ class Edit extends Component {
   }
 }
 
-const mapStateToProps = ({transactions}) => ({
-  transactions
+const styles = StyleSheet.create({
+  tagColor: {
+    height: 20, 
+    width: 20, 
+    borderRadius: 10,  
+  }
+});
+
+const mapStateToProps = ({transactions, tags}) => ({
+  transactions, tags
 });
 
 const mapDispatchToProps = {
-  updateTransactions 
+  updateTransactions,
+  addTag,
+  addToNetSav 
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Edit);

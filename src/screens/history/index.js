@@ -12,7 +12,8 @@ class History extends Component {
     super(props);
 
     this.state = {
-      localTransactions: []
+      localTransactions: [],
+      editWasMade: false
     };
   }
 
@@ -20,19 +21,24 @@ class History extends Component {
     this.setState({localTransactions: this.props.transactions.slice(0, 100)});
   }
 
+  setEditWasMade = () => {
+    this.setState({editWasMade: true});
+  }
+
   componentDidUpdate(){
-    const { localTransactions } = this.state;
+    const { localTransactions, editWasMade } = this.state;
     const { transactions } = this.props;
     let i = Math.ceil(localTransactions.length / 100);
     let visibleTransactions = transactions.slice(0, i * 100);
-    if(localTransactions.length !== visibleTransactions.length){
-      this.setState({localTransactions: visibleTransactions});
+    if(editWasMade || visibleTransactions.length !== localTransactions.length){
+      this.setState({editWasMade: false, localTransactions: visibleTransactions});
     }
   }
 
   render() {
     const { transactions, removeFromNetSav, removeTransaction, navigation } = this.props;
-    const { localTransactions } = this.state;
+    const { localTransactions, editWasMade } = this.state;
+    console.log(editWasMade);
     return (
       <View styles={styles.container}>
         <StatusBar
@@ -61,7 +67,7 @@ class History extends Component {
                       removeTransaction(rowKey);
                     }}
                     renderCard={item => (
-                      <TouchableOpacity onPress={() => navigation.navigate('Edit', { transaction: localTransactions[index] })}>
+                      <TouchableOpacity onPress={() => navigation.navigate('Edit', { index, setEditWasMade: this.setEditWasMade })}>
                         <TransactionCard 
                           item={item}
                         />

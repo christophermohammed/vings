@@ -2,7 +2,7 @@ import { emptyRegex, getGUID } from '../utilities';
 import { transactionType } from '../utilities';
 import { isACurrencyName } from './currencies';
 
-export const buildBasicTransaction = (description, location, amt, type) => {
+export const buildBasicTransaction = (description, location, amt, type, uid = "") => {
   let transaction = {};
   // amount valid
   if(!isNaN(amt) && amt > 0){
@@ -22,7 +22,8 @@ export const buildBasicTransaction = (description, location, amt, type) => {
           description: description,
           location: location,
           amount: amt,
-          uid: getGUID()
+          uid: uid === "" ? getGUID() : uid,
+          type
         }
       } else {
         alert("Please enter a valid location.");
