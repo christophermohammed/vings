@@ -30,7 +30,7 @@ class Tags extends Component {
     };
     // verify and save
     if(transaction){
-      //saveTransactionToAzure(transaction, user.uid);
+      saveTransactionToAzure(transaction, user.uid);
       addTransaction(updatedTransaction);
       addToNetSav(updatedTransaction.amount, updatedTransaction.currency);
       navigation.navigate('Basic');

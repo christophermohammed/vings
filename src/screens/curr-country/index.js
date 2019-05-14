@@ -35,7 +35,7 @@ class Country extends Component {
           country
         }
         onUpdateUser(newUser);
-        //saveUserToAzure(user);
+        saveUserToAzure(user);
         if(isSetup){
           screenProps.gotoMain();
         }else{

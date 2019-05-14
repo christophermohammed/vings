@@ -16,8 +16,8 @@ export default startup = async (
     navigation
   ) => {
   // get data from storage
-  let transactions = bcTransactions; //await getItemFromAsync("transactions", []);
-  let user = bcUser //await getItemFromAsync("user");
+  let transactions = await getItemFromAsync("transactions", []);
+  let user = await getItemFromAsync("user");
   let currencies = await getItemFromAsync("currencies", defaultCurrencies);
   let tags = await getItemFromAsync("tags", []);
   // get from cloud
