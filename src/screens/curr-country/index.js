@@ -76,7 +76,7 @@ class Country extends Component {
             message={"Main currency:"}
           />
         </View>
-        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10, marginTop: 15}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Back"

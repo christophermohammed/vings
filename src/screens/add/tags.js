@@ -39,9 +39,14 @@ class Tags extends Component {
   }
 
   addTagToLocal = (tag) => {
-    let newTags = JSON.parse(JSON.stringify(this.state.localTags));
-    newTags.push(tag);
-    this.setState({localTags: newTags});
+    const { localTags } = this.state;
+    if(localTags.length < 5){
+      let newTags = JSON.parse(JSON.stringify(localTags));
+      newTags.push(tag);
+      this.setState({localTags: newTags});
+    }else{
+      alert("This transaction has the maximum number of tags");
+    }
   }
 
   removeTagFromLocal = (index) => {
@@ -83,7 +88,10 @@ class Tags extends Component {
               keyExtractor={(_item, index) => (index).toString()}
               renderItem = {
                 ({item, index})=>(
-                  <TouchableOpacity onPress={() => this.addTagToLocal(item)} style={[commonStyles.regRow, {marginTop: 5, height: 30}]}>
+                  <TouchableOpacity 
+                    onPress={() => this.addTagToLocal(item)} 
+                    style={[commonStyles.regRow, {marginTop: 5, height: 30}]}
+                  >
                     <View style={[styles.tagColor, {backgroundColor: item.color, marginRight: 5}]}></View>
                     <Text style={{fontSize: 15}}>{item.name}</Text>
                   </TouchableOpacity>
@@ -107,18 +115,25 @@ class Tags extends Component {
             />
           </View>
         </View>
-        <View style={[commonStyles.space, { alignItems: 'flex-end', marginRight: 10}]}>
+        <View style={[commonStyles.space, { alignItems: 'flex-end', marginRight: 10, marginTop: 15}]}>
           <View style={{borderRadius: 10}}>
             <Button
               title="Add New Tag"
-              onPress={() => this.setState({isTagsOpen: true})}
+              onPress={() => {
+                console.log(this.state.localTags.length);
+                if(this.state.localTags.length < 5){
+                  this.setState({isTagsOpen: true});
+                }else{
+                  alert("This transaction has the maximum number of tags");
+                }
+              }}
               color={Colors.main}
             />
           </View>
         </View>
 
         {/* Save / Back */}
-        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10, marginTop: 15}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Back"

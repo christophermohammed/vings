@@ -68,7 +68,7 @@ class More extends Component {
           />
           <Text style={commonStyles.detailSubtitle}>{date ? date.toDateString() : ""}</Text>
         </View>
-        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-around', marginRight: 10, marginLeft: 10}]}>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Today"
@@ -87,7 +87,7 @@ class More extends Component {
         </View>
 
         {/* Save / Back */}
-        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10, marginTop: 15}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Back"

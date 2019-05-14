@@ -58,12 +58,18 @@ class Tags extends Component {
           <View style={{ borderRadius: 10}}>
             <Button
               title="Add New Tag"
-              onPress={() => this.setState({isTagsOpen: true})}
+              onPress={() => {
+                if(tags.length < 11){
+                  this.setState({isTagsOpen: true});
+                }else{
+                  alert("You already have the maximum number of tags");
+                }
+              }}
               color={Colors.main}
             />
           </View>
         </View>
-        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
+        <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10, marginTop: 15}]}>
           <View style={{ borderRadius: 10}}>
             <Button
               title="Back"

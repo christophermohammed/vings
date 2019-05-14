@@ -3,7 +3,7 @@ import { transactionType } from '../utilities';
 import { isACurrencyName } from './currencies';
 
 export const buildBasicTransaction = (description, location, amt, type, uid = "") => {
-  let transaction = {};
+  let transaction = null;
   // amount valid
   if(!isNaN(amt) && amt > 0){
     // description valid
