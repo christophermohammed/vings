@@ -6,6 +6,7 @@ export default function reducer(state = [], {type, payload}) {
     let newCurrencies = JSON.parse(JSON.stringify(state));
     switch(type){
         case actionTypes.UPDATE_CURRENCIES:
+            setItemToAsync("currencies", payload.currencies);
             return payload.currencies;
             
         case actionTypes.UPDATE_RATES:
@@ -15,6 +16,7 @@ export default function reducer(state = [], {type, payload}) {
                     newCurrencies[i].rate = rates[i].Rate;
                 }
             }
+            setItemToAsync("currencies", newCurrencies);
             return newCurrencies;
 
         case actionTypes.ADD_TO_NET_SAV:

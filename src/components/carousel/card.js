@@ -32,7 +32,7 @@ const CarouselCard = (props) => {
                 <View style={styles.imageContainer}>
                     <Image source={{uri: image.URI, cache: 'force-cache'}} style={styles.homeImage} blurRadius={15}/>
                     <View style={[{position: 'absolute'}, styles.homeImage, styles.imageContainer, commonStyles.center]}>
-                        <Tip tip={tip} />
+                        <Tip tip={tip} color="white"/>
                     </View>
                 </View>
                 <TouchableOpacity style={styles.textContainer} onPress={() => this.handleLink(image.URL)}>

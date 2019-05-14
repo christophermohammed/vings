@@ -36,6 +36,7 @@ export default function reducer(state = [], {type, payload}) {
                 });
                 return tr;
             });
+            setItemToAsync("transactions", transactions);
             return transactions;
 
         default:

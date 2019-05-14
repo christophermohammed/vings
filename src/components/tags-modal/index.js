@@ -62,7 +62,7 @@ class TagsModal extends React.Component {
                             <TouchableOpacity onPress={() => this.setState({color: Colors.tagViolet})} style={[styles.tagColor, {backgroundColor: Colors.tagViolet}]}></TouchableOpacity>
                         </View>                        
                     </View>
-                    <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-around', marginRight: 10, marginLeft: 10}]}>
+                    <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
                         <View style={{ borderRadius: 10}}>
                           <Button
                             title="Cancel"

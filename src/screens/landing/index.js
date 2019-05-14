@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
+import Tip from '../../components/tip-of-the-day';
+import { tips } from '../../data/tips';
+import { Colors } from '../../utilities';
+import commonStyles from '../../utilities/common-styles';
 // setters
 import { updatePhotos } from '../../state/photos/actions';
 import { updateUser } from '../../state/user/actions';
@@ -29,11 +33,18 @@ class Landing extends Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={[commonStyles.center, {flex: 1}]}>
         <StatusBar
           backgroundColor="white"
           barStyle="dark-content"
         />
+        <Tip tip={tips[Math.floor(Math.random()*99)]} color="black"/>
+        <View style={{marginTop: 20}}>
+          <ActivityIndicator 
+            size="large"
+            color={Colors.main}
+          />
+        </View>
       </View>
     );
   }

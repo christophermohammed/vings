@@ -40,8 +40,8 @@ const TipIcons = (props) => {
     let iconNames = getIconNames(props.category);
     return(
         <View style={styles.container}>
-            <Icon name={iconNames[0]} color={'white'} size={24}/> 
-            <Icon name={iconNames[1]} color={'white'} size={24}/>
+            <Icon name={iconNames[0]} color={props.color} size={24}/> 
+            <Icon name={iconNames[1]} color={props.color} size={24}/>
         </View>
     );
 }
