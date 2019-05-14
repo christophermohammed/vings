@@ -2,6 +2,8 @@ import { getItemFromAsync } from './async';
 import { getPhotosFromAzure, getRatesFromAzure } from './cloud';
 import { getCurrencyFromCode } from './currencies';
 import defaultCurrencies from '../data/currencies';
+import {isString} from '../utilities';
+import { bcTransactions, bcUser } from '../data/backwards-compat';
 
 export default startup = async (
     updatePhotos, 
@@ -9,35 +11,42 @@ export default startup = async (
     updateTransactions, 
     updateCurrencies, 
     updateTags,
-    updateRates, 
+    updateRates,
+    addToNetSav, 
     navigation
   ) => {
   // get data from storage
-  let transactions = await getItemFromAsync("transactions", []);
+  let transactions = bcTransactions; //await getItemFromAsync("transactions", []);
+  let user = bcUser //await getItemFromAsync("user");
   let currencies = await getItemFromAsync("currencies", defaultCurrencies);
-  let user = await getItemFromAsync("user");
   let tags = await getItemFromAsync("tags", []);
   // get from cloud
   let photos = await getPhotosFromAzure();
   let rates = await getRatesFromAzure();
+  // set state
+  updatePhotos(photos);
+  updateCurrencies(currencies);
+  updateTags(tags);
+  updateRates(rates);
   // handle backwards compat
-  if(user && user.currency !== undefined){
+  if(user && isString(user.currency)){
+    user.currency = null;
     user.currencyCode = "USD";
+    user.country = "United States of America";
+    user.age = parseInt(user.age);
     transactions.map(function(tr) { 
+      tr.description = tr.title || tr.description;
+      tr.title = null;
       tr.amount = parseFloat(tr.amount);
       tr.dateString = tr.date;
       tr.date = new Date(tr.dateString);
       tr.currency = getCurrencyFromCode(user.currencyCode, currencies);
+      addToNetSav(tr.amount, tr.currency);
       return tr
     });
   }
-  // set state
-  updatePhotos(photos);
   updateUser(user);
   updateTransactions(transactions);
-  updateCurrencies(currencies);
-  updateTags(tags);
-  updateRates(rates);
   // navigate
   if(user === undefined){
     navigation.navigate("Setup");

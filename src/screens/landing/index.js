@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { updatePhotos } from '../../state/photos/actions';
 import { updateUser } from '../../state/user/actions';
 import { updateTransactions } from '../../state/transactions/actions';
-import { updateCurrencies } from '../../state/currencies/actions';
+import { updateCurrencies, addToNetSav } from '../../state/currencies/actions';
 import { updateTags } from '../../state/tags/actions';
 import { updateRates } from '../../state/currencies/actions';
 import startup from '../../logic/startup';
@@ -13,7 +13,7 @@ import startup from '../../logic/startup';
 class Landing extends Component {
   async componentDidMount() {
     // actions from props
-    const { updateUser, updatePhotos, updateTransactions, updateCurrencies, updateTags, updateRates, navigation } = this.props;
+    const { updateUser, updatePhotos, updateTransactions, updateCurrencies, updateTags, updateRates, addToNetSav, navigation } = this.props;
     // call startup
     await startup(
       updatePhotos,
@@ -22,6 +22,7 @@ class Landing extends Component {
       updateCurrencies,
       updateTags,
       updateRates,
+      addToNetSav,
       navigation
     );
   }
@@ -44,7 +45,8 @@ const mapDispatchToProps = {
   updateTransactions,
   updateCurrencies,
   updateTags,
-  updateRates 
+  updateRates,
+  addToNetSav 
 };
 
 export default connect(null, mapDispatchToProps)(Landing);

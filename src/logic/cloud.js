@@ -47,10 +47,7 @@ export const saveUserToAzure = async (user) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        age: user.age,
-        gender: user.gender
-        }),
+      body: JSON.stringify(user),
     });
     let responseJson = await response.json();
     let fromAzure = JSON.stringify(responseJson);
@@ -76,9 +73,8 @@ export const removeTransactionFromAzure = async (uid) => {
         body: JSON.stringify({
           UserUID: user.uid,
           transactionUID: uid 
-          }),
+        }),
       });
-      let resJson = await response.json();
     } catch (error) {
     console.error(error);
   }
@@ -94,12 +90,9 @@ export const saveTransactionToAzure = async (transaction, userUID) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-          UserUID: userUID,
-          description: transaction.description,
-          location: transaction.location,
-          amount: (transaction.amount).toString(),
-          date: transaction.date
-        }),
+        UserUID: userUID,
+        ...transaction
+      }),
     });
     let responseJson = await response.json();
     let fromAzure = JSON.stringify(responseJson);
