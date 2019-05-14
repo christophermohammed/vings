@@ -2,7 +2,7 @@ import { getItemFromAsync } from './async';
 import { getPhotosFromAzure, getRatesFromAzure } from './cloud';
 import { getCurrencyFromCode } from './currencies';
 import defaultCurrencies from '../data/currencies';
-import {isString} from '../utilities';
+import {isString, transactionType} from '../utilities';
 import { bcTransactions, bcUser } from '../data/backwards-compat';
 
 export default startup = async (
@@ -40,6 +40,8 @@ export default startup = async (
       tr.amount = parseFloat(tr.amount);
       tr.dateString = tr.date;
       tr.date = new Date(tr.dateString);
+      tr.tags = [];
+      tr.type = tr.amount < 0 ? transactionType.cost : transactionType.savings;
       tr.currency = getCurrencyFromCode(user.currencyCode, currencies);
       addToNetSav(tr.amount, tr.currency);
       return tr
