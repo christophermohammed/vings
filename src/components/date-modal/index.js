@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Modal, Button } from 'react-native';
 import {DatePicker} from 'react-native-wheel-picker-android';
 import commonStyles from '../../utilities/common-styles';
-import { Colors } from '../../utilities';
+import { Colors, SCREEN_HEIGHT } from '../../utilities';
 
 const DateModal = (props) => {
     const { visible, closeDateModal, setDate } = props;
@@ -13,7 +13,7 @@ const DateModal = (props) => {
           visible={visible}
       >
         <View style={commonStyles.modalBG}>
-          <View style={[commonStyles.space, {alignItems: 'center'}]}>
+          <View style={[commonStyles.space, {alignItems: 'center', marginTop: SCREEN_HEIGHT / 9}]}>
             <DatePicker
               mode="date" 
               onDateSelected={setDate}
@@ -22,7 +22,7 @@ const DateModal = (props) => {
               hideAm
             />
           </View>
-          <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
+          <View style={[commonStyles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10, marginTop: 10}]}>
             <View style={{ borderRadius: 10}}>
               <Button
                 title="Cancel"

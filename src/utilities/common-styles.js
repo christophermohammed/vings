@@ -93,6 +93,5 @@ export default styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.95)', 
         height: SCREEN_HEIGHT, 
         width: SCREEN_WIDTH, 
-        marginTop: SCREEN_HEIGHT / 9
     }
 });

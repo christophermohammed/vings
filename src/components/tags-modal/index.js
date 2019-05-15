@@ -8,8 +8,8 @@ class TagsModal extends React.Component {
     constructor(){
         super();
         this.state = {
-            name: '',
-            color: '',
+          name: '',
+          color: '',
         }
     }
 
@@ -33,7 +33,7 @@ class TagsModal extends React.Component {
                 visible={visible}
             >
                 <View style={commonStyles.modalBG}>
-                    <View style={commonStyles.center}>
+                    <View style={[commonStyles.center, {marginTop: SCREEN_HEIGHT / 9}]}>
                         <View style={[commonStyles.regRow, {marginTop: 5, height: 50}]}>
                           <View style={[styles.tagColor, {backgroundColor: color, marginRight: 10}]}></View>
                           <Text style={{fontSize: 30}}>{name}</Text>
@@ -41,13 +41,13 @@ class TagsModal extends React.Component {
                     </View>
                     <View style={commonStyles.space}>
                        <MWITextInput 
-                            message="What do you want to name your tag?"
-                            placeholder={placeholders.name}
-                            value={name}
-                            onChange={name => this.setState({name})}
-                            getRef={n => { this.nameInput = n }}
-                            width={SCREEN_WIDTH - 20}
-                            maxLength={20}
+                          message="What do you want to name your tag?"
+                          placeholder={placeholders.name}
+                          value={name}
+                          onChange={name => this.setState({name})}
+                          getRef={n => { this.nameInput = n }}
+                          width={SCREEN_WIDTH - 20}
+                          maxLength={20}
                        />
                     </View>
                     <View style={commonStyles.space}>
@@ -62,7 +62,7 @@ class TagsModal extends React.Component {
                             <TouchableOpacity onPress={() => this.setState({color: Colors.tagViolet})} style={[styles.tagColor, {backgroundColor: Colors.tagViolet}]}></TouchableOpacity>
                         </View>                        
                     </View>
-                    <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10}]}>
+                    <View style={[styles.space, {flexDirection: 'row', justifyContent: 'space-between', marginRight: 10, marginLeft: 10, marginTop: 10}]}>
                         <View style={{ borderRadius: 10}}>
                           <Button
                             title="Cancel"
@@ -101,11 +101,12 @@ class TagsModal extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    tagColor: {
-        height: 40, 
-        width: 40, 
-        borderRadius: 40,   
-    }
+  tagColor: {
+    height: 40, 
+    width: 40, 
+    borderRadius: 20,
+    overflow: 'hidden'   
+  }
 });
 
 export default TagsModal;
