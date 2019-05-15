@@ -59,10 +59,10 @@ class Home extends Component {
             <View style={homeStyles.gallery}>
               <Carousel photos={photos}/>
             </View>
-            <Button 
+            {/* <Button 
               title="Clear"
               onPress={clearAsync}
-            />
+            /> */}
           </View>
         </ScrollView>
       </View>
