@@ -50,7 +50,7 @@ export default startup = async (
   updateUser(user);
   updateTransactions(transactions);
   // navigate
-  if(user === undefined){
+  if(user === undefined || user.currencyCode === undefined){
     navigation.navigate("Setup");
   }else{
     navigation.navigate("Main");

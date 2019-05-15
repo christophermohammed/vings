@@ -13,7 +13,7 @@ class Demographic extends Component {
 
     this.state = {
       age: "",
-      gender: 'Male',
+      genderIndex: 0,
     }
   }
 
@@ -25,7 +25,7 @@ class Demographic extends Component {
     }else{
       let user = {
         age: this.state.age,
-        gender: this.state.gender,
+        gender: genders[this.state.genderIndex],
         uid: getGUID()
       }
       this.props.navigation.navigate("CurrCountryContainer", {user});
@@ -38,7 +38,7 @@ class Demographic extends Component {
   }
 
   render() {
-    const { age, gender } = this.state;
+    const { age, genderIndex } = this.state;
     return (
       <ScrollView>
       <View style={styles.container}>
@@ -64,8 +64,8 @@ class Demographic extends Component {
         <View style={styles.space}>
           <MWIPicker 
             items={genders}
-            selectedValue={gender}
-            onChange={(gender) => this.setState({gender})}
+            selectedValue={genderIndex}
+            onChange={genderIndex => this.setState({genderIndex})}
             message="What is your gender?"
           />
         </View>

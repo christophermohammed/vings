@@ -19,9 +19,6 @@ class MWIPicker extends React.Component {
   }
 
   render(){
-    // let pickerList = this.props.items.map( (s, i) => {
-    //   return <Picker.Item key={i} value={s} label={s} />
-    // });
     let { message, items } = this.props;
     let {isOpen} = this.state;
 
@@ -50,7 +47,6 @@ class MWIPicker extends React.Component {
                   this.props.onChange(index)
                 }
               }
-              //style={pickerStyle.picker}
             />
           </View>
         }
