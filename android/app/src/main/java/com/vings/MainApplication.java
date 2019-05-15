@@ -5,6 +5,10 @@ import android.app.Application;
 import com.oblador.vectoricons.VectorIconsPackage;
 
 import com.facebook.react.ReactApplication;
+import com.wheelpicker.WheelPickerPackage;
+import com.zyu.ReactNativeWheelPickerPackage;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -28,6 +32,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new WheelPickerPackage(),
+            new ReactNativeWheelPickerPackage(),
+            new NetInfoPackage(),
+            new AsyncStoragePackage(),
           new VectorIconsPackage(),
           new RNGestureHandlerPackage()  
       );
