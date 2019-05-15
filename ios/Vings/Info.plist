@@ -2,28 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>NSCalendarsUsageDescription</key>
-  <string>Allow Vings to access your calendar</string>
-  <key>NSCameraUsageDescription</key>
-  <string>Allow Vings to use the camera</string>
-  <key>NSContactsUsageDescription</key>
-  <string>Allow Vings experiences to access your contacts</string>
-  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-  <string>Allow Vings to use your location</string>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>Allow Vings to use your location</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>Allow Vings to use your location</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>Allow Vings to access your microphone</string>
-  <key>NSMotionUsageDescription</key>
-  <string>Allow Vings to access your device's accelerometer</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-  <string>Give Vings periences permission to save photos</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>Give Vings periences permission to access your photos</string>
-  <key>NSRemindersUsageDescription</key>
-  <string>Allow Vings to access your reminders</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -39,29 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.17</string>
+	<string>1.0.18</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.17</string>
+	<string>1.0.18</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -75,6 +37,28 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Allow Vings to access your calendar</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow Vings to use the camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Allow Vings experiences to access your contacts</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Allow Vings to use your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow Vings to use your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow Vings to access your microphone</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Allow Vings to access your device's accelerometer</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Give Vings periences permission to save photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Give Vings periences permission to access your photos</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Allow Vings to access your reminders</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -93,5 +77,19 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>
