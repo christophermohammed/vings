@@ -72,7 +72,6 @@ class Home extends Component {
 
 const homeStyles = StyleSheet.create({
   gallery: {
-    paddingTop: 10,
     paddingBottom: 10,
   }
 });
