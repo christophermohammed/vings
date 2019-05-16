@@ -27,7 +27,11 @@ class Converter extends Component {
     let baseCur = getCurrencyFromName(baseCurrencyName);
     let destCur = getCurrencyFromName(destCurrencyName);
     if(baseCur && destCur){
-      this.setState({destAmount: to2Dp(convertCurrency(parseFloat(baseAmount), baseCur.rate, destCur.rate)).toString()});
+      if(baseCur.code !== destCur.code){
+        this.setState({destAmount: to2Dp(convertCurrency(parseFloat(baseAmount), baseCur.rate, destCur.rate)).toString()});
+      }else{
+        this.setState({destAmount: to2Dp(parseFloat(baseAmount)).toString()});
+      }
     }
   }
 
