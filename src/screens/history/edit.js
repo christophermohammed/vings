@@ -10,7 +10,7 @@ import {updateTransactions} from '../../state/transactions/actions';
 import { addToNetSav } from '../../state/currencies/actions';
 import { addTag } from '../../state/tags/actions';
 import commonStyles from '../../utilities/common-styles';
-import { SCREEN_WIDTH, Colors, contains, to2Dp, transactionType } from '../../utilities';
+import { SCREEN_WIDTH, Colors, transactionType } from '../../utilities';
 import {buildBasicTransaction, buildRestOfTransaction} from '../../logic/add';
 import moment from 'moment';
 
@@ -41,7 +41,7 @@ class Edit extends Component {
     let oldTransaction = transactions[index];
     const { localDescription, localAmount, localLocation, localDate, localTags, currencyName } = this.state;
     // build transaction
-    let transaction = buildBasicTransaction(localDescription, localLocation, to2Dp(parseFloat(localAmount)), oldTransaction.type ,oldTransaction.uid);
+    let transaction = buildBasicTransaction(localDescription, localLocation, parseFloat(localAmount), oldTransaction.type ,oldTransaction.uid);
     if(transaction){
       let updatedTransaction = buildRestOfTransaction(transaction, getCurrencyFromName(currencyName), localDate);
       if(updatedTransaction){

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { ScrollView, View, StatusBar, Button, Text } from 'react-native';
-import { SCREEN_WIDTH, Colors, to2Dp } from '../../utilities';
+import { SCREEN_WIDTH, Colors } from '../../utilities';
 import { buildBasicTransaction } from '../../logic/add';
 import { transactionType, placeholders } from '../../utilities';
 import MWITextInput from '../../components/mwi-text-input';
@@ -32,7 +32,7 @@ class Basic extends Component {
     // extract data 
     const { amount, description, location } = this.state;
     const { screenProps, navigation } = this.props;
-    let amt = to2Dp(parseFloat(amount));
+    let amt = parseFloat(amount);
     // verify and save
     let transaction = buildBasicTransaction(description, location, amt, screenProps.type);
     if(transaction){
