@@ -21,8 +21,12 @@ export default function reducer(state = [], {type, payload}) {
 
         case actionTypes.ADD_TO_NET_SAV:
             newCurrencies = state.map(cur => {
-                var localAmount = convertCurrency(payload.amount, payload.base && payload.base.rate, cur.rate);
-                cur.netSav += localAmount;
+                if(cur.code !== payload.base.code){
+                    var localAmount = convertCurrency(payload.amount, payload.base && payload.base.rate, cur.rate);
+                    cur.netSav += localAmount;
+                }else{
+                    cur.netSav += payload.amount;
+                }
                 return cur;
             });
             setItemToAsync("currencies", newCurrencies);
@@ -30,8 +34,12 @@ export default function reducer(state = [], {type, payload}) {
 
         case actionTypes.REMOVE_FROM_NET_SAV:
             newCurrencies = state.map(cur => {
-                var localAmount = convertCurrency(payload.amount, payload.base && payload.base.rate, cur.rate);
-                cur.netSav -= localAmount;
+                if(cur.code !== payload.base.code){
+                    var localAmount = convertCurrency(payload.amount, payload.base && payload.base.rate, cur.rate);
+                    cur.netSav -= localAmount;
+                }else{
+                    cur.netSav -= payload.amount;
+                }
                 return cur;
             });
             setItemToAsync("currencies", newCurrencies);
